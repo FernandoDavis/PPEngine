@@ -3,12 +3,11 @@ package Entities
 import java.awt.Color
 import java.awt.event.KeyEvent
 
-import mainPPE.Entity
-import mainPPE.Input
+import mainPPE.{Entity, Input, Vector2D}
 
 class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: Int, h: Int) {
   def this() = this(0, 0, 30, 30)
-
+  def this(v: Vector2D) = this(v.getX.toInt,v.getY.toInt,30,30)
   def this(x: Integer, y: Integer) = this(x, y, 30, 30)
 
   this.MaskColor = Color.red
@@ -95,5 +94,5 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
 
   override def death(): Unit = {}
 
-  override def behaviour(): Unit = {}
+  //override def behaviour(): Beh = {}
 }

@@ -37,8 +37,24 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   protected var maskOffset: Vector2D = new Vector2D(0, 0)
   protected var possessed: Boolean = false
   protected var left: Obj = null
-  protected var right: Obj =null
-  protected var lockMovement: Vector2D = new Vector2D(0,0)
+  protected var right: Obj = null
+  protected var lockMovement: Vector2D = new Vector2D(0, 0)
+  protected var behaviour: Behaviour = null
+  val startPosition: Vector2D = new Vector2D(x, y)
+  protected var targetPos: Vector2D = null
+  protected var speed: Double = 0
+  var canBeTouched: Boolean = true
+  var canTouch: Boolean = true
+
+
+  def getTargetPos: Vector2D = targetPos
+
+  def getBehaviour: Behaviour = behaviour
+
+  def setBehaviour(behaviour: Behaviour): Unit = {
+    behaviour.setOwner(this)
+    this.behaviour = behaviour
+  }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Obj]
 
@@ -204,7 +220,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   def isAnchored: Boolean = this.anchored
 
   def collision(obj: Obj) {
-    if (!this.anchored) {
+    if (!this.anchored&&obj.canBeTouched&&this.canTouch) {
       //println(obj)
       if (this.getPosition.getY + this.getMask.getHeight * 3 / 4 - (this.velocity.getY * 2) < obj.getY) {
         //println(this.getPosition.getY+" "+this.y)
@@ -254,24 +270,32 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
     //println(this.getY > obj.getCenterY+obj.height*0.25)
     if (this.getArea <= obj.getArea && obj != this) {
-      if (this.getY > obj.getCenterY+obj.height/2-this.height/2) {
-        this.Position.setY(obj.getY + obj.height+1)
-        if(this.velocity.getY<0)
+      if (this.getY > obj.getCenterY + obj.height / 2 - this.height / 2) {
+        this.Position.setY(obj.getY + obj.height + 1)
+        if (this.velocity.getY < 0)
           this.velocity.setY(0)
         return
       }
-      
+
       if (this.getX <= obj.getCenterX) {
-        this.Position.setX(obj.getX - this.width-1)
-        this.right=obj
-        if(this.velocity.getX>0)
+        this.Position.setX(obj.getX - this.width - 1)
+        this.right = obj
+        if (this.velocity.getX > 0)
           this.velocity.setX(0)
+        return
       }
       if (this.getX > obj.getCenterX) {
-        this.Position.setX(obj.getX + obj.width+1)
-        this.left=obj
-        if(this.velocity.getX<0)
+        this.Position.setX(obj.getX + obj.width + 1)
+        this.left = obj
+        if (this.velocity.getX < 0)
           this.velocity.setX(0)
+        return
+      }
+
+      if (this.getY + this.height-1 < obj.getY ) {
+        this.Position.setY(obj.getY - obj.height - 1)
+        if (this.velocity.getY < 0)
+          this.velocity.setY(0)
       }
 
     }
@@ -280,22 +304,22 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   def l(obj1: Obj, obj2: Obj): Double = {
     val angle: Double = obj1.Position.getDifferenceAngle(obj2.Position)
     val length: Double = obj1.Position.distance(obj2.Position)
-    var x: Double = math.sin(angle)*length
+    var x: Double = math.sin(angle) * length
     var xS: Double = 1
-    if(x<0)
-      xS= -1
-    var y: Double = math.cos(angle)*length
+    if (x < 0)
+      xS = -1
+    var y: Double = math.cos(angle) * length
     var yS: Double = 1
-    if(y<0)
-      yS= -1
-//    var L: Double = obj2.getX-obj1.getX
-//    if(obj1.getX>obj2.getX)
-//      L = obj1.getX-obj2.getX
-    if(x*xS>obj1.width/2)
-      x=obj1.width/2*xS
-    if(y*yS>obj1.height/2)
-      y=obj1.height/2*yS
-    math.sqrt(x*x+y*y)
+    if (y < 0)
+      yS = -1
+    //    var L: Double = obj2.getX-obj1.getX
+    //    if(obj1.getX>obj2.getX)
+    //      L = obj1.getX-obj2.getX
+    if (x * xS > obj1.width / 2)
+      x = obj1.width / 2 * xS
+    if (y * yS > obj1.height / 2)
+      y = obj1.height / 2 * yS
+    math.sqrt(x * x + y * y)
   }
 
   def tick() {
@@ -308,6 +332,28 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
       } else if (!noFriction)
         this.velocity.setX(this.velocity.getX * 0.75) //Friction
     }
+    if (!this.isPossessed && targetPos != null && !this.anchored) {
+      if (targetPos.distance(this.getCenter) >= 20) {
+        val direction: Vector2D = this.Position.UnitVector(targetPos)
+        if (this.gravity > 0)
+          direction.setY(0)
+        this.velocity = direction * speed
+      }
+      else {
+        targetPos = null
+        if (this.gravity > 0)
+          this.velocity.setX(0)
+        else {
+          this.velocity.setX(0)
+          this.velocity.setY(0)
+        }
+      }
+    }
+    else {
+      //wut
+    }
+    if (this.behaviour != null)
+      behaviour.run()
     if (this.velocity.getY > 30) //speed limits
       this.velocity.setY(30)
     else if (this.velocity.getY < (-30))
@@ -317,7 +363,6 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     else if (this.velocity.getX < (-30))
       this.velocity.setX(-30)
     this.setPosition(this.Position + this.velocity)
-
   }
 
   def setAnchored(anchored: Boolean) {
@@ -344,7 +389,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def getGround: Obj = this.ground
 
-  def setGround(obj: Obj){
+  def setGround(obj: Obj) {
     this.ground = obj
   }
 
@@ -401,8 +446,35 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     case _ => false
   }
 
+  def setGravity(gravity: Double): Unit = {
+    this.gravity = gravity
+  }
+
+  def getGravity: Double = {
+    gravity
+  }
+
+  def jump(jumpSpeed: Double): Unit = {
+    if (this.ground != null && math.abs(this.velocity.getY) <= 0.01) {
+      this.airTime = 0
+      this.ground = null
+      this.translate(0, -4)
+      this.velocity.setY(-jumpSpeed)
+    }
+  }
+
+  def goTo(position: Vector2D): Unit = {
+    this.targetPos = position
+  }
+
   override def hashCode(): Int = {
     val state = Seq(Position, img, height, width, mask, anchored, gravity, solid, inAir, airTime, velocity, initVelocity, yThru, xThru, canPassThru, ground, elasticity, MaskColor)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
+  def getSpeed: Double = speed
+
+  def setSpeed(newSpeed: Double) {
+    this.speed = newSpeed
   }
 }

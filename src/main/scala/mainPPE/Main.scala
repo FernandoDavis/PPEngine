@@ -6,19 +6,22 @@ import javax.swing._
 
 class Component extends JComponent {
 
-  var levelList = new ArrayList[Level]()
-  var level: Level = _
+  private var levelList = new ArrayList[Level]()
+  private var level: Level = null
   var Speed: Integer = 10
   val DebugMode: Boolean = true
-  var objInfo: Obj = _
-  var Player: Obj = _
+  var objInfo: Obj = null
+  var Player: Obj = null
   var shift: Vector2D = new Vector2D(0, 0)
+  private var previousLevel: Int = 0
 
   def mousePosition: Vector2D = {
     new Vector2D(MouseInfo.getPointerInfo.getLocation) - new Vector2D(this.getLocationOnScreen)
   }
 
   def loadLevel(level: Level) {
+    if(this.level!=null)
+      this.previousLevel=this.level.getIndex
     this.level = level
     this.Speed = level.getLevelSpeed
     this.level.startLevel()
@@ -62,8 +65,46 @@ class Component extends JComponent {
     }
   }
 
-  def getLevel: Level = {
+  def currentLevel: Level = {
     this.level
+  }
+
+  def addLevel(level: Level) {
+    if (level == null)
+      return
+    level.changeIndex(this.levelList.size)
+    this.levelList += level
+  }
+
+  def addLevel(levels: Level*) {
+    if (levels == null)
+      return
+    levels.foreach(addLevel)
+  }
+
+  def nextLevel: Level = {
+    val next: Int = level.getIndex + 1
+    if (next < 0 || next > this.levelList.size - 1)
+      return null
+    this.levelList.get(next)
+  }
+
+  def prevLevel: Level = {
+    val prev: Int = level.getIndex - 1
+    if (prev < 0 || prev > this.levelList.size - 1)
+      return null
+    this.levelList.get(prev)
+  }
+
+  def b4Level: Level = {
+    if (this.previousLevel < 0 || this.previousLevel > this.levelList.size - 1)
+      return null
+    this.levelList.get(this.previousLevel)
+  }
+
+  def start(): Unit ={
+    if(this.level==null)
+      this.loadLevel(this.levelList.get(0))
   }
 
   override def paintComponent(g: Graphics) {
@@ -86,12 +127,16 @@ class Component extends JComponent {
           g.setColor(Color.green)
           g2.draw(new Line(objInfo.getPosition + shift, objInfo.getPosition + objInfo.getMaskDimensions + shift))
           g.setColor(Color.blue)
-          LineSplitter.draw(objInfo.toString,40,20,g)
+          LineSplitter.draw(objInfo.toString, 40, 20, g)
           //g.drawString(objInfo.toString(), 40, 20)
           if (objInfo.getGround != null) {
             g2.setColor(Color.red)
             g2.draw(new Line(objInfo.getCenter + shift, objInfo.getGround.getCenter + shift))
             //g2.drawString("Currently on top of " + objInfo.getGround.toString(), 40, 60)
+          }
+          if(objInfo.getTargetPos!=null){
+            g.setColor(Color.GREEN)
+            g2.draw(new Line(objInfo.getCenter+shift,objInfo.getTargetPos+shift))
           }
         }
       }
@@ -100,34 +145,36 @@ class Component extends JComponent {
 }
 
 object Main {
+  private var game: Component = null
+  def getGame: Component = game
+
   def main(args: Array[String]) {
     val frame: JFrame = new JFrame()
     //var input: Input = new Input()
-    val comp: Component = new Component()
+    game = new Component()
     //   var timer: Int = 0
-//    var changed: Boolean = false
+    //    var changed: Boolean = false
     frame.setSize(800, 800)
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-    frame.add(comp)
+    frame.add(game)
     frame.setVisible(true)
     frame.addKeyListener(Input)
     frame.addMouseListener(MouseClicks)
-    // frame.addMouseMotionListener(MouseMotion)
-
-
-//    var box: Box = new Box(200, 100, 50, 50) //This is for testing purposes
-//    var box2: Box = new Box(0, 300, 1000, 20)//This is for testing purposes
-//    var box3: Box = new Box(300, 50, 50, 50)//This is for testing purposes
-//    var box4: Box = new Box(400, 100, 50, 50)//This is for testing purposes
-//    var wall1: Box = new Box(0, 300-50, 50, 50)//This is for testing purposes
-//    var wall2: Box = new Box(400, 300-50, 50, 50)//This is for testing purposes
-//    var player: Player = new Player(300,10)
-//    box3.setAnchored(false)//This is for testing purposes
-//
-//    val lvl: Level = new Level {}//This is for testing purposes
-//    lvl.addObject(box2,box3,box4,player,wall1,wall2)//This is for testing purposes
-//    lvl.startLevel()//This is for testing purposes
-    comp.loadLevel(new Level1)
+    //    var box: Box = new Box(200, 100, 50, 50) //This is for testing purposes
+    //    var box2: Box = new Box(0, 300, 1000, 20)//This is for testing purposes
+    //    var box3: Box = new Box(300, 50, 50, 50)//This is for testing purposes
+    //    var box4: Box = new Box(400, 100, 50, 50)//This is for testing purposes
+    //    var wall1: Box = new Box(0, 300-50, 50, 50)//This is for testing purposes
+    //    var wall2: Box = new Box(400, 300-50, 50, 50)//This is for testing purposes
+    //    var player: Player = new Player(300,10)
+    //    box3.setAnchored(false)//This is for testing purposes
+    //
+    //    val lvl: Level = new Level {}//This is for testing purposes
+    //    lvl.addObject(box2,box3,box4,player,wall1,wall2)//This is for testing purposes
+    //    lvl.startLevel()//This is for testing purposes
+    game.addLevel(new Level1, new Level2)
+    game.start()
+    //game.loadLevel(new Level1)
     while (true) {
       frame.repaint()
       try {

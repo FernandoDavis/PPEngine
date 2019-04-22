@@ -4,13 +4,15 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
   protected var Health: Double = 100
   protected var Lives: Int = 0
   protected var MaxHealth: Double = 100
-  protected var Speed: Int = 3 //always 3
+  this.canBeTouched=false
 
   def death()
 
-  def behaviour()
+  //def behaviour()
 
   def getHealth: Double = Health
+
+  def jump(): Unit = this.jump(this.getSpeed*1.2)
 
   def setHealth(newHealth: Double) {
     if (newHealth <= 0) {
@@ -32,12 +34,6 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   def getLives: Int = Lives
 
-  def getSpeed: Int = Speed
-
-  def setSpeed(newSpeed: Int) {
-    this.Speed = newSpeed
-  }
-
   def takeDamage(damage: Double) {
     val newHealth: Double = this.Health - damage
     if (newHealth <= 0) {
@@ -51,12 +47,12 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
   override def tick(): Unit = {
     super.tick()
     if(left!=null){
-      if(left.getY>this.getY+this.height-1||left.getY+left.height<this.getY||left.getX+left.width<this.getX-this.Speed){
+      if(left.getY>this.getY+this.height-1||left.getY+left.height<this.getY||left.getX+left.width<this.getX-this.speed){
         left=null
       }
     }
     if(right!=null){
-      if(right.getY>this.getY+this.height-1||right.getY+right.height<this.getY||right.getX>this.getX+this.width+this.Speed){
+      if(right.getY>this.getY+this.height-1||right.getY+right.height<this.getY||right.getX>this.getX+this.width+this.speed){
         right=null
       }
     }

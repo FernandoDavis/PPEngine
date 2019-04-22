@@ -7,7 +7,6 @@ Object(0, 325, wall, Behaviour(0,0,0, DEFAULT, False))
 Enemy(400, 150, asteroid, Behaviour(0,400,3, LOOP, False))
 Object(0, 125, wall, Behaviour(0,0,0, DEFAULT, False))
 Object(800, 525, wall, Behaviour(0,0,0, DEFAULT, False))
-
 Object(800, 325, wall, Behaviour(0,0,0, DEFAULT, False))
 Object(800, 125, wall, Behaviour(0,0,0, DEFAULT, False))
 Enemy(215, 420, asteroid, Behaviour(150,0,8, CONTINUOUS, False))
