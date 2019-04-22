@@ -1,6 +1,7 @@
 package mainPPE
 
 import java.awt._
+import java.awt.event.KeyEvent
 
 import javax.swing._
 
@@ -62,6 +63,9 @@ class Component extends JComponent {
             }
         }
       }
+    }
+    if(Input.keys(KeyEvent.VK_N)) {
+      this.level.goToNextLevel()
     }
   }
 
