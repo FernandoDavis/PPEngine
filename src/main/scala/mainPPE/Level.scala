@@ -95,7 +95,7 @@ abstract class Level {
 
   def goToLevelPreviouslyIn(): Unit = {
     if (Main.getGame == null)
-      return //wtf
+      return //wtf lol
     val level: Level = Main.getGame.b4Level
     if (level != null)
       Main.getGame.loadLevel(level)
