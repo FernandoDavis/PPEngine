@@ -3,10 +3,15 @@ import java.awt.Color
 
 import Entities.Player
 import Objects.Box
+import javax.imageio.ImageIO
+import java.awt.image.BufferedImage
+import java.io.File
+
 
 //Slide on box, and Climb!
 class Level2 extends Level{
 
+  var brick: BufferedImage = ImageIO.read(new File("src\\BRICK50X50.jpg"))
   var box: Box = new Box(200, 100, 50, 50)
   var floor: Box = new Box(340, 300, 400, 20)
   var Airbox: Box = new Box(400, 100, 50, 50)
@@ -55,6 +60,7 @@ class Level2 extends Level{
     Airbox2.setBehaviour(Behaviour.randomFly(Airbox2))
     Airbox3.setBehaviour(Behaviour.randomFly(Airbox2))
     Slidebox.setAnchored(false)
+    Slidebox.setImg(brick) //SET IMAGE TEXTURE
     this.addObject(floor,Slidebox,Airbox,Airbox2,Airbox3,player,platform,platform2, platform3, platform4, platform5, platform6, platform7, boxHere)
     this.addPlayer(this.getStartPosition)
 
@@ -62,5 +68,4 @@ class Level2 extends Level{
   override def tick(){
     super.tick()
   }
-
 }
