@@ -3,11 +3,13 @@ package Entities
 import java.awt.Color
 import java.awt.event.KeyEvent
 
-import mainPPE.{Entity, Input, Vector2D}
+import mainPPE.{Entity, Input, Main, Vector2D}
 
 class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: Int, h: Int) {
   def this() = this(0, 0, 30, 30)
-  def this(v: Vector2D) = this(v.getX.toInt,v.getY.toInt,30,30)
+
+  def this(v: Vector2D) = this(v.getX.toInt, v.getY.toInt, 30, 30)
+
   def this(x: Integer, y: Integer) = this(x, y, 30, 30)
 
   this.MaskColor = Color.red
@@ -87,12 +89,16 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
     if (!(Input.keys(KeyEvent.VK_D) && Input.keys(KeyEvent.VK_A))) {
       this.noFriction = false
     }
-    //    if (Input.keys(KeyEvent.VK_S)) {
-    //      this.velocity+=(0,this.getSpeed())
-    //    }
+
+    if(this.getCenterY>=currentLevel.getDeathY)
+      this.death()
   }
 
-  override def death(): Unit = {}
+  override def death(): Unit = {
+    if(Main.getGame.nextLevel!= null)
+    Main.getGame.currentLevel.goToNextLevel()
+    else System.exit(0)
+  }
 
   //override def behaviour(): Beh = {}
 }

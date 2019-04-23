@@ -6,7 +6,7 @@ import Entities.Player
 import Objects.Box
 
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
-import mainPPE.{Behaviour, Component, GenericLevel, Level, Level1, Level2, Main, Obj}
+import mainPPE.{ArrayList, Behaviour, Component, GenericLevel, Level, Level1, Level2, Main, Obj}
 
 class TestLexer extends StandardTokenParsers {
 
@@ -21,6 +21,7 @@ class TestLexer extends StandardTokenParsers {
       var l : GenericLevel = new GenericLevel
       Main.objArray.get(Main.objArray.size-1).foreach(l.addObject)
       Main.currentLevelIndex+=1
+      Main.objArray.add(new ArrayList[Obj](255))
       l
   }
 

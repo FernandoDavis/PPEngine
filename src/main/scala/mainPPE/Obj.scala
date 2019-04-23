@@ -42,10 +42,20 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   protected var behaviour: Behaviour = null
   val startPosition: Vector2D = new Vector2D(x, y)
   protected var targetPos: Vector2D = null
+  protected var targetObj: Obj = null
   protected var speed: Double = 0
   var canBeTouched: Boolean = true
   var canTouch: Boolean = true
+  var targetDistance: Double = 30
 
+
+  def leftCollision: Boolean = this.left != null
+
+  def setTargetDistance(distance: Double): Unit = {
+    this.targetDistance = distance
+  }
+
+  def rightCollision: Boolean = this.right != null
 
   def getTargetPos: Vector2D = targetPos
 
@@ -220,14 +230,17 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   def isAnchored: Boolean = this.anchored
 
   def collision(obj: Obj) {
-    if (!this.anchored&&obj.canBeTouched&&this.canTouch) {
+    if (!this.anchored && obj.canBeTouched && this.canTouch) {
       //println(obj)
       if (this.getPosition.getY + this.getMask.getHeight * 3 / 4 - (this.velocity.getY * 2) < obj.getY) {
         //println(this.getPosition.getY+" "+this.y)
         if (this.velocity.getY > 0) { // && obj.yThru <= 0) {
           this.airTime = 0 //DO NOT REMOVE
           if (!obj.isAnchored) {
-            this.velocity = obj.getVelocity
+            if (math.abs(obj.getVelocity.getY) <= 0.2)
+              this.velocity.setX(obj.getVelocity.getX)
+            else
+              this.velocity = obj.getVelocity
           }
           else
             this.velocity.setY(0)
@@ -292,7 +305,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
         return
       }
 
-      if (this.getY + this.height-1 < obj.getY ) {
+      if (this.getY + this.height - 1 < obj.getY) {
         this.Position.setY(obj.getY - obj.height - 1)
         if (this.velocity.getY < 0)
           this.velocity.setY(0)
@@ -323,29 +336,53 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   }
 
   def tick() {
+    if (left != null) {
+      if (left.getY > this.getY + this.height - 1 || left.getY + left.height < this.getY || left.getX + left.width < this.getX - this.speed) {
+        left = null
+      }
+    }
+    if (right != null) {
+      if (right.getY > this.getY + this.height - 1 || right.getY + right.height < this.getY || right.getX > this.getX + this.width + this.speed) {
+        right = null
+      }
+    }
     if (gravity != 0 && (!anchored) && ground == null)
       this.doGravity()
     else if (ground != null) {
       this.velocity.setY(0)
+      //if (math.abs(this.velocity.getX)<=0.2)
+      if (math.abs(this.velocity.getX - ground.velocity.getX) <= 0.1 || math.abs(this.velocity.getX) <= 0.1) {
+        this.velocity.setX(ground.getVelocity.getX)
+      } else
       if (math.abs(this.velocity.getX) < 0.2) { //X velocity damping
         this.velocity.setX(0)
       } else if (!noFriction)
         this.velocity.setX(this.velocity.getX * 0.75) //Friction
+
     }
-    if (!this.isPossessed && targetPos != null && !this.anchored) {
-      if (targetPos.distance(this.getCenter) >= 20) {
-        val direction: Vector2D = this.Position.UnitVector(targetPos)
-        if (this.gravity > 0)
-          direction.setY(0)
-        this.velocity = direction * speed
-      }
-      else {
-        targetPos = null
-        if (this.gravity > 0)
-          this.velocity.setX(0)
+    if (!this.isPossessed && !this.anchored) {
+      if (targetPos != null || targetObj != null) {
+        var target: Vector2D = targetPos
+        if (targetObj != null)
+          target = targetObj.getCenter
+        if (target.distance(this.getCenter) >= targetDistance) {
+          val direction: Vector2D = this.getCenter.UnitVector(target)
+          if (this.gravity != 0)
+            this.velocity.setX(direction.getX * speed)
+          else
+            this.velocity = direction * speed
+        }
         else {
-          this.velocity.setX(0)
-          this.velocity.setY(0)
+          if (targetObj != null)
+            targetObj = null
+          else
+            targetPos = null
+          if (this.gravity > 0)
+            this.velocity.setX(0)
+          else {
+            this.velocity.setX(0)
+            this.velocity.setY(0)
+          }
         }
       }
     }
@@ -463,7 +500,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     }
   }
 
-  def goTo(position: Vector2D): Unit = {
+  def setTargetPosition(position: Vector2D): Unit = {
     this.targetPos = position
   }
 
@@ -477,4 +514,13 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   def setSpeed(newSpeed: Double) {
     this.speed = newSpeed
   }
+
+  def setTargetObj(obj: Obj): Unit = {
+    this.targetObj = obj
+  }
+
+  def getTargetObj: Obj = targetObj
+
+  def currentLevel: Level = Main.getGame.currentLevel
+  def game: Component = Main.getGame
 }

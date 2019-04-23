@@ -14,6 +14,17 @@ abstract class Level {
   private var Timers: Array[Int] = new Array[Int](20)
   private var LevelNumber: Int = 0
   protected var player: Player = null
+  protected var deathY: Int = 500
+
+  def getDeathY: Int = this.deathY
+
+  def clearObjects(): Unit ={
+    Objects.clear()
+  }
+
+  def setDeathY(int: Int) {
+    this.deathY = int
+  }
 
   def addPlayer() {
     this.addPlayer(this.getStartPosition)

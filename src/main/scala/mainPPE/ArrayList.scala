@@ -191,6 +191,9 @@ class ArrayList[E >: Null: ClassTag] extends Iterable[E] {
   def clear(): Unit = {
     if (this.Size == 0)
       return
+    for(i: Int <- this.indices){
+      this.elements(i)=null
+    }
     this.elements = new Array[E](minCap)
     Size = 0
   }

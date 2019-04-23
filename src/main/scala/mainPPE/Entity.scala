@@ -46,15 +46,6 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   override def tick(): Unit = {
     super.tick()
-    if(left!=null){
-      if(left.getY>this.getY+this.height-1||left.getY+left.height<this.getY||left.getX+left.width<this.getX-this.speed){
-        left=null
-      }
-    }
-    if(right!=null){
-      if(right.getY>this.getY+this.height-1||right.getY+right.height<this.getY||right.getX>this.getX+this.width+this.speed){
-        right=null
-      }
-    }
+
   }
 }

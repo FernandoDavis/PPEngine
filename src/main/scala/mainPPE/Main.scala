@@ -3,16 +3,17 @@ package mainPPE
 import java.awt._
 import java.awt.event.KeyEvent
 
+import Entities.Player
 import javax.swing._
 import mainPPE.ArrayList
 class Component extends JComponent {
 
   private var levelList = new ArrayList[Level]()
   private var level: Level = null
-  var Speed: Integer = 10
+  var speed: Integer = 10
   val DebugMode: Boolean = true
   var objInfo: Obj = null
-  var Player: Obj = null
+  var player: Obj = null
   var shift: Vector2D = new Vector2D(0, 0)
   private var previousLevel: Int = 0
 
@@ -21,17 +22,22 @@ class Component extends JComponent {
   }
 
   def loadLevel(level: Level) {
-    if(this.level!=null)
-      this.previousLevel=this.level.getIndex
+    if (this.level != null)
+      this.previousLevel = this.level.getIndex
     this.level = level
-    this.Speed = level.getLevelSpeed
+    this.speed = level.getLevelSpeed
+    this.level.startLevel()
+  }
+
+  def reloadLevel(): Unit ={
+    this.level.clearObjects()
     this.level.startLevel()
   }
 
   def tick() {
     if (this.level != null) {
-      if (this.Player != null)
-        shift = this.Player.getPosition * (-1) + (this.getWidth / 2, this.getHeight / 2)
+      if (this.player != null)
+        shift = this.player.getPosition * (-1) + (this.getWidth / 2, this.getHeight / 2)
       else
         shift = new Vector2D(0, 0)
       for (i <- this.level.getObjects.indices) {
@@ -43,8 +49,8 @@ class Component extends JComponent {
               this.objInfo = obj1
             }
           }
-          if (obj1.isPossessed && this.Player != obj1)
-            this.Player = obj1
+          if (obj1.isPossessed && this.player != obj1)
+            this.player = obj1
           obj1.tick()
           if (obj1.isSolid)
             for (j <- i until this.level.getObjects.length) {
@@ -106,8 +112,10 @@ class Component extends JComponent {
     this.levelList.get(this.previousLevel)
   }
 
-  def start(): Unit ={
-    if(this.level==null)
+  def getPlayer: Obj = this.player
+
+  def start(): Unit = {
+    if (this.level == null)
       this.loadLevel(this.levelList.get(0))
   }
 
@@ -138,12 +146,19 @@ class Component extends JComponent {
             g2.draw(new Line(objInfo.getCenter + shift, objInfo.getGround.getCenter + shift))
             //g2.drawString("Currently on top of " + objInfo.getGround.toString(), 40, 60)
           }
-          if(objInfo.getTargetPos!=null){
+          if (objInfo.getTargetPos != null || objInfo.getTargetObj!=null) {
+            var target: Vector2D = objInfo.getTargetPos
+            if(objInfo.getTargetObj!=null)
+              target = objInfo.getTargetObj.getCenter
             g.setColor(Color.GREEN)
-            g2.draw(new Line(objInfo.getCenter+shift,objInfo.getTargetPos+shift))
+            g2.draw(new Line(objInfo.getCenter + shift, target + shift))
+            g.setColor(Color.BLACK)
+            g2.drawString("Target Position",(target.getX+shift.getX).toInt,(target.getY+shift.getY).toInt)
           }
         }
       }
+      g.setColor(Color.red)
+      g.drawLine(0,(currentLevel.getDeathY+shift.getY).toInt,this.getWidth,(currentLevel.getDeathY+shift.getY).toInt)
     }
   }
 }
