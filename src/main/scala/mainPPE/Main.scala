@@ -4,7 +4,7 @@ import java.awt._
 import java.awt.event.KeyEvent
 
 import javax.swing._
-
+import mainPPE.ArrayList
 class Component extends JComponent {
 
   private var levelList = new ArrayList[Level]()
@@ -149,13 +149,15 @@ class Component extends JComponent {
 }
 
 object Main {
-  private var game: Component = null
+  private var game: Component = new Component()
   def getGame: Component = game
-
-  def main(args: Array[String]) {
+  var objArray: ArrayList[ArrayList[Obj]] = new ArrayList[ArrayList[Obj]](255)
+  objArray.add(new ArrayList[Obj](255))
+  var currentLevelIndex : Int = 0
+  def run() {
     val frame: JFrame = new JFrame()
     //var input: Input = new Input()
-    game = new Component()
+//    game = new Component()
     //   var timer: Int = 0
     //    var changed: Boolean = false
     frame.setSize(800, 800)
@@ -176,7 +178,7 @@ object Main {
     //    val lvl: Level = new Level {}//This is for testing purposes
     //    lvl.addObject(box2,box3,box4,player,wall1,wall2)//This is for testing purposes
     //    lvl.startLevel()//This is for testing purposes
-    game.addLevel(new Level1, new Level2)
+//    game.addLevel(new Level1, new Level2)
     game.start()
     //game.loadLevel(new Level1)
     while (true) {
