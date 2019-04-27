@@ -8,8 +8,9 @@ import Objects.Box
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import java.io.File
+
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
-import mainPPE.{ArrayList, Behaviour, Component, GenericLevel, Level, Level1, Level2, Main, Obj}
+import mainPPE.{ArrayList, Behaviour, Component, GenericLevel, Level, Level1, Level2, Main, Obj, SpriteSheet}
 
 class TestLexer extends StandardTokenParsers {
 
@@ -59,7 +60,7 @@ class TestLexer extends StandardTokenParsers {
         y = str.substring(arr(0), arr(1)).toInt
         arr = subIndex(str, arr(1) +1)
         z = str.substring(arr(0), arr(1)).toInt
-        println(x + " " + y + " " + str.substring(arr(0)-3, arr(0))+ " " +z)
+        println(x + " " + y + " " + str.substring(arr(0)-3, arr(0))+z)
         val findImg = str.substring(arr(0)-3, arr(0)+ z)
 
         //var x : Int = list.get(0).asInstanceOf[Int]
@@ -69,19 +70,47 @@ class TestLexer extends StandardTokenParsers {
         //   var p: Player = new Player(x,y)
         //
         //        Main.objArray.get(Main.currentLevelIndex).add(p)
+
         var p: Player = new Player(x,y)
 
+       // var skins = new SpriteSheet(ImageIO.read(new File("src\\BRICK50X50.jpg")), 1,1,50,50,1) //SprSheet, crop all textures to player/object dimensions? Unsure what the crop function is.
+       var skin: BufferedImage = null
+
+        //SWITCH STATEMENT VERSION doesnt work, im doing it wrong
+   /*     findImg match{
+          case "img1" =>  skin = ImageIO.read(new File("src/IMAGES/BRICK50X50.jpg"))
+            p.setImg(skin)
+            println("Skin 1 Applied to Player")
+          case "img2" =>  skin = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
+            p.setImg(skin)
+            println("Skin 2 Applied to Player")
+
+          case "img3" =>  skin = ImageIO.read(new File("src/IMAGES/water.jpg"))
+            p.setImg(skin)
+            println("Skin 3 Applied to Player")
+        }
+        */
+
         if(findImg == "img1"){
-          var texture: BufferedImage = ImageIO.read(new File("src\\BRICK50X50.jpg"))
+          //var texture = skinss.getFrame(1)
+          var texture: BufferedImage = ImageIO.read(new File("src/IMAGES/BRICK50X50.jpg"))
           p.setImg(texture)
           println("Skin 1 Applied to Player")
         }
 
         if(findImg == "img2"){
-                 var texture: BufferedImage = ImageIO.read(new File("src\\happyface.jpg  "))
-                 p.setImg(texture)
-                println("Skin 2 Applied to Object")
+          //var texture = skins.getFrame(2) //SprSheet
+          var face: BufferedImage = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
+          p.setImg(face)
+          println("Skin 2 Applied to Player")
                 }
+
+        if(findImg == "img3"){
+          //var texture = skins.getFrame(2) //SprSheet
+          var water: BufferedImage = ImageIO.read(new File("src/IMAGES/water.jpg"))
+          p.setImg(water)
+          println("Skin 3 Applied to Player")
+        }
 
         Main.objArray.get(Main.currentLevelIndex).add(p)
         //couldnt be found when declared together???
@@ -109,19 +138,21 @@ class TestLexer extends StandardTokenParsers {
         // var y : Int = list.get(1).asInstanceOf[Int]
         //          var i : String = list.get(2).asInstanceOf[String]
         //          var Bh : Behaviour = list.get(3).asInstanceOf[Behaviour]
+
         val box: Box = new Box(x, y, 100, 100)
         box.setAnchored(true)
 
         if(findImg == "img1"){
-          var texture: BufferedImage = ImageIO.read(new File("src\\BRICK50X50.jpg"))
+          val texture: BufferedImage = ImageIO.read(new File("src\\IMAGES\\BRICK50X50.jpg"))
           box.setImg(texture)
           println("Texture 1 Applied to Object")
         }
-        //if(findImg == "img2"){
-        //          var texture: BufferedImage = ImageIO.read(new File("src\\  "))
-        //          box.setImg(texture)
-        //          println("Texture 2 Applied to Object")
-        //        }
+
+        if(findImg == "img2"){
+          val texture: BufferedImage = ImageIO.read(new File("src\\IMAGES\\happyface.jpg"))
+          box.setImg(texture)
+          println("Texture 2 Applied to Object")
+        }
 
         Main.objArray.get(Main.currentLevelIndex).add(box)
       }
