@@ -11,7 +11,7 @@ import java.io.File
 //Slide on box, and Climb!
 class Level2 extends Level{
 
-  var brick: BufferedImage = ImageIO.read(new File("src\\BRICK50X50.jpg"))
+  var brick: BufferedImage = ImageIO.read(new File("src\\IMAGES/BRICK50X50.jpg"))
   var box: Box = new Box(200, 100, 50, 50)
   var floor: Box = new Box(340, 300, 400, 20)
   var Airbox: Box = new Box(400, 100, 50, 50)
