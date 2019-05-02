@@ -19,13 +19,13 @@ class Level1 extends Level {
 
   override def startLevel() {
     super.startLevel()
-    box3.canBeTouched=false
+    box3.canBeTouched=true
     box3.setAnchored(false)
     box3.setSpeed(3)
-    box3.setBehaviour(Behaviour.followPlayer(box3))
+    box3.setPersonality(Behaviour.followPlayer+Behaviour.jump+Behaviour.attackPlayer(10))
     box5.setMaskColor(Color.RED)
     this.addObject(floor, box3, box4, wall1, wall2, wall3, wall4, box5)
-    this.addPlayer(this.getStartPosition)
+    this.addPlayer()
 
   }
 

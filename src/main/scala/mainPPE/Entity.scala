@@ -1,10 +1,17 @@
 package mainPPE
 
+import java.awt.{Graphics, Graphics2D}
+
+import javax.swing.JComponent
+
 abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int, w: Int, h: Int) {
   protected var Health: Double = 100
   protected var Lives: Int = 0
   protected var MaxHealth: Double = 100
-  this.canBeTouched=false
+  this.canBeTouched = false
+  protected var healthbar: Healthbar = new Healthbar(this)
+  healthbar.setConstant(false)
+  healthbar.setAlpha(0)
 
   def death()
 
@@ -12,7 +19,9 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   def getHealth: Double = Health
 
-  def jump(): Unit = this.jump(this.getSpeed*1.2)
+  def getMaxHealth: Double = MaxHealth
+
+  def jump(): Unit = this.jump(this.getSpeed * 1.2)
 
   def setHealth(newHealth: Double) {
     if (newHealth <= 0) {
@@ -36,6 +45,7 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   def takeDamage(damage: Double) {
     val newHealth: Double = this.Health - damage
+    healthbar.appear()
     if (newHealth <= 0) {
       this.Health = 0
       this.death()
@@ -46,6 +56,15 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   override def tick(): Unit = {
     super.tick()
+  }
 
+  override def drawObj(g: Graphics, comp: JComponent): Unit = {
+    super.drawObj(g, comp)
+    healthbar.draw(g)
+  }
+
+  override def drawObj(g: Graphics2D, comp: JComponent, offset: Vector2D): Unit = {
+    super.drawObj(g, comp, offset)
+    healthbar.draw(g)
   }
 }

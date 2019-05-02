@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent
 
 import Entities.Player
 import javax.swing._
-import mainPPE.ArrayList
+
 class Component extends JComponent {
 
   private var levelList = new ArrayList[Level]()
@@ -14,8 +14,19 @@ class Component extends JComponent {
   val DebugMode: Boolean = true
   var objInfo: Obj = null
   var player: Obj = null
-  var shift: Vector2D = new Vector2D(0, 0)
+  private var shift: Vector2D = new Vector2D(0, 0)
   private var previousLevel: Int = 0
+
+  def isInScreen(obj: Obj): Boolean = {
+    val pos = obj.getPosition + shift
+    pos.getX + obj.width >= 0 && pos.getX <= this.getWidth && pos.getY + obj.height >= 0 && pos.getY <= this.getHeight
+  }
+
+  def getScreenShift: Vector2D = {
+    if (player != null)
+      return shift//player.getCenter + (this.getWidth / 2, this.getHeight / 2)
+    new Vector2D(0, 0)
+  }
 
   def mousePosition: Vector2D = {
     new Vector2D(MouseInfo.getPointerInfo.getLocation) - new Vector2D(this.getLocationOnScreen)
@@ -29,15 +40,16 @@ class Component extends JComponent {
     this.level.startLevel()
   }
 
-  def reloadLevel(): Unit ={
+  def reloadLevel(): Unit = {
     this.level.clearObjects()
     this.level.startLevel()
   }
 
   def tick() {
     if (this.level != null) {
-      if (this.player != null)
-        shift = this.player.getPosition * (-1) + (this.getWidth / 2, this.getHeight / 2)
+      if (this.player != null) {
+        shift = this.player.getCenter * (-1) + (this.getWidth / 2, this.getHeight / 2)
+      }
       else
         shift = new Vector2D(0, 0)
       for (i <- this.level.getObjects.indices) {
@@ -53,7 +65,7 @@ class Component extends JComponent {
             this.player = obj1
           obj1.tick()
           if (obj1.isSolid)
-            for (j <- i until this.level.getObjects.length) {
+            for (j <- (i until this.level.getObjects.length).par) { //parallelized
               val obj2: Obj = this.level.getObject(j)
               if (obj2 != null)
                 if (obj1 != obj2)
@@ -70,8 +82,61 @@ class Component extends JComponent {
         }
       }
     }
-    if(Input.keys(KeyEvent.VK_N)) {
+    if (Input.keys(KeyEvent.VK_N)) {
       this.level.goToNextLevel()
+    }
+  }
+
+  def objOverlapping(obj1: Obj, obj2: Obj): Unit = {
+    var bigger = obj1
+    var smaller = obj2
+    if (obj2.getArea > obj1.getArea) {
+      bigger = obj2
+      smaller = obj1
+    }
+    if (obj1.isAnchored)
+      bigger = obj1
+    else if (obj2.isAnchored)
+      bigger = obj2
+    if (obj1.isAnchored && obj2.isAnchored)
+      return
+    if (smaller.getY > bigger.getCenterY + bigger.height / 2 - smaller.height / 2) {
+      smaller.setPositionY(bigger.getY + bigger.height + 1)
+      if (smaller.getVelocity.getY < 0)
+        smaller.setVelocityY(0)
+      return
+    }
+    if (smaller.getX <= bigger.getCenterX) {
+      if (!smaller.leftCollision) {
+        smaller.setPositionX(bigger.getX - smaller.width - 1)
+        smaller.setRight(bigger)
+        if (smaller.getVelocity.getX > 0) {
+          smaller.setVelocityX(0)
+        }
+      } else {
+        bigger.setPositionX(smaller.getX + smaller.width)
+        bigger.setRight(smaller)
+      }
+      return
+    }
+    if (smaller.getX > bigger.getCenterX) {
+      if (!smaller.rightCollision) {
+        smaller.setPositionX(bigger.getX + bigger.width + 1)
+        smaller.setLeft(bigger)
+        if (smaller.getVelocity.getX < 0) {
+          smaller.setVelocityX(0)
+        }
+      } else {
+        bigger.setPositionX(smaller.getX - bigger.width)
+        bigger.setRight(smaller)
+      }
+      return
+    }
+
+    if (smaller.getY + smaller.height - 1 < bigger.getY) {
+      smaller.setPositionY(bigger.getY - bigger.height - 1)
+      if (smaller.getVelocity.getY < 0)
+        smaller.setVelocityY(0)
     }
   }
 
@@ -122,19 +187,27 @@ class Component extends JComponent {
   override def paintComponent(g: Graphics) {
     super.paintComponent(g)
     val g2: Graphics2D = g.asInstanceOf[Graphics2D]
+    g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
     this.tick()
     val mouse = mousePosition //Incase it changes while the code below loads
     if (this.level != null) {
+      val deathY = level.getDeathY + shift.getY.toInt
+      val grad = new GradientPaint(0, deathY - 10, Color.lightGray, 0, deathY + 40, Color.gray)
+      if (deathY < this.getHeight)
+        g2.setPaint(grad)
+      else
+        g2.setPaint(Color.lightGray)
+      g2.fillRect(0, 0, this.getWidth, this.getHeight)
       this.level.tick()
       for (i <- this.level.getObjects.indices) {
         val obj: Obj = this.level.getObject(i)
         if (obj != null) {
-          obj.drawObj(g, this, shift)
-          //println(this.get)
+          if (isInScreen(obj))
+            obj.drawObj(g2, this, shift)
         }
       }
       if (mouse != null && this.DebugMode) {
-        g.fillRect(mouse.getX.toInt, mouse.getY.toInt, 10, 10)
+        //g.fillRect(mouse.getX.toInt, mouse.getY.toInt, 10, 10)
         if (objInfo != null) {
           g.setColor(Color.green)
           g2.draw(new Line(objInfo.getPosition + shift, objInfo.getPosition + objInfo.getMaskDimensions + shift))
@@ -146,33 +219,67 @@ class Component extends JComponent {
             g2.draw(new Line(objInfo.getCenter + shift, objInfo.getGround.getCenter + shift))
             //g2.drawString("Currently on top of " + objInfo.getGround.toString(), 40, 60)
           }
-          if (objInfo.getTargetPos != null || objInfo.getTargetObj!=null) {
+          if (objInfo.getTargetPos != null || objInfo.getTargetObj != null) {
             var target: Vector2D = objInfo.getTargetPos
-            if(objInfo.getTargetObj!=null)
+            if (objInfo.getTargetObj != null)
               target = objInfo.getTargetObj.getCenter
             g.setColor(Color.GREEN)
             g2.draw(new Line(objInfo.getCenter + shift, target + shift))
+            g2.draw(new Line(target + shift + (20 * math.cos(Main.currentTime / 500.0), 20 * math.sin(Main.currentTime / 500.0)), target + shift + (20 * math.cos(Main.currentTime / 500.0 + math.Pi), 20 * math.sin(Main.currentTime / 500.0 + math.Pi))))
+            g2.draw(new Line(target + shift + (20 * math.cos(Main.currentTime / 500.0 + math.Pi / 2), 20 * math.sin(Main.currentTime / 500.0 + math.Pi / 2)), target + shift + (20 * math.cos(Main.currentTime / 500.0 + math.Pi + math.Pi / 2), 20 * math.sin(Main.currentTime / 500.0 + math.Pi + math.Pi / 2))))
             g.setColor(Color.BLACK)
-            g2.drawString("Target Position",(target.getX+shift.getX).toInt,(target.getY+shift.getY).toInt)
+            g2.drawString("Target Position", (target.getX + shift.getX).toInt, (target.getY + shift.getY).toInt)
           }
         }
+//        if (player != null)
+//          if (player.isInstanceOf[Player]) {
+//            val p = player.asInstanceOf[Player]
+//            val healthbar: Healthbar = new Healthbar(p)
+//            healthbar.draw(g)
+//          }
+
+        //        val healthBarBorderWidth = 2
+        //        val healthBarDimensions = new Vector2D(200, 20)
+        //        val healthBarPosition = new Vector2D(20, this.getHeight - healthBarDimensions.getY - 20)
+        //        val healthBar = new UIBox(healthBarPosition, healthBarDimensions)
+        //        healthBar.setBorderWidth(healthBarBorderWidth)
+        //        healthBar.setColor(Color.RED)
+        //        var health: Double = 100
+        //        var maxHealth: Double = 100
+        //        if (player.isInstanceOf[Player]) {
+        //          val p = player.asInstanceOf[Player]
+        //          health = p.getHealth
+        //          maxHealth = p.getMaxHealth
+        //        }
+        //        val xDim = (healthBarDimensions - (healthBarBorderWidth * 2))*(health/maxHealth,1)
+        //        val h = new UIBox(healthBarPosition + healthBarBorderWidth,  xDim)
+        //        h.setColor(Color.GREEN)
+        //        healthBar.draw(g)
+        //        h.draw(g)
+        // g.setColor(Color.red)
+        // g.drawLine(0, (currentLevel.getDeathY + shift.getY).toInt, this.getWidth, (currentLevel.getDeathY + shift.getY).toInt)
       }
-      g.setColor(Color.red)
-      g.drawLine(0,(currentLevel.getDeathY+shift.getY).toInt,this.getWidth,(currentLevel.getDeathY+shift.getY).toInt)
+
     }
+
   }
 }
 
 object Main {
-  private var game: Component = new Component()
+  private val game: Component = new Component()
+
+  def currentTime: Long = System.currentTimeMillis()
+
   def getGame: Component = game
+
   var objArray: ArrayList[ArrayList[Obj]] = new ArrayList[ArrayList[Obj]](255)
   objArray.add(new ArrayList[Obj](255))
-  var currentLevelIndex : Int = 0
+  var currentLevelIndex: Int = 0
+
   def run() {
     val frame: JFrame = new JFrame()
     //var input: Input = new Input()
-//    game = new Component()
+    //    game = new Component()
     //   var timer: Int = 0
     //    var changed: Boolean = false
     frame.setSize(800, 800)
@@ -193,7 +300,7 @@ object Main {
     //    val lvl: Level = new Level {}//This is for testing purposes
     //    lvl.addObject(box2,box3,box4,player,wall1,wall2)//This is for testing purposes
     //    lvl.startLevel()//This is for testing purposes
-//    game.addLevel(new Level1, new Level2)
+    //    game.addLevel(new Level1, new Level2)
     game.start()
     //game.loadLevel(new Level1)
     while (true) {

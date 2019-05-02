@@ -2,7 +2,7 @@ package mainPPE
 
 //import java.awt.geom.Point2D
 import java.awt.image.BufferedImage
-import java.awt.{Color, Graphics, Rectangle}
+import java.awt._
 
 import javax.swing._
 
@@ -39,7 +39,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   protected var left: Obj = null
   protected var right: Obj = null
   protected var lockMovement: Vector2D = new Vector2D(0, 0)
-  protected var behaviour: Behaviour = null
+  protected var personality: Personality = new Personality(this)
   val startPosition: Vector2D = new Vector2D(x, y)
   protected var targetPos: Vector2D = null
   protected var targetObj: Obj = null
@@ -59,11 +59,16 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def getTargetPos: Vector2D = targetPos
 
-  def getBehaviour: Behaviour = behaviour
+  def getPersonality: Personality = personality
 
-  def setBehaviour(behaviour: Behaviour): Unit = {
+  def setPersonality(personality: Personality): Unit = {
+    personality.setOwner(this)
+    this.personality = personality
+  }
+
+  def setPersonality(behaviour: Behaviour): Unit = {
     behaviour.setOwner(this)
-    this.behaviour = behaviour
+    this.personality+=behaviour
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Obj]
@@ -198,16 +203,16 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     }
   }
 
-  def drawObj(g: Graphics, comp: JComponent, offset: Vector2D): Unit = {
+  def drawObj(g: Graphics2D, comp: JComponent, offset: Vector2D): Unit = {
     this.refreshMask()
     val shift: Vector2D = this.Position + offset
     if (this.getImage == null) {
-      g.setColor(this.MaskColor)
+      g.setColor(MaskColor)
       g.fillRect(shift.getX.toInt, shift.getY.toInt, this.width, this.height)
       g.setColor(Color.BLUE)
       g.drawRect(shift.getX.toInt, shift.getY.toInt, this.width, this.height)
     } else {
-      g.drawImage(this.getImage, shift.getX.toInt, shift.getY.toInt, comp)
+      g.drawImage(this.getImage, shift.getX.toInt, shift.getY.toInt,this.width,this.height,comp)
     }
   }
 
@@ -231,9 +236,9 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def collision(obj: Obj) {
     if (!this.anchored && obj.canBeTouched && this.canTouch) {
-      //println(obj)
+      personality.runCollisionBehaviours(obj)
+      obj.getPersonality.runCollisionBehaviours(this)
       if (this.getPosition.getY + this.getMask.getHeight * 3 / 4 - (this.velocity.getY * 2) < obj.getY) {
-        //println(this.getPosition.getY+" "+this.y)
         if (this.velocity.getY > 0) { // && obj.yThru <= 0) {
           this.airTime = 0 //DO NOT REMOVE
           if (!obj.isAnchored) {
@@ -250,15 +255,13 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
       } else {
         this.overlap2(obj)
         if (!obj.isAnchored) {
+          if(this.getY+this.height-2<obj.getY)
           this.velocity = this.velocity.getMax(obj.getVelocity)
         }
         else {
           //this.repulse(obj)
         }
       }
-      // if (this.velocity.getMagnitude > 0.6) {
-      //this.repulse(obj)
-      // }
     }
   }
 
@@ -281,9 +284,10 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def overlap2(obj: Obj) {
 
-    //println(this.getY > obj.getCenterY+obj.height*0.25)
     if (this.getArea <= obj.getArea && obj != this) {
       if (this.getY > obj.getCenterY + obj.height / 2 - this.height / 2) {
+        if(this.ground!=null)
+          return
         this.Position.setY(obj.getY + obj.height + 1)
         if (this.velocity.getY < 0)
           this.velocity.setY(0)
@@ -310,8 +314,24 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
         if (this.velocity.getY < 0)
           this.velocity.setY(0)
       }
+    } else if (this.getArea > obj.getArea && obj != this){
 
+      if (this.getX > obj.getCenterX && obj.leftCollision) {
+        this.Position.setX(obj.getX + obj.width + 1)
+        this.left = obj
+        if (this.velocity.getX < 0)
+          this.velocity.setX(0)
+        return
+      }
+      if (this.getX <= obj.getCenterX && obj.rightCollision) {
+        this.Position.setX(obj.getX - this.width - 1)
+        this.right = obj
+        if (this.velocity.getX > 0)
+          this.velocity.setX(0)
+        return
+      }
     }
+
   }
 
   def l(obj1: Obj, obj2: Obj): Double = {
@@ -336,6 +356,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   }
 
   def tick() {
+    this.refreshMask()
     if (left != null) {
       if (left.getY > this.getY + this.height - 1 || left.getY + left.height < this.getY || left.getX + left.width < this.getX - this.speed) {
         left = null
@@ -366,11 +387,11 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
         if (targetObj != null)
           target = targetObj.getCenter
         if (target.distance(this.getCenter) >= targetDistance) {
-          val direction: Vector2D = this.getCenter.UnitVector(target)
+          val direction: Vector2D = this.getCenter.UnitVector(target)*speed
           if (this.gravity != 0)
-            this.velocity.setX(direction.getX * speed)
+            this.velocity.setX(direction.getX)
           else
-            this.velocity = direction * speed
+            this.velocity = direction
         }
         else {
           if (targetObj != null)
@@ -389,8 +410,8 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     else {
       //wut
     }
-    if (this.behaviour != null)
-      behaviour.run()
+    if (this.personality != null)
+      personality.run()
     if (this.velocity.getY > 30) //speed limits
       this.velocity.setY(30)
     else if (this.velocity.getY < (-30))
@@ -399,6 +420,9 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
       this.velocity.setX(30)
     else if (this.velocity.getX < (-30))
       this.velocity.setX(-30)
+
+    if((velocity.getX>0&&this.rightCollision)||(velocity.getX<0&&this.leftCollision))
+      velocity.setX(0)
     this.setPosition(this.Position + this.velocity)
   }
 
@@ -456,7 +480,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     var space: String = ""
     if (ground != null)
       space = "\n\r"
-    this.getClass.getSimpleName + ":\n[\nPosition: " + this.Position + " ,\n Width: " + this.width + " ,\n Height: " + this.height + " ,\n Velocity: " + this.velocity + ",\n Ground: " + space + "(" + this.ground + ")\n]"
+    this.getClass.getSimpleName + ":\n[\nPosition: " + this.Position + " ,\n Width: " + this.width + " ,\n Height: " + this.height + " ,\n Velocity: " + this.velocity + " ,\n Is in screen: "+isInScreen+" ,\n Ground: " + space + "(" + this.ground + ")\n]"
   }
 
   override def equals(other: Any): Boolean = other match {
@@ -523,4 +547,23 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def currentLevel: Level = Main.getGame.currentLevel
   def game: Component = Main.getGame
+  def setRight(obj: Obj): Unit = this.right=obj
+  def setLeft(obj: Obj): Unit = this.left=obj
+  def isInScreen: Boolean = {
+    game.isInScreen(this)
+  }
+
+  def setVelocityX(n: Double): Unit ={
+    this.velocity.setX(n)
+  }
+  def setVelocityY(n: Double): Unit ={
+    this.velocity.setY(n)
+  }
+  def setPositionX(n: Double): Unit ={
+    this.Position.setX(n)
+  }
+  def setPositionY(n: Double): Unit ={
+    this.Position.setY(n)
+  }
+
 }

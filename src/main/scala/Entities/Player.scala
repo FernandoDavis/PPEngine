@@ -20,6 +20,7 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
   val jumpDelay: Double = 100
   val horizontalDelay: Double = 1000
   var horizontalTime: Double = 0
+  this.canBeTouched=true
 
   override def tick() {
     super.tick()
@@ -100,5 +101,4 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
     else System.exit(0)
   }
 
-  //override def behaviour(): Beh = {}
 }

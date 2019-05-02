@@ -18,8 +18,20 @@ class Vector2D(var x: Double, var y: Double) {
   def +(x: Double, y: Double) =
     new Vector2D(this.x + x, this.y + y)
 
+  def -(x: Double, y: Double) =
+    new Vector2D(this.x - x, this.y - y)
+
+  def *(x: Double, y: Double) =
+    new Vector2D(this.x * x, this.y * y)
+
   def -(v: Vector2D): Vector2D =
     new Vector2D(this.x - v.getX, this.y - v.getY)
+
+  def -(n: Double): Vector2D =
+    new Vector2D(this.x - n, this.y - n)
+
+  def +(n: Double): Vector2D =
+    new Vector2D(this.x + n, this.y + n)
 
   def *(v: Vector2D): Vector2D =
     new Vector2D(this.x * v.getX, this.y * v.getY)
@@ -55,11 +67,11 @@ class Vector2D(var x: Double, var y: Double) {
     this.translate(-x, -y)
   }
 
-  def +=(v: Vector2D){
+  def +=(v: Vector2D) {
     this.translate(v)
   }
 
-  def -=(v: Vector2D){
+  def -=(v: Vector2D) {
     this.translate(new Vector2D(0, 0) - v)
   }
 
@@ -137,7 +149,6 @@ class Vector2D(var x: Double, var y: Double) {
     val power: Double = math.pow(10, n)
     new Vector2D(math.floor(this.getX * power) / power, math.floor(this.getY * power) / power)
   }
-
 
 
 }
