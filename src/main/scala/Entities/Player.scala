@@ -62,7 +62,7 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
           this.velocity.translate(-this.getSpeed, 0)
         else if (this.velocity.getX > -this.getSpeed) {
           if (left != null) {
-            if (this.left.getX + this.left.width < this.getX - mov)
+            if (this.left.getX + this.left.getWidth < this.getX - mov)
               this.velocity.translate(-mov, 0)
           }
           else
@@ -87,6 +87,10 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
       }
     }
 
+    if(Input.isPressing(KeyEvent.VK_S)&&ground==null){
+      this.setVelocityY(this.getVelocity.getY+2)
+    }
+
     if (!(Input.keys(KeyEvent.VK_D) && Input.keys(KeyEvent.VK_A))) {
       this.noFriction = false
     }
@@ -95,10 +99,13 @@ class Player(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
       this.death()
   }
 
+  override def reset(){
+    super.reset()
+    this.setHealth(this.getMaxHealth)
+  }
+
   override def death(): Unit = {
-    if(Main.getGame.nextLevel!= null)
-    Main.getGame.currentLevel.goToNextLevel()
-    else System.exit(0)
+    Main.getGame.reloadLevel()
   }
 
 }

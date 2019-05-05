@@ -19,7 +19,7 @@ class Component extends JComponent {
 
   def isInScreen(obj: Obj): Boolean = {
     val pos = obj.getPosition + shift
-    pos.getX + obj.width >= 0 && pos.getX <= this.getWidth && pos.getY + obj.height >= 0 && pos.getY <= this.getHeight
+    pos.getX + obj.getWidth >= 0 && pos.getX <= this.getWidth && pos.getY + obj.getHeight >= 0 && pos.getY <= this.getHeight
   }
 
   def getScreenShift: Vector2D = {
@@ -43,6 +43,7 @@ class Component extends JComponent {
   def reloadLevel(): Unit = {
     this.level.clearObjects()
     this.level.startLevel()
+    this.level.getObjects.foreach(_.reset())
   }
 
   def tick() {
@@ -72,6 +73,8 @@ class Component extends JComponent {
                   if (obj1.intersects(obj2) || obj2.intersects(obj1)) {
                     obj1.collision(obj2)
                     obj2.collision(obj1)
+                    obj1.getPersonality.runCollisionBehaviours(obj2)
+                    obj2.getPersonality.runCollisionBehaviours(obj1)
                   } else {
                     if (obj1.getGround == obj2)
                       obj1.setGround(null)
@@ -87,58 +90,6 @@ class Component extends JComponent {
     }
   }
 
-  def objOverlapping(obj1: Obj, obj2: Obj): Unit = {
-    var bigger = obj1
-    var smaller = obj2
-    if (obj2.getArea > obj1.getArea) {
-      bigger = obj2
-      smaller = obj1
-    }
-    if (obj1.isAnchored)
-      bigger = obj1
-    else if (obj2.isAnchored)
-      bigger = obj2
-    if (obj1.isAnchored && obj2.isAnchored)
-      return
-    if (smaller.getY > bigger.getCenterY + bigger.height / 2 - smaller.height / 2) {
-      smaller.setPositionY(bigger.getY + bigger.height + 1)
-      if (smaller.getVelocity.getY < 0)
-        smaller.setVelocityY(0)
-      return
-    }
-    if (smaller.getX <= bigger.getCenterX) {
-      if (!smaller.leftCollision) {
-        smaller.setPositionX(bigger.getX - smaller.width - 1)
-        smaller.setRight(bigger)
-        if (smaller.getVelocity.getX > 0) {
-          smaller.setVelocityX(0)
-        }
-      } else {
-        bigger.setPositionX(smaller.getX + smaller.width)
-        bigger.setRight(smaller)
-      }
-      return
-    }
-    if (smaller.getX > bigger.getCenterX) {
-      if (!smaller.rightCollision) {
-        smaller.setPositionX(bigger.getX + bigger.width + 1)
-        smaller.setLeft(bigger)
-        if (smaller.getVelocity.getX < 0) {
-          smaller.setVelocityX(0)
-        }
-      } else {
-        bigger.setPositionX(smaller.getX - bigger.width)
-        bigger.setRight(smaller)
-      }
-      return
-    }
-
-    if (smaller.getY + smaller.height - 1 < bigger.getY) {
-      smaller.setPositionY(bigger.getY - bigger.height - 1)
-      if (smaller.getVelocity.getY < 0)
-        smaller.setVelocityY(0)
-    }
-  }
 
   def currentLevel: Level = {
     this.level
@@ -231,31 +182,6 @@ class Component extends JComponent {
             g2.drawString("Target Position", (target.getX + shift.getX).toInt, (target.getY + shift.getY).toInt)
           }
         }
-//        if (player != null)
-//          if (player.isInstanceOf[Player]) {
-//            val p = player.asInstanceOf[Player]
-//            val healthbar: Healthbar = new Healthbar(p)
-//            healthbar.draw(g)
-//          }
-
-        //        val healthBarBorderWidth = 2
-        //        val healthBarDimensions = new Vector2D(200, 20)
-        //        val healthBarPosition = new Vector2D(20, this.getHeight - healthBarDimensions.getY - 20)
-        //        val healthBar = new UIBox(healthBarPosition, healthBarDimensions)
-        //        healthBar.setBorderWidth(healthBarBorderWidth)
-        //        healthBar.setColor(Color.RED)
-        //        var health: Double = 100
-        //        var maxHealth: Double = 100
-        //        if (player.isInstanceOf[Player]) {
-        //          val p = player.asInstanceOf[Player]
-        //          health = p.getHealth
-        //          maxHealth = p.getMaxHealth
-        //        }
-        //        val xDim = (healthBarDimensions - (healthBarBorderWidth * 2))*(health/maxHealth,1)
-        //        val h = new UIBox(healthBarPosition + healthBarBorderWidth,  xDim)
-        //        h.setColor(Color.GREEN)
-        //        healthBar.draw(g)
-        //        h.draw(g)
         // g.setColor(Color.red)
         // g.drawLine(0, (currentLevel.getDeathY + shift.getY).toInt, this.getWidth, (currentLevel.getDeathY + shift.getY).toInt)
       }

@@ -102,4 +102,5 @@ abstract class Level {
   }
 
   def getTime: Int = time
+
 }

@@ -29,6 +29,16 @@ class TransformableImage {
     this.image = newImage
   }
 
+  def rotateRadians(rotation: Double) {
+    val CenterX = image.getWidth / 2
+    val CenterY = image.getHeight / 2
+    val tx = AffineTransform.getRotateInstance(rotation, CenterX, CenterY)
+    val operation = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
+    val newImage = new BufferedImage(image.getWidth, image.getHeight, image.getType)
+    operation.filter(image, newImage)
+    this.image = newImage
+  }
+
   def flipImageX() {
     val tx = AffineTransform.getScaleInstance(-1, 1)
     tx.translate(-image.getWidth(null), 0)
@@ -81,21 +91,21 @@ class TransformableImage {
 
   def cloneImage: BufferedImage = this.cloneImage(image)
 
-  def scaleImg(img: BufferedImage, width: Double, height: Double): Unit = {
-    val w = img.getWidth
-    val h = img.getHeight
+  def scaleImg(width: Double, height: Double): Unit = {
+    val w = this.getImage.getWidth
+    val h = this.getImage.getHeight
     val at = new AffineTransform
     at.scale(width, height)
     val op = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR)
     val after = new BufferedImage((w * width).toInt, (h * height).toInt, BufferedImage.TYPE_INT_ARGB)
-    op.filter(img, after)
+    op.filter(this.getImage, after)
     this.image = after
   }
 
-  def resizeImg(img: BufferedImage, width: Double, height: Double): Unit = {
-    val w = img.getWidth
-    val h = img.getHeight
-    scaleImg(img, width / w, height / h)
+  def resizeImg(width: Double, height: Double): Unit = {
+    val w = this.getWidth
+    val h = this.getHeight
+    scaleImg(width / w, height / h)
   }
 
   def reset(): Unit ={

@@ -1,13 +1,18 @@
 package mainPPE
 
+import java.awt.event.KeyEvent
+import java.awt.image.BufferedImage
 import java.awt.{Graphics, Graphics2D}
 
+import Entities.Player
 import javax.swing.JComponent
 
 abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int, w: Int, h: Int) {
   protected var Health: Double = 100
   protected var Lives: Int = 0
   protected var MaxHealth: Double = 100
+  protected var dir: Int = 0
+  protected var moving: Boolean = false
   this.canBeTouched = false
   protected var healthbar: Healthbar = new Healthbar(this)
   healthbar.setConstant(false)
@@ -56,12 +61,40 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   override def tick(): Unit = {
     super.tick()
+    if (!this.isInstanceOf[Player]) {
+      if (math.abs(velocity.getX) >= 0.5)
+        moving = true
+      else
+        moving = false
+      if (this.velocity.getX > 0)
+        dir = 1
+      else if (this.velocity.getX < 0)
+        dir = -1
+    }
   }
 
-  override def drawObj(g: Graphics, comp: JComponent): Unit = {
-    super.drawObj(g, comp)
-    healthbar.draw(g)
+  override def getImage: BufferedImage = {
+    if (this.animated && animation != null) {
+      if (ground == null) {
+        return animation.getJumpingImg
+      }
+      var img: BufferedImage = null
+      if (moving)
+        img = animation.getMovingImg
+      else
+        img = animation.getStandingImg
+      if (dir >= 0)
+        return img
+      else if (dir < 0)
+        return ImageFunctions.flipX(img)
+    }
+    super.getImage
   }
+
+//  override def drawObj(g: Graphics, comp: JComponent): Unit = {
+//    super.drawObj(g, comp)
+//    healthbar.draw(g)
+//  }
 
   override def drawObj(g: Graphics2D, comp: JComponent, offset: Vector2D): Unit = {
     super.drawObj(g, comp, offset)

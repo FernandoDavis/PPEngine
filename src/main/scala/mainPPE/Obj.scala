@@ -3,12 +3,29 @@ package mainPPE
 //import java.awt.geom.Point2D
 import java.awt.image.BufferedImage
 import java.awt._
+import java.io.File
 
+import javax.imageio.ImageIO
 import javax.swing._
 
-abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
+abstract class Obj() {
 
-  def this() = this(0, 0, 0, 0)
+  protected var x: Int = 0
+  protected var y: Int = 0
+  protected var width: Int = 0
+  protected var height: Int = 0
+
+  def this(x: Int, y: Int, width: Int, height: Int) {
+    this()
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
+    this.Position = new Vector2D(x, y)
+    this.mask = new Rectangle(this.width, this.height, this.Position.getX.toInt, this.Position.getY.toInt)
+    this.startPosition = new Vector2D(x, y)
+  }
+
 
   def this(v: Vector2D) = this(v.getX.toInt, v.getY.toInt, 0, 0)
 
@@ -17,8 +34,6 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   protected var Position: Vector2D = new Vector2D(x, y)
   protected var img: BufferedImage = null
   protected var noFriction: Boolean = false
-  //  protected var height: Int = h
-  //  protected var width: Int = w
   protected var mask: Rectangle = new Rectangle(this.width, this.height, this.Position.getX.toInt, this.Position.getY.toInt)
   protected var anchored: Boolean = true
   private var speedMask: SpeedMask = new SpeedMask(mask)
@@ -40,14 +55,35 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   protected var right: Obj = null
   protected var lockMovement: Vector2D = new Vector2D(0, 0)
   protected var personality: Personality = new Personality(this)
-  val startPosition: Vector2D = new Vector2D(x, y)
+  var startPosition: Vector2D = new Vector2D(x, y)
   protected var targetPos: Vector2D = null
   protected var targetObj: Obj = null
   protected var speed: Double = 0
-  var canBeTouched: Boolean = true
-  var canTouch: Boolean = true
+  protected var canBeTouched: Boolean = true
+  protected var canTouch: Boolean = true
   var targetDistance: Double = 30
+  protected var tileableTexture: Boolean = false
+  protected var textureFollowsObject: Boolean = false
+  protected var topTexture: BufferedImage = null
+  protected var animated = false
+  protected var animation: Animation = null
+  protected var imageOffset: Vector2D = new Vector2D(0,0)
 
+  def setCanBeTouchedByOthers(boolean: Boolean): Unit = {
+    this.canBeTouched = boolean
+  }
+
+  def setCanTouchOthers(boolean: Boolean): Unit = {
+    this.canTouch = boolean
+  }
+
+  def reset(): Unit = {
+    this.setPosition(this.startPosition)
+  }
+
+  def isTouchable: Boolean = this.canBeTouched
+
+  def isAbleToTouch: Boolean = this.canTouch
 
   def leftCollision: Boolean = this.left != null
 
@@ -68,7 +104,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def setPersonality(behaviour: Behaviour): Unit = {
     behaviour.setOwner(this)
-    this.personality+=behaviour
+    this.personality += behaviour
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Obj]
@@ -105,8 +141,43 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     this.mask = mask
   }
 
+  def setTopTexture(path: String) {
+    val file: File = new File("src\\" + path)
+    if (file.exists()) {
+      this.topTexture = ImageIO.read(file)
+    }
+  }
+
+  def setTopTexture(image: BufferedImage): Unit = {
+    this.topTexture = image
+  }
+
+  def setImg(path: String) {
+    val file: File = new File("src\\" + path)
+    if (file.exists()) {
+      this.img = ImageIO.read(file)
+    }
+  }
+
+
   def setImg(img: BufferedImage) {
     this.img = img
+  }
+
+  def getTopTexture: BufferedImage = this.topTexture
+
+  def setAnimation(animation: Animation): Unit = {
+    this.animation = animation
+  }
+
+  def getAnimation: Animation = this.animation
+
+  def setTileable(boolean: Boolean): Unit = {
+    this.tileableTexture = boolean
+  }
+
+  def setTextureFollowing(boolean: Boolean): Unit = {
+    this.textureFollowsObject = boolean
   }
 
   protected def refreshMask() {
@@ -191,17 +262,20 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     this.translate(new Vector2D(x, y))
   }
 
-  def drawObj(g: Graphics, comp: JComponent) {
-    this.refreshMask()
-    if (this.getImage == null) {
-      g.setColor(this.MaskColor)
-      g.fillRect(this.Position.getX.toInt, this.Position.getY.toInt, this.width, this.height)
-      g.setColor(Color.BLUE)
-      g.drawRect(this.Position.getX.toInt, this.Position.getY.toInt, this.width, this.height)
-    } else {
-      g.drawImage(this.getImage, this.getX.toInt, this.getY.toInt, comp)
-    }
-  }
+  //  def drawObj(g: Graphics, comp: JComponent) {
+  //    this.refreshMask()
+  //    if (this.getImage == null) {
+  //      g.setColor(this.MaskColor)
+  //      g.fillRect(this.Position.getX.toInt, this.Position.getY.toInt, this.width, this.height)
+  //      g.setColor(Color.BLUE)
+  //      g.drawRect(this.Position.getX.toInt, this.Position.getY.toInt, this.width, this.height)
+  //    } else {
+  //      var img = this.getImage
+  //      if (tileableTexture)
+  //        img = ImageFunctions.tileBySize(this.getImage, this.getWidth, this.getHeight, this.getX.toInt, this.getY.toInt)
+  //      g.drawImage(img, this.getX.toInt, this.getY.toInt, comp)
+  //    }
+  //  }
 
   def drawObj(g: Graphics2D, comp: JComponent, offset: Vector2D): Unit = {
     this.refreshMask()
@@ -212,8 +286,33 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
       g.setColor(Color.BLUE)
       g.drawRect(shift.getX.toInt, shift.getY.toInt, this.width, this.height)
     } else {
-      g.drawImage(this.getImage, shift.getX.toInt, shift.getY.toInt,this.width,this.height,comp)
+      if (tileableTexture) {
+        var sx: Int = this.getX.toInt
+        var sy: Int = this.getY.toInt
+        if (!textureFollowsObject) {
+          sx = 0
+          sy = 0
+        }
+        val Img: BufferedImage = ImageFunctions.tileBySize(this.getImage, this.getWidth, this.getHeight, sx, sy)
+        g.drawImage(Img, shift.getX.toInt, shift.getY.toInt, comp)
+        if (this.getTopTexture != null) {
+          val TopImg: BufferedImage = ImageFunctions.tileBySize(this.getTopTexture, this.getWidth, this.getTopTexture.getHeight(), sx, 0)
+          g.drawImage(TopImg, shift.getX.toInt, shift.getY.toInt, comp)
+        }
+      }
+      else {
+        g.drawImage(processImage(this.getImage), shift.getX.toInt+imageOffset.getX.toInt, shift.getY.toInt+imageOffset.getY.toInt, this.width, this.height, comp)
+        if (this.getTopTexture != null)
+          g.drawImage(this.getTopTexture, shift.getX.toInt, shift.getY.toInt, this.width, this.height / 4, comp)
+      }
     }
+  }
+
+  def processImage(img: BufferedImage): BufferedImage ={
+    if(this.width!=img.getWidth||this.height!=img.getHeight){
+      return ImageFunctions.resize(img,this.width,this.height)
+    }
+    img
   }
 
   def intersects(obj: Obj): Boolean = {
@@ -236,8 +335,8 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
   def collision(obj: Obj) {
     if (!this.anchored && obj.canBeTouched && this.canTouch) {
-      personality.runCollisionBehaviours(obj)
-      obj.getPersonality.runCollisionBehaviours(this)
+      //personality.runCollisionBehaviours(obj)
+      //obj.getPersonality.runCollisionBehaviours(this)
       if (this.getPosition.getY + this.getMask.getHeight * 3 / 4 - (this.velocity.getY * 2) < obj.getY) {
         if (this.velocity.getY > 0) { // && obj.yThru <= 0) {
           this.airTime = 0 //DO NOT REMOVE
@@ -248,15 +347,15 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
               this.velocity = obj.getVelocity
           }
           else
-            this.velocity.setY(0)
+            this.velocity.setY(obj.getVelocity.getY) //IT used to be 0
           this.ground = obj
           this.setY(obj.getY - this.getMask.getHeight)
         }
       } else {
         this.overlap2(obj)
         if (!obj.isAnchored) {
-          if(this.getY+this.height-2<obj.getY)
-          this.velocity = this.velocity.getMax(obj.getVelocity)
+          if (this.getY + this.height - 2 < obj.getY)
+            this.velocity = this.velocity.getMax(obj.getVelocity)
         }
         else {
           //this.repulse(obj)
@@ -270,7 +369,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
       return
     val r: Rectangle = this.mask.intersection(obj.getMask)
     val intersection: Vector2D = new Vector2D(r.getCenterX, r.getCenterY)
-    this.velocity = (this.velocity - this.getCenter.UnitVector(intersection)) //* math.sqrt(r.getHeight*r.getHeight+r.getWidth*r.getWidth))
+    this.velocity = this.velocity - this.getCenter.UnitVector(intersection) //* math.sqrt(r.getHeight*r.getHeight+r.getWidth*r.getWidth))
   }
 
   def overlap(obj: Obj) {
@@ -286,7 +385,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
 
     if (this.getArea <= obj.getArea && obj != this) {
       if (this.getY > obj.getCenterY + obj.height / 2 - this.height / 2) {
-        if(this.ground!=null)
+        if (this.ground != null)
           return
         this.Position.setY(obj.getY + obj.height + 1)
         if (this.velocity.getY < 0)
@@ -314,7 +413,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
         if (this.velocity.getY < 0)
           this.velocity.setY(0)
       }
-    } else if (this.getArea > obj.getArea && obj != this){
+    } else if (this.getArea > obj.getArea && obj != this) {
 
       if (this.getX > obj.getCenterX && obj.leftCollision) {
         this.Position.setX(obj.getX + obj.width + 1)
@@ -374,8 +473,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
       //if (math.abs(this.velocity.getX)<=0.2)
       if (math.abs(this.velocity.getX - ground.velocity.getX) <= 0.1 || math.abs(this.velocity.getX) <= 0.1) {
         this.velocity.setX(ground.getVelocity.getX)
-      } else
-      if (math.abs(this.velocity.getX) < 0.2) { //X velocity damping
+      } else if (math.abs(this.velocity.getX) < 0.2) { //X velocity damping
         this.velocity.setX(0)
       } else if (!noFriction)
         this.velocity.setX(this.velocity.getX * 0.75) //Friction
@@ -387,7 +485,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
         if (targetObj != null)
           target = targetObj.getCenter
         if (target.distance(this.getCenter) >= targetDistance) {
-          val direction: Vector2D = this.getCenter.UnitVector(target)*speed
+          val direction: Vector2D = this.getCenter.UnitVector(target) * speed
           if (this.gravity != 0)
             this.velocity.setX(direction.getX)
           else
@@ -421,7 +519,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     else if (this.velocity.getX < (-30))
       this.velocity.setX(-30)
 
-    if((velocity.getX>0&&this.rightCollision)||(velocity.getX<0&&this.leftCollision))
+    if ((velocity.getX > 0 && this.rightCollision) || (velocity.getX < 0 && this.leftCollision))
       velocity.setX(0)
     this.setPosition(this.Position + this.velocity)
   }
@@ -480,7 +578,7 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
     var space: String = ""
     if (ground != null)
       space = "\n\r"
-    this.getClass.getSimpleName + ":\n[\nPosition: " + this.Position + " ,\n Width: " + this.width + " ,\n Height: " + this.height + " ,\n Velocity: " + this.velocity + " ,\n Is in screen: "+isInScreen+" ,\n Ground: " + space + "(" + this.ground + ")\n]"
+    this.getClass.getSimpleName + ":\n[\nPosition: " + this.Position + " ,\n Width: " + this.width + " ,\n Height: " + this.height + " ,\n Velocity: " + this.velocity + " ,\n Is in screen: " + isInScreen + " ,\n Ground: " + space + "(" + this.ground + ")\n]"
   }
 
   override def equals(other: Any): Boolean = other match {
@@ -546,24 +644,58 @@ abstract class Obj(var x: Int, var y: Int, var width: Int, var height: Int) {
   def getTargetObj: Obj = targetObj
 
   def currentLevel: Level = Main.getGame.currentLevel
+
   def game: Component = Main.getGame
-  def setRight(obj: Obj): Unit = this.right=obj
-  def setLeft(obj: Obj): Unit = this.left=obj
+
+  def setRight(obj: Obj): Unit = this.right = obj
+
+  def setLeft(obj: Obj): Unit = this.left = obj
+
   def isInScreen: Boolean = {
     game.isInScreen(this)
   }
 
-  def setVelocityX(n: Double): Unit ={
+  def setVelocityX(n: Double): Unit = {
     this.velocity.setX(n)
   }
-  def setVelocityY(n: Double): Unit ={
+
+  def setVelocityY(n: Double): Unit = {
     this.velocity.setY(n)
   }
-  def setPositionX(n: Double): Unit ={
+
+  def setPositionX(n: Double): Unit = {
     this.Position.setX(n)
   }
-  def setPositionY(n: Double): Unit ={
+
+  def setPositionY(n: Double): Unit = {
     this.Position.setY(n)
   }
+
+  def setWidth(width: Int): Unit = {
+    this.width = width
+  }
+
+  def setHeight(height: Int): Unit = {
+    this.height = height
+  }
+
+  def getWidth: Int = this.width
+
+  def getHeight: Int = this.height
+
+  def setDimensions(dimensions: Vector2D): Unit = {
+    this.setWidth(dimensions.getX.toInt)
+    this.setHeight(dimensions.getY.toInt)
+  }
+
+  def loadImage(path: String): BufferedImage = {
+    val file: File = new File("src\\" + path)
+    if (file.exists()) {
+      return ImageIO.read(file)
+    }
+    null
+  }
+
+  def getDimensions: Vector2D = new Vector2D(width, height)
 
 }

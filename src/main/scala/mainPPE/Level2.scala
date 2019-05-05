@@ -45,11 +45,11 @@ class Level2 extends Level{
     platform2.setMaskColor(Color.BLUE)
     platform.setMaskColor(Color.BLUE)
     boxHere.setMaskColor(Color.GRAY)
-    boxHere.canBeTouched=false
+    boxHere.setCanBeTouchedByOthers(false)
     boxHere.setPassable(true)
-    Airbox.canBeTouched=false
-    Airbox2.canBeTouched=false
-    Airbox3.canBeTouched=false
+    Airbox.setCanBeTouchedByOthers(false)
+    Airbox2.setCanBeTouchedByOthers(false)
+    Airbox3.setCanBeTouchedByOthers(false)
     Airbox.setAnchored(false)
     Airbox2.setAnchored(false)
     Airbox3.setAnchored(false)
@@ -61,7 +61,7 @@ class Level2 extends Level{
     Airbox3.setPersonality(Behaviour.randomFly)
     Slidebox.setAnchored(false)
     Slidebox.setImg(brick) //SET IMAGE TEXTURE
-    this.addObject(floor,Slidebox,Airbox,Airbox2,Airbox3,player,platform,platform2, platform3, platform4, platform5, platform6, platform7, boxHere)
+    this.addObject(floor,Slidebox,Airbox,Airbox2,Airbox3,platform,platform2, platform3, platform4, platform5, platform6, platform7, boxHere)
     this.addPlayer(this.getStartPosition)
 
   }

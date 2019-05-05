@@ -101,4 +101,6 @@ class Personality {
     p += behaviours
     p
   }
+
+  def size: Int = this.behaviours.size
 }

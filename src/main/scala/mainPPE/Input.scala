@@ -16,6 +16,8 @@ object Input extends KeyListener {
     reset()
   }
 
+  def isPressing(key: Int): Boolean = this.keys(key)
+
   def updateMouse(e: MouseEvent): Unit={
     mousePosition.getDataFrom(e.getPoint)
     mouseScreenPosition.getDataFrom(e.getLocationOnScreen)

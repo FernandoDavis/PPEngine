@@ -100,5 +100,9 @@ class SpriteSheet(img: BufferedImage) extends Iterable[BufferedImage] {
     img
   }
 
+  def setSpeed(speed: Int): Unit ={
+    this.speed=speed
+  }
+
   override def iterator: Iterator[BufferedImage] = images.iterator
 }

@@ -11,6 +11,13 @@ class ArrayList[E >: Null: ClassTag] extends Iterable[E] {
     if (int > minCap)
       this.len = int
   }
+
+  def this(e: E*) {
+    this()
+    if(e!=null)
+      e.foreach(add)
+  }
+
   if (this.len < minCap)
     len = minCap
   private var elements: Array[E] = new Array[E](len)
@@ -64,6 +71,18 @@ class ArrayList[E >: Null: ClassTag] extends Iterable[E] {
 
 
   def add(arr: E*): Unit = {
+    if (arr != null) {
+      arr.foreach(add)
+    }
+  }
+
+  def addArray(arr: Array[E]): Unit = {
+    if (arr != null) {
+      arr.foreach(add)
+    }
+  }
+
+  def addSeq(arr: Seq[E]): Unit = {
     if (arr != null) {
       arr.foreach(add)
     }
