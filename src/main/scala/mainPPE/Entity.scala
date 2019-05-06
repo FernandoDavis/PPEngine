@@ -7,16 +7,20 @@ import java.awt.{Graphics, Graphics2D}
 import Entities.Player
 import javax.swing.JComponent
 
+import scala.util.Random
+
 abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int, w: Int, h: Int) {
   protected var Health: Double = 100
   protected var Lives: Int = 0
   protected var MaxHealth: Double = 100
-  protected var dir: Int = 0
+  //protected var dir: Int = 0
   protected var moving: Boolean = false
   this.canBeTouched = false
   protected var healthbar: Healthbar = new Healthbar(this)
+  protected var random: Random = new Random()
   healthbar.setConstant(false)
   healthbar.setAlpha(0)
+  random.setSeed(this.getHealth.toLong + System.currentTimeMillis() + System.nanoTime() + this.MaxHealth.toLong)
 
   def death()
 
@@ -75,8 +79,11 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
 
   override def getImage: BufferedImage = {
     if (this.animated && animation != null) {
-      if (ground == null) {
-        return animation.getJumpingImg
+      if (ground == null && gravity != 0) {
+        if (dir >= 0)
+          return animation.getJumpingImg
+        else
+          return ImageFunctions.flipX(animation.getJumpingImg)
       }
       var img: BufferedImage = null
       if (moving)
@@ -84,17 +91,17 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
       else
         img = animation.getStandingImg
       if (dir >= 0)
-        return img
-      else if (dir < 0)
-        return ImageFunctions.flipX(img)
+        return ImageFunctions.rotateRadians(img, this.imageRotation + rotationOffset)
+      else
+        return ImageFunctions.rotateRadians(ImageFunctions.flipX(img), this.imageRotation + rotationOffset)
     }
     super.getImage
   }
 
-//  override def drawObj(g: Graphics, comp: JComponent): Unit = {
-//    super.drawObj(g, comp)
-//    healthbar.draw(g)
-//  }
+  //  override def drawObj(g: Graphics, comp: JComponent): Unit = {
+  //    super.drawObj(g, comp)
+  //    healthbar.draw(g)
+  //  }
 
   override def drawObj(g: Graphics2D, comp: JComponent, offset: Vector2D): Unit = {
     super.drawObj(g, comp, offset)

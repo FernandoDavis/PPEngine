@@ -15,16 +15,17 @@ class Animation {
     null
   }
 
+  protected var frameSpeed: Double = 1
   protected var Standing: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
-  protected var sIndex = 0
+  protected var sIndex: Double = 0
   protected var Moving: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
-  protected var mIndex = 0
+  protected var mIndex: Double = 0
   protected var Jumping: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
-  protected var jIndex = 0
+  protected var jIndex: Double = 0
 
 
-  private def next(int: Int, arrayList: ArrayList[BufferedImage]): Int = {
-    (int + 1) % arrayList.size
+  private def next(n: Double, arrayList: ArrayList[BufferedImage]): Double = {
+    (n + frameSpeed) % arrayList.size
   }
 
   def loadImage(spriteSheet: SpriteSheet): ArrayList[BufferedImage] = {
@@ -47,6 +48,10 @@ class Animation {
 
   def resetStanding(): Unit = {
     sIndex = 0
+  }
+
+  def setFrameSpeed(frameSpeed: Double): Unit ={
+    this.frameSpeed=frameSpeed
   }
 
   def setMovingAnimation(list: BufferedImage*): Unit = {
@@ -77,7 +82,7 @@ class Animation {
   def getJumpingImg: BufferedImage = {
     resetStanding()
     resetMoving()
-    val img = Jumping.get(jIndex)
+    val img = Jumping.get(jIndex.toInt)
     jIndex = next(jIndex, Jumping)
     img
   }
@@ -85,7 +90,7 @@ class Animation {
   def getStandingImg: BufferedImage = {
     resetJumping()
     resetMoving()
-    val img = Standing.get(sIndex)
+    val img = Standing.get(sIndex.toInt)
     sIndex = next(sIndex, Standing)
     img
   }
@@ -93,10 +98,12 @@ class Animation {
   def getMovingImg: BufferedImage = {
     resetJumping()
     resetStanding()
-    val img = Moving.get(mIndex)
+    val img = Moving.get(mIndex.toInt)
     mIndex = next(mIndex, Moving)
     img
   }
+
+  def getFrameSpeed: Double = frameSpeed
 
 
 }

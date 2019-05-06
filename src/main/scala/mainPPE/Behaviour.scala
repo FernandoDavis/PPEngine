@@ -179,8 +179,13 @@ object Behaviour {
           owner.setTargetDistance(5)
         }
       }
+      val rand = new Random()
+      rand.setSeed(System.nanoTime()*2+System.currentTimeMillis()*3)
+
 
       var h: Int = 1
+      if(rand.nextBoolean())
+        h= -1
 
       override def run(): Unit = {
         super.run()
@@ -288,7 +293,8 @@ abstract class Behaviour() {
       case 3 => return Behaviour.jump
       case 4 => return Behaviour.attackPlayer(dp1.toInt)
       case 5 => return Behaviour.moveBackAndForthH(dp1)
-      case 6 =>  return Behaviour.moveBackAndForthH(dp1,dp2,dp3)
+      case 6 => return Behaviour.moveBackAndForthH(dp1,dp2,dp3)
+      case _ => throw new NullPointerException("The behaviour with index "+index+" has not been added to the clone list")
     }
     null
   }

@@ -1,12 +1,19 @@
 package mainPPE
 
-import java.awt.Point
+import java.awt.{Dimension, Point}
 import java.awt.geom.Point2D
 
-class Vector2D(var x: Double, var y: Double) {
-  def this(X: Int, Y: Int) = this(X.toDouble, Y.toDouble)
+class Vector2D {
+  var x: Double = 0
+  var y: Double = 0
 
-  def this() = this(0, 0)
+  def this(x: Double, y: Double){
+    this()
+    this.x=x
+    this.y=y
+  }
+
+  def this(X: Int, Y: Int) = this(X.toDouble, Y.toDouble)
 
   def this(p: Point) = this(p.getX, p.getY)
 
@@ -143,6 +150,10 @@ class Vector2D(var x: Double, var y: Double) {
 
   def toPoint2D(): Point2D.Double = {
     new Point2D.Double(this.getX, this.getY)
+  }
+
+  def toDimension(): Dimension = {
+    new Dimension(this.getX.toInt,this.getY.toInt)
   }
 
   def roundToNDigits(n: Int): Vector2D = {

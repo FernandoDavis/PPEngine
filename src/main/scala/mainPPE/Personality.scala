@@ -98,9 +98,13 @@ class Personality {
 
   override def clone(): Personality = {
     val p = new Personality()
-    p += behaviours
+    p.setOwner(this.owner)
+    for(behaviour <- behaviours){
+      p.add(behaviour.clone())
+    }
     p
   }
+
 
   def size: Int = this.behaviours.size
 }

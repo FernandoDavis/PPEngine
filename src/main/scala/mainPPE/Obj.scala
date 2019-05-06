@@ -67,7 +67,17 @@ abstract class Obj() {
   protected var topTexture: BufferedImage = null
   protected var animated = false
   protected var animation: Animation = null
-  protected var imageOffset: Vector2D = new Vector2D(0,0)
+  protected var imageOffset: Vector2D = new Vector2D(0, 0)
+  protected var imageRotation: Double = 0
+  protected var rotationOffset: Double = 0
+  protected var customMaskDimensions: Boolean = false
+  protected var customHitBoxDimensions: Boolean = false
+  protected var maskDimensions: Vector2D = new Vector2D(width, height)
+  protected var hitBox: Rectangle = new Rectangle(this.width, this.height, this.Position.getX.toInt, this.Position.getY.toInt)
+  protected var hitBoxDimensions: Vector2D = new Vector2D(width,height)
+  protected var dir = 1
+  protected var vdir= 1
+  protected var hitBoxOffset: Vector2D = new Vector2D(0,0)
 
   def setCanBeTouchedByOthers(boolean: Boolean): Unit = {
     this.canBeTouched = boolean
@@ -79,6 +89,8 @@ abstract class Obj() {
 
   def reset(): Unit = {
     this.setPosition(this.startPosition)
+    val newPersonality = this.personality.clone()
+    this.personality=newPersonality
   }
 
   def isTouchable: Boolean = this.canBeTouched
@@ -180,9 +192,53 @@ abstract class Obj() {
     this.textureFollowsObject = boolean
   }
 
+  def setMaskDimensions(width: Double, height:Double): Unit ={
+    this.setMaskDimensions(new Vector2D(width,height))
+  }
+
+  def setMaskDimensions(dimensions: Vector2D): Unit ={
+    this.customMaskDimensions=true
+    this.maskDimensions=dimensions
+  }
+
+  def setHitBoxDimensions(width: Double, height:Double): Unit ={
+    this.setHitBoxDimensions(new Vector2D(width,height))
+  }
+  def setHitBoxDimensions(dimensions: Vector2D): Unit ={
+    this.customHitBoxDimensions=true
+    this.hitBoxDimensions=dimensions
+  }
+  def getHitBox: Rectangle = this.hitBox
+
+  def setHitBoxOffset(offset: Vector2D): Unit ={
+    this.hitBoxOffset=offset
+  }
+  def setHitBoxOffset(x: Double, y: Double): Unit ={
+    this.hitBoxOffset=new Vector2D(x,y)
+  }
+  def getHitBoxDimensions: Vector2D = new Vector2D(hitBox.getWidth,hitBox.getHeight)
+
   protected def refreshMask() {
-    mask.setLocation(this.Position.getX.toInt + maskOffset.getX.toInt, this.Position.getY.toInt + maskOffset.getY.toInt)
-    mask.setSize(width, height)
+    //mask.setLocation((this.Position+this.maskDimensions).toPoint())//(this.Position.getX.toInt + maskOffset.getX.toInt, this.Position.getY.toInt + maskOffset.getY.toInt)
+    if (!customMaskDimensions)
+      mask.setSize(width, height)
+    else
+      mask.setSize(maskDimensions.toDimension())
+    if (!customHitBoxDimensions)
+      hitBox.setSize(width, height)
+    else
+      hitBox.setSize(hitBoxDimensions.toDimension())
+    val hbL: Double = hitBoxOffset.getMagnitude
+    val cos: Double = math.cos(this.imageRotation)
+    val sin: Double = math.sin(this.imageRotation)
+    val xhr: Double = cos*hbL*dir
+    val yhr: Double = sin*hbL*vdir
+    val mL: Double = maskOffset.getMagnitude
+    val xmr: Double = cos*mL*dir
+    val ymr: Double = sin*mL*vdir
+    mask.setLocation((this.Position+new Vector2D(xmr,ymr)+this.maskOffset*(dir,vdir)+this.getDimensions/2-this.getMaskDimensions/2).toPoint())
+    hitBox.setLocation((this.Position+new Vector2D(xhr,yhr)+this.hitBoxOffset*(dir,vdir)+this.getDimensions/2-this.getHitBoxDimensions/2).toPoint())
+
   }
 
   def setDimensions(width: Int, height: Int) {
@@ -190,6 +246,8 @@ abstract class Obj() {
     this.height = height
     //this.refreshMask()
   }
+
+
 
   //  def isPassable(): Boolean={
   //    this.canPassThru
@@ -301,22 +359,26 @@ abstract class Obj() {
         }
       }
       else {
-        g.drawImage(processImage(this.getImage), shift.getX.toInt+imageOffset.getX.toInt, shift.getY.toInt+imageOffset.getY.toInt, this.width, this.height, comp)
+        g.drawImage(processImage(this.getImage), shift.getX.toInt + imageOffset.getX.toInt*dir, shift.getY.toInt + imageOffset.getY.toInt*vdir, this.width, this.height, comp)
         if (this.getTopTexture != null)
           g.drawImage(this.getTopTexture, shift.getX.toInt, shift.getY.toInt, this.width, this.height / 4, comp)
       }
     }
   }
 
-  def processImage(img: BufferedImage): BufferedImage ={
-    if(this.width!=img.getWidth||this.height!=img.getHeight){
-      return ImageFunctions.resize(img,this.width,this.height)
+  def processImage(img: BufferedImage): BufferedImage = {
+    if (this.width != img.getWidth || this.height != img.getHeight) {
+      return ImageFunctions.resize(img, this.width, this.height)
     }
     img
   }
 
+  def collisionFiltering(obj: Obj): Boolean = {
+    false //This gets overriden in entities and objects that need it, by default it should be false
+  }
+
   def intersects(obj: Obj): Boolean = {
-    if (this != obj) {
+    if (this != obj && !collisionFiltering(obj)) {
       if (this.ground == obj) {
         val mask2: Rectangle = obj.getMask.clone().asInstanceOf[Rectangle]
         mask2.grow(1, 1)
@@ -325,13 +387,44 @@ abstract class Obj() {
         else
           this.ground = null
       }
-      this.speedMask.refresh(mask, this.velocity)
+      // this.speedMask.refresh(mask, this.velocity)
       return this.getMask.intersects(obj.getMask)
     }
     false
   }
 
   def isAnchored: Boolean = this.anchored
+
+  def collision_NEW(obj: Obj) {
+    if (!this.anchored && obj.canBeTouched && this.canTouch) {
+      //personality.runCollisionBehaviours(obj)
+      //obj.getPersonality.runCollisionBehaviours(this)
+      if (this.getMask.getY + this.getMask.getHeight * 3 / 4 - (this.velocity.getY * 2) < obj.getMask.getY) {
+        if (this.velocity.getY > 0) { // && obj.yThru <= 0) {
+          this.airTime = 0 //DO NOT REMOVE
+          if (!obj.isAnchored) {
+            if (math.abs(obj.getVelocity.getY) <= 0.2)
+              this.velocity.setX(obj.getVelocity.getX)
+            else
+              this.velocity = obj.getVelocity
+          }
+          else
+            this.velocity.setY(obj.getVelocity.getY) //IT used to be 0
+          this.ground = obj
+          this.setY(obj.getMask.getY - this.getMask.getHeight+(deltaDimensions/2).getY)
+        }
+      } else {
+        this.overlap_NEW(obj)
+        if (!obj.isAnchored) {
+          if (mask.getY + mask.getHeight - 2 < obj.getMask.getY)
+            this.velocity = this.velocity.getMax(obj.getVelocity)
+        }
+        else {
+          //this.repulse(obj)
+        }
+      }
+    }
+  }
 
   def collision(obj: Obj) {
     if (!this.anchored && obj.canBeTouched && this.canTouch) {
@@ -352,7 +445,7 @@ abstract class Obj() {
           this.setY(obj.getY - this.getMask.getHeight)
         }
       } else {
-        this.overlap2(obj)
+        this.overlap(obj)
         if (!obj.isAnchored) {
           if (this.getY + this.height - 2 < obj.getY)
             this.velocity = this.velocity.getMax(obj.getVelocity)
@@ -372,16 +465,71 @@ abstract class Obj() {
     this.velocity = this.velocity - this.getCenter.UnitVector(intersection) //* math.sqrt(r.getHeight*r.getHeight+r.getWidth*r.getWidth))
   }
 
-  def overlap(obj: Obj) {
-    if (this.getArea <= obj.getArea && obj != this) {
-      val r: Rectangle = this.mask.intersection(obj.getMask)
-      val intersection: Vector2D = new Vector2D(r.getCenterX, r.getCenterY)
-      this.Position = this.Position - this.getCenter.UnitVector(intersection) * 4 //4 since the distance from the center to the edge is half the distance from edge to edge
-      //this.velocity = new Vector(0,0)
+  //  def overlap_OLD(obj: Obj) {
+  //    if (this.getArea <= obj.getArea && obj != this) {
+  //      val r: Rectangle = this.mask.intersection(obj.getMask)
+  //      val intersection: Vector2D = new Vector2D(r.getCenterX, r.getCenterY)
+  //      this.Position = this.Position - this.getCenter.UnitVector(intersection) * 4 //4 since the distance from the center to the edge is half the distance from edge to edge
+  //      //this.velocity = new Vector(0,0)
+  //    }
+  //  }
+
+  def deltaDimensions: Vector2D = getDimensions-getMaskDimensions
+
+  def overlap_NEW(obj: Obj) {
+    val dd: Vector2D =  (getDimensions-getMaskDimensions)/2
+    val odd: Vector2D =  (obj.getDimensions-obj.getMaskDimensions)/2
+    if ((this.getArea <= obj.getArea||obj.isAnchored) && obj != this) {
+      if (mask.getY > obj.getMask.getCenterY + obj.getMask.getHeight / 2 - mask.getHeight / 2) {
+        if (this.ground != null)
+          return
+        this.Position.setY(obj.getMask.getY + obj.getMask.getHeight + 0 -dd.getY)
+        if (this.velocity.getY < 0)
+          this.velocity.setY(0)
+        return
+      }
+
+      if (mask.getX <= obj.getMask.getCenterX && !leftCollision) {
+        this.Position.setX(obj.getMask.getX - mask.getWidth - 0 + dd.getX)
+        this.right = obj
+        if (this.velocity.getX > 0)
+          this.velocity.setX(0)
+        return
+      }
+      if (mask.getX > obj.getMask.getCenterX && !rightCollision) {
+        this.Position.setX(obj.getMask.getX + obj.getMask.getWidth + 0 - dd.getX)
+        this.left = obj
+        if (this.velocity.getX < 0)
+          this.velocity.setX(0)
+        return
+      }
+
+      if (mask.getY + mask.getHeight - 1 < obj.getMask.getY) {
+        this.Position.setY(obj.getMask.getY - mask.getHeight - 1+dd.getY)
+        if (this.velocity.getY < 0)
+          this.velocity.setY(0)
+      }
+    } else if (this.getArea > obj.getArea && obj != this) {
+
+      if (mask.getX > obj.getMask.getCenterX && obj.leftCollision) {
+        this.Position.setX(obj.getMask.getX + obj.getMask.getWidth + 0-dd.getX)
+        this.left = obj
+        if (this.velocity.getX < 0)
+          this.velocity.setX(0)
+        return
+      }
+      if (mask.getX <= obj.getMask.getCenterX && obj.rightCollision) {
+        this.Position.setX(obj.getMask.getX - mask.getWidth - 0+dd.getX)
+        this.right = obj
+        if (this.velocity.getX > 0)
+          this.velocity.setX(0)
+        return
+      }
     }
+
   }
 
-  def overlap2(obj: Obj) {
+  def overlap(obj: Obj) {
 
     if (this.getArea <= obj.getArea && obj != this) {
       if (this.getY > obj.getCenterY + obj.height / 2 - this.height / 2) {
@@ -561,11 +709,7 @@ abstract class Obj() {
   }
 
   def doGravity() {
-    if (ground != null) {
-      if (!(this.getY + this.getMask.getY - 2 < ground.getY)) {
-        //Do nothing
-      }
-    } else {
+    if (ground == null) {
       this.velocity = this.velocity + (new Vector2D(0, gravity) * airTime)
       if (airTime == 0)
         this.initVelocity = velocity

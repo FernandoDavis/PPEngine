@@ -1,0 +1,5 @@
+package Entities
+
+trait Enemy {
+
+}

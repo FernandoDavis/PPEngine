@@ -71,10 +71,10 @@ class Component extends JComponent {
               if (obj2 != null)
                 if (obj1 != obj2)
                   if (obj1.intersects(obj2) || obj2.intersects(obj1)) {
-                    obj1.collision(obj2)
-                    obj2.collision(obj1)
                     obj1.getPersonality.runCollisionBehaviours(obj2)
                     obj2.getPersonality.runCollisionBehaviours(obj1)
+                    obj1.collision_NEW(obj2)
+                    obj2.collision_NEW(obj1)
                   } else {
                     if (obj1.getGround == obj2)
                       obj1.setGround(null)
@@ -161,8 +161,11 @@ class Component extends JComponent {
         //g.fillRect(mouse.getX.toInt, mouse.getY.toInt, 10, 10)
         if (objInfo != null) {
           g.setColor(Color.green)
-          g2.draw(new Line(objInfo.getPosition + shift, objInfo.getPosition + objInfo.getMaskDimensions + shift))
+          g2.draw(new Line(objInfo.getPosition + shift, objInfo.getPosition + objInfo.getDimensions + shift))
+          //g.setColor(Color.GREEN)
+          g.drawRect(objInfo.getMask.getX.toInt+shift.getX.toInt,objInfo.getMask.getY.toInt+shift.getY.toInt,objInfo.getMask.getWidth.toInt,objInfo.getMask.getHeight.toInt)
           g.setColor(Color.blue)
+          g.drawRect(objInfo.getHitBox.getX.toInt+shift.getX.toInt,objInfo.getHitBox.getY.toInt+shift.getY.toInt,objInfo.getHitBox.getWidth.toInt,objInfo.getHitBox.getHeight.toInt)
           LineSplitter.draw(objInfo.toString, 40, 20, g)
           //g.drawString(objInfo.toString(), 40, 20)
           if (objInfo.getGround != null) {
