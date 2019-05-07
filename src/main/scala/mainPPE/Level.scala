@@ -1,5 +1,7 @@
 package mainPPE
 
+import java.awt.image.BufferedImage
+
 import Entities.Player
 
 abstract class Level {
@@ -15,8 +17,16 @@ abstract class Level {
   private var LevelNumber: Int = 0
   protected var player: Player = null
   protected var deathY: Int = 500
+  protected var music: Sound = new Sound("Sounds/overworld3.wav")
+  protected var background: BufferedImage = null
+  protected var backgroundOffset: Vector2D = new Vector2D(0,0)
+  music.setLoop(-1)
 
   def getDeathY: Int = this.deathY
+
+  def getBackground: BufferedImage =background
+  def getBackgroundOffset: Vector2D = backgroundOffset
+  def getMusic: Sound = music
 
   def clearObjects(): Unit ={
     Objects.clear()
@@ -42,6 +52,7 @@ abstract class Level {
   }
 
   def startLevel() {
+    music.play()
     time = 0
   }
 

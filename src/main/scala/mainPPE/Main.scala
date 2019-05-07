@@ -2,8 +2,11 @@ package mainPPE
 
 import java.awt._
 import java.awt.event.KeyEvent
+import java.awt.image.BufferedImage
+import java.io.File
 
 import Entities.Player
+import javax.imageio.ImageIO
 import javax.swing._
 
 class Component extends JComponent {
@@ -11,20 +14,26 @@ class Component extends JComponent {
   private var levelList = new ArrayList[Level]()
   private var level: Level = null
   var speed: Integer = 10
-  val DebugMode: Boolean = true
+  val DebugMode: Boolean = false
   var objInfo: Obj = null
   var player: Obj = null
   private var shift: Vector2D = new Vector2D(0, 0)
   private var previousLevel: Int = 0
 
   def isInScreen(obj: Obj): Boolean = {
+    var w: Double = obj.getWidth
+    var h: Double = obj.getHeight
+    if (obj.hasCustomImageDimensions) {
+      w = obj.getCustomImageDimensions.getX
+      h = obj.getCustomImageDimensions.getY
+    }
     val pos = obj.getPosition + shift
-    pos.getX + obj.getWidth >= 0 && pos.getX <= this.getWidth && pos.getY + obj.getHeight >= 0 && pos.getY <= this.getHeight
+    pos.getX + w >= 0 && pos.getX <= this.getWidth && pos.getY + h >= 0 && pos.getY <= this.getHeight
   }
 
   def getScreenShift: Vector2D = {
     if (player != null)
-      return shift//player.getCenter + (this.getWidth / 2, this.getHeight / 2)
+      return shift //player.getCenter + (this.getWidth / 2, this.getHeight / 2)
     new Vector2D(0, 0)
   }
 
@@ -33,8 +42,10 @@ class Component extends JComponent {
   }
 
   def loadLevel(level: Level) {
-    if (this.level != null)
+    if (this.level != null) {
       this.previousLevel = this.level.getIndex
+      this.level.getMusic.stop()
+    }
     this.level = level
     this.speed = level.getLevelSpeed
     this.level.startLevel()
@@ -73,8 +84,8 @@ class Component extends JComponent {
                   if (obj1.intersects(obj2) || obj2.intersects(obj1)) {
                     obj1.getPersonality.runCollisionBehaviours(obj2)
                     obj2.getPersonality.runCollisionBehaviours(obj1)
-                    obj1.collision_NEW(obj2)
-                    obj2.collision_NEW(obj1)
+                    obj1.collision(obj2)
+                    obj2.collision(obj1)
                   } else {
                     if (obj1.getGround == obj2)
                       obj1.setGround(null)
@@ -142,13 +153,18 @@ class Component extends JComponent {
     this.tick()
     val mouse = mousePosition //Incase it changes while the code below loads
     if (this.level != null) {
-      val deathY = level.getDeathY + shift.getY.toInt
-      val grad = new GradientPaint(0, deathY - 10, Color.lightGray, 0, deathY + 40, Color.gray)
-      if (deathY < this.getHeight)
-        g2.setPaint(grad)
-      else
-        g2.setPaint(Color.lightGray)
-      g2.fillRect(0, 0, this.getWidth, this.getHeight)
+            val deathY = level.getDeathY + shift.getY.toInt
+            val grad = new GradientPaint(0, 0, new Color(51,90,34), 0,this.getHeight, new Color(0,30,0))
+//            if (deathY < this.getHeight)
+              g2.setPaint(grad)
+//            else
+//              g2.setPaint(new Color(51,90,34))
+            g2.fillRect(0, 0, this.getWidth, this.getHeight)
+      if (level.getBackground != null) {
+//        val boffset = level.getBackgroundOffset
+//        val img = ImageFunctions.tileBySize(level.getBackground, this.getWidth, this.getHeight, (boffset.getX - shift.getX).toInt, (boffset.getY - shift.getY).toInt)
+//        g.drawImage(img, 0, 0, null)
+      }
       this.level.tick()
       for (i <- this.level.getObjects.indices) {
         val obj: Obj = this.level.getObject(i)
@@ -163,9 +179,9 @@ class Component extends JComponent {
           g.setColor(Color.green)
           g2.draw(new Line(objInfo.getPosition + shift, objInfo.getPosition + objInfo.getDimensions + shift))
           //g.setColor(Color.GREEN)
-          g.drawRect(objInfo.getMask.getX.toInt+shift.getX.toInt,objInfo.getMask.getY.toInt+shift.getY.toInt,objInfo.getMask.getWidth.toInt,objInfo.getMask.getHeight.toInt)
+          g.drawRect(objInfo.getMask.getX.toInt + shift.getX.toInt, objInfo.getMask.getY.toInt + shift.getY.toInt, objInfo.getMask.getWidth.toInt, objInfo.getMask.getHeight.toInt)
           g.setColor(Color.blue)
-          g.drawRect(objInfo.getHitBox.getX.toInt+shift.getX.toInt,objInfo.getHitBox.getY.toInt+shift.getY.toInt,objInfo.getHitBox.getWidth.toInt,objInfo.getHitBox.getHeight.toInt)
+          g.drawRect(objInfo.getHitBox.getX.toInt + shift.getX.toInt, objInfo.getHitBox.getY.toInt + shift.getY.toInt, objInfo.getHitBox.getWidth.toInt, objInfo.getHitBox.getHeight.toInt)
           LineSplitter.draw(objInfo.toString, 40, 20, g)
           //g.drawString(objInfo.toString(), 40, 20)
           if (objInfo.getGround != null) {
@@ -195,6 +211,15 @@ class Component extends JComponent {
 }
 
 object Main {
+
+  def loadImage(path: String): BufferedImage = {
+    val file: File = new File("src\\" + path)
+    if (file.exists()) {
+      return ImageIO.read(file)
+    }
+    null
+  }
+
   private val game: Component = new Component()
 
   def currentTime: Long = System.currentTimeMillis()
@@ -211,12 +236,14 @@ object Main {
     //    game = new Component()
     //   var timer: Int = 0
     //    var changed: Boolean = false
-    frame.setSize(800, 800)
+    frame.setSize(600, 600)
+    frame.setLocationRelativeTo(null) //This centers the JFrame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     frame.add(game)
     frame.setVisible(true)
     frame.addKeyListener(Input)
     frame.addMouseListener(MouseClicks)
+    frame.setResizable(false)
     //    var box: Box = new Box(200, 100, 50, 50) //This is for testing purposes
     //    var box2: Box = new Box(0, 300, 1000, 20)//This is for testing purposes
     //    var box3: Box = new Box(300, 50, 50, 50)//This is for testing purposes

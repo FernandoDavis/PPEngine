@@ -54,12 +54,14 @@ object Behaviour {
                 this.owner.setTargetObj(null)
                 this.owner.setTargetPosition(null)
               } else {
-                if (secondary.index == 6 && !lostIt) {
-                  lostIt=true
-                  secondary.doubleParam2 = owner.getCenterX
-                  secondary.doubleParam3 = owner.getCenterY
+                if (secondary != null) {
+                  if (secondary.index == 6 && !lostIt) {
+                    lostIt = true
+                    secondary.doubleParam2 = owner.getCenterX
+                    secondary.doubleParam3 = owner.getCenterY
+                  }
+                  runSecondary()
                 }
-                runSecondary()
               }
             }
         }
@@ -159,8 +161,8 @@ object Behaviour {
     }
   }
 
-  def moveBackAndForthH(distance: Double, x: Double, y:Double): Behaviour ={
-    this.moveBackAndForthH(distance,new Vector2D(x,y))
+  def moveBackAndForthH(distance: Double, x: Double, y: Double): Behaviour = {
+    this.moveBackAndForthH(distance, new Vector2D(x, y))
   }
 
   def moveBackAndForthH(distance: Double, aroundPosition: Vector2D): Behaviour = {
@@ -179,13 +181,14 @@ object Behaviour {
           owner.setTargetDistance(5)
         }
       }
+
       val rand = new Random()
-      rand.setSeed(System.nanoTime()*2+System.currentTimeMillis()*3)
+      rand.setSeed(System.nanoTime() * 2 + System.currentTimeMillis() * 3)
 
 
       var h: Int = 1
-      if(rand.nextBoolean())
-        h= -1
+      if (rand.nextBoolean())
+        h = -1
 
       override def run(): Unit = {
         super.run()
@@ -252,6 +255,8 @@ abstract class Behaviour() {
   }
 
   def ~(behaviour: Behaviour): Behaviour = {
+    if(behaviour==null)
+      return this
     if (behaviour.owner == null)
       behaviour.setOwner(owner)
     else if (this.owner == null && behaviour.owner != null)
@@ -259,6 +264,7 @@ abstract class Behaviour() {
     this.secondary = behaviour
     this
   }
+
 
   def runSecondary(): Unit = {
     if (secondary != null)
@@ -276,6 +282,12 @@ abstract class Behaviour() {
     p
   }
 
+  def cloneSecondary: Behaviour = {
+    if(secondary!=null)
+      return secondary.clone()
+    null
+  }
+
 
   def setOwner(owner: Obj): Unit = {
     if (owner == null)
@@ -287,14 +299,14 @@ abstract class Behaviour() {
 
   override def clone(): Behaviour = {
     index match {
-      case 0 => return Behaviour.randomFly
-      case 1 => return Behaviour.followPlayer
-      case 2 => return Behaviour.constantVelocity(dp1, dp2)
-      case 3 => return Behaviour.jump
-      case 4 => return Behaviour.attackPlayer(dp1.toInt)
-      case 5 => return Behaviour.moveBackAndForthH(dp1)
-      case 6 => return Behaviour.moveBackAndForthH(dp1,dp2,dp3)
-      case _ => throw new NullPointerException("The behaviour with index "+index+" has not been added to the clone list")
+      case 0 => return Behaviour.randomFly~cloneSecondary
+      case 1 => return Behaviour.followPlayer~cloneSecondary
+      case 2 => return Behaviour.constantVelocity(dp1, dp2)~cloneSecondary
+      case 3 => return Behaviour.jump~cloneSecondary
+      case 4 => return Behaviour.attackPlayer(dp1.toInt)~cloneSecondary
+      case 5 => return Behaviour.moveBackAndForthH(dp1)~cloneSecondary
+      case 6 => return Behaviour.moveBackAndForthH(dp1, dp2, dp3)~cloneSecondary
+      case _ => throw new NullPointerException("The behaviour with index " + index + " has not been added to the clone list")
     }
     null
   }

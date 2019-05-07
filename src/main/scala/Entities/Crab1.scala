@@ -24,7 +24,21 @@ class Crab1(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: In
   this.anchored = false
   this.imageOffset=new Vector2D(0,2)
   animation.setFrameSpeed(0.1*this.speed)
+  val sound: Sound = new Sound("Sounds/step1.wav")
+  sound.setSoundRadius(200)
+  //sound.setVolumeSuppression(0.2f)
+  val delay: Int = 100
+  var time: Long = 0
 
+
+
+  override def tick(): Unit ={
+    super.tick()
+    if(System.currentTimeMillis()-time>=delay&&ground!=null&&math.abs(this.getVelocity.getX)>0.5){
+      time=System.currentTimeMillis()
+      sound.play(this.getPosition)
+    }
+  }
 
   override def death(): Unit = {
     Main.getGame.currentLevel.getObjects.remove(this)

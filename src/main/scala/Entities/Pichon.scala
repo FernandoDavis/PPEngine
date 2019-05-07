@@ -8,7 +8,7 @@ class Pichon(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
 
   def this(v: Vector2D) = this(v.getX.toInt, v.getY.toInt, 141, 141)
 
-  def this(x: Integer, y: Integer) = this(x, y, 141, 141)
+  def this(x: Integer, y: Integer) = this(x, y, 62, 42)
 
   val spriteSheet: SpriteSheet = new SpriteSheet(loadImage("IMAGES/pichon/sheet.png"), 3, 1, 141, 141, 3)
   this.animation = new Animation
@@ -26,13 +26,24 @@ class Pichon(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
   this.gravity = 0
   this.hitBoxOffset = new Vector2D(-8,5)
   this.setHitBoxDimensions(28,20)
-  this.setMaskDimensions(62,42)
+  //this.setMaskDimensions(62,42)
+  this.setImageDimensions(141,141)
   animation.setFrameSpeed(0.2 * this.speed)
+  val sound: Sound = new Sound("Sounds/pichon.wav")
+  sound.setSoundRadius(1000)
+  sound.setVolumeSuppression(0.7f)
+  val delay: Int = 100
+  var time: Long = 0
 
 
   override def tick(): Unit = {
     super.tick()
     this.imageRotation = math.sin(System.currentTimeMillis() / 400.0) * math.toRadians(20)
+    if(System.currentTimeMillis()-time>=delay){
+      time=System.currentTimeMillis()
+      sound.play(this.getPosition)
+    }
+
   }
 
   override def death(): Unit = {

@@ -7,7 +7,9 @@ import java.io.File
 
 import javax.imageio.ImageIO
 import javax.swing._
-
+/**
+  * author: Gabriel Soto Ramos
+  */
 abstract class Obj() {
 
   protected var x: Int = 0
@@ -70,14 +72,16 @@ abstract class Obj() {
   protected var imageOffset: Vector2D = new Vector2D(0, 0)
   protected var imageRotation: Double = 0
   protected var rotationOffset: Double = 0
+  protected var imageDimensions: Vector2D = new Vector2D(0, 0)
+  protected var customImageDimensions: Boolean = false
   protected var customMaskDimensions: Boolean = false
   protected var customHitBoxDimensions: Boolean = false
   protected var maskDimensions: Vector2D = new Vector2D(width, height)
   protected var hitBox: Rectangle = new Rectangle(this.width, this.height, this.Position.getX.toInt, this.Position.getY.toInt)
-  protected var hitBoxDimensions: Vector2D = new Vector2D(width,height)
+  protected var hitBoxDimensions: Vector2D = new Vector2D(width, height)
   protected var dir = 1
-  protected var vdir= 1
-  protected var hitBoxOffset: Vector2D = new Vector2D(0,0)
+  protected var vdir = 1
+  protected var hitBoxOffset: Vector2D = new Vector2D(0, 0)
 
   def setCanBeTouchedByOthers(boolean: Boolean): Unit = {
     this.canBeTouched = boolean
@@ -90,7 +94,7 @@ abstract class Obj() {
   def reset(): Unit = {
     this.setPosition(this.startPosition)
     val newPersonality = this.personality.clone()
-    this.personality=newPersonality
+    this.personality = newPersonality
   }
 
   def isTouchable: Boolean = this.canBeTouched
@@ -192,38 +196,53 @@ abstract class Obj() {
     this.textureFollowsObject = boolean
   }
 
-  def setMaskDimensions(width: Double, height:Double): Unit ={
-    this.setMaskDimensions(new Vector2D(width,height))
+  def setMaskDimensions(width: Double, height: Double): Unit = {
+    this.setMaskDimensions(new Vector2D(width, height))
   }
 
-  def setMaskDimensions(dimensions: Vector2D): Unit ={
-    this.customMaskDimensions=true
-    this.maskDimensions=dimensions
+  def setMaskDimensions(dimensions: Vector2D): Unit = {
+    this.customMaskDimensions = true
+    this.maskDimensions = dimensions
   }
 
-  def setHitBoxDimensions(width: Double, height:Double): Unit ={
-    this.setHitBoxDimensions(new Vector2D(width,height))
+  def setHitBoxDimensions(width: Double, height: Double): Unit = {
+    this.setHitBoxDimensions(new Vector2D(width, height))
   }
-  def setHitBoxDimensions(dimensions: Vector2D): Unit ={
-    this.customHitBoxDimensions=true
-    this.hitBoxDimensions=dimensions
+
+  def setHitBoxDimensions(dimensions: Vector2D): Unit = {
+    this.customHitBoxDimensions = true
+    this.hitBoxDimensions = dimensions
   }
+
   def getHitBox: Rectangle = this.hitBox
 
-  def setHitBoxOffset(offset: Vector2D): Unit ={
-    this.hitBoxOffset=offset
+  def setHitBoxOffset(offset: Vector2D): Unit = {
+    this.hitBoxOffset = offset
   }
-  def setHitBoxOffset(x: Double, y: Double): Unit ={
-    this.hitBoxOffset=new Vector2D(x,y)
+
+  def setImageDimensions(width: Double, height: Double): Unit = {
+    this.customImageDimensions = true
+    this.imageDimensions = new Vector2D(width, height)
   }
-  def getHitBoxDimensions: Vector2D = new Vector2D(hitBox.getWidth,hitBox.getHeight)
+
+  def setImageDimensions(dimension: Vector2D): Unit = {
+    this.customImageDimensions = true
+    this.imageDimensions = dimension
+  }
+
+  def setCustomImageDimensions(boolean: Boolean): Unit = {
+    this.customImageDimensions = boolean
+  }
+
+  def setHitBoxOffset(x: Double, y: Double): Unit = {
+    this.hitBoxOffset = new Vector2D(x, y)
+  }
+
+  def getHitBoxDimensions: Vector2D = new Vector2D(hitBox.getWidth, hitBox.getHeight)
 
   protected def refreshMask() {
     //mask.setLocation((this.Position+this.maskDimensions).toPoint())//(this.Position.getX.toInt + maskOffset.getX.toInt, this.Position.getY.toInt + maskOffset.getY.toInt)
-    if (!customMaskDimensions)
-      mask.setSize(width, height)
-    else
-      mask.setSize(maskDimensions.toDimension())
+    mask.setSize(width, height)
     if (!customHitBoxDimensions)
       hitBox.setSize(width, height)
     else
@@ -231,13 +250,13 @@ abstract class Obj() {
     val hbL: Double = hitBoxOffset.getMagnitude
     val cos: Double = math.cos(this.imageRotation)
     val sin: Double = math.sin(this.imageRotation)
-    val xhr: Double = cos*hbL*dir
-    val yhr: Double = sin*hbL*vdir
+    val xhr: Double = cos * hbL * dir
+    val yhr: Double = sin * hbL * vdir
     val mL: Double = maskOffset.getMagnitude
-    val xmr: Double = cos*mL*dir
-    val ymr: Double = sin*mL*vdir
-    mask.setLocation((this.Position+new Vector2D(xmr,ymr)+this.maskOffset*(dir,vdir)+this.getDimensions/2-this.getMaskDimensions/2).toPoint())
-    hitBox.setLocation((this.Position+new Vector2D(xhr,yhr)+this.hitBoxOffset*(dir,vdir)+this.getDimensions/2-this.getHitBoxDimensions/2).toPoint())
+    val xmr: Double = cos * mL * dir
+    val ymr: Double = sin * mL * vdir
+    mask.setLocation((this.Position + new Vector2D(xmr, ymr) + this.maskOffset * (dir, vdir) + this.getDimensions / 2 - this.getMaskDimensions / 2).toPoint())
+    hitBox.setLocation((this.Position + new Vector2D(xhr, yhr) + this.hitBoxOffset * (dir, vdir) + this.getDimensions / 2 - this.getHitBoxDimensions / 2).toPoint())
 
   }
 
@@ -246,7 +265,6 @@ abstract class Obj() {
     this.height = height
     //this.refreshMask()
   }
-
 
 
   //  def isPassable(): Boolean={
@@ -359,15 +377,21 @@ abstract class Obj() {
         }
       }
       else {
-        g.drawImage(processImage(this.getImage), shift.getX.toInt + imageOffset.getX.toInt*dir, shift.getY.toInt + imageOffset.getY.toInt*vdir, this.width, this.height, comp)
+        var w: Double = this.width
+        var h: Double = this.height
+        if (this.customImageDimensions) {
+          w = imageDimensions.getX
+          h = imageDimensions.getY
+        }
+        g.drawImage(processImage(this.getImage, w.toInt, h.toInt), shift.getX.toInt + imageOffset.getX.toInt * dir - (w / 2).toInt + this.width / 2, shift.getY.toInt + imageOffset.getY.toInt * vdir - (h / 2).toInt + this.height / 2, w.toInt, h.toInt, comp)
         if (this.getTopTexture != null)
           g.drawImage(this.getTopTexture, shift.getX.toInt, shift.getY.toInt, this.width, this.height / 4, comp)
       }
     }
   }
 
-  def processImage(img: BufferedImage): BufferedImage = {
-    if (this.width != img.getWidth || this.height != img.getHeight) {
+  def processImage(img: BufferedImage, w: Int, h: Int): BufferedImage = {
+    if (w != img.getWidth || h != img.getHeight) {
       return ImageFunctions.resize(img, this.width, this.height)
     }
     img
@@ -375,6 +399,15 @@ abstract class Obj() {
 
   def collisionFiltering(obj: Obj): Boolean = {
     false //This gets overriden in entities and objects that need it, by default it should be false
+  }
+
+  def hasCustomImageDimensions: Boolean = customImageDimensions
+
+  def getCustomImageDimensions: Vector2D = {
+    if (this.customImageDimensions)
+      this.imageDimensions
+    else
+      new Vector2D(this.width, this.height)
   }
 
   def intersects(obj: Obj): Boolean = {
@@ -411,7 +444,7 @@ abstract class Obj() {
           else
             this.velocity.setY(obj.getVelocity.getY) //IT used to be 0
           this.ground = obj
-          this.setY(obj.getMask.getY - this.getMask.getHeight+(deltaDimensions/2).getY)
+          this.setY(obj.getMask.getY - this.getMask.getHeight + (deltaDimensions / 2).getY)
         }
       } else {
         this.overlap_NEW(obj)
@@ -474,16 +507,16 @@ abstract class Obj() {
   //    }
   //  }
 
-  def deltaDimensions: Vector2D = getDimensions-getMaskDimensions
+  def deltaDimensions: Vector2D = getDimensions - getMaskDimensions
 
   def overlap_NEW(obj: Obj) {
-    val dd: Vector2D =  (getDimensions-getMaskDimensions)/2
-    val odd: Vector2D =  (obj.getDimensions-obj.getMaskDimensions)/2
-    if ((this.getArea <= obj.getArea||obj.isAnchored) && obj != this) {
+    val dd: Vector2D = (getDimensions - getMaskDimensions) / 2
+    val odd: Vector2D = (obj.getDimensions - obj.getMaskDimensions) / 2
+    if ((this.getArea <= obj.getArea || obj.isAnchored) && obj != this) {
       if (mask.getY > obj.getMask.getCenterY + obj.getMask.getHeight / 2 - mask.getHeight / 2) {
         if (this.ground != null)
           return
-        this.Position.setY(obj.getMask.getY + obj.getMask.getHeight + 0 -dd.getY)
+        this.Position.setY(obj.getMask.getY + obj.getMask.getHeight + 0 - dd.getY)
         if (this.velocity.getY < 0)
           this.velocity.setY(0)
         return
@@ -505,21 +538,21 @@ abstract class Obj() {
       }
 
       if (mask.getY + mask.getHeight - 1 < obj.getMask.getY) {
-        this.Position.setY(obj.getMask.getY - mask.getHeight - 1+dd.getY)
+        this.Position.setY(obj.getMask.getY - mask.getHeight - 1 + dd.getY)
         if (this.velocity.getY < 0)
           this.velocity.setY(0)
       }
     } else if (this.getArea > obj.getArea && obj != this) {
 
       if (mask.getX > obj.getMask.getCenterX && obj.leftCollision) {
-        this.Position.setX(obj.getMask.getX + obj.getMask.getWidth + 0-dd.getX)
+        this.Position.setX(obj.getMask.getX + obj.getMask.getWidth + 0 - dd.getX)
         this.left = obj
         if (this.velocity.getX < 0)
           this.velocity.setX(0)
         return
       }
       if (mask.getX <= obj.getMask.getCenterX && obj.rightCollision) {
-        this.Position.setX(obj.getMask.getX - mask.getWidth - 0+dd.getX)
+        this.Position.setX(obj.getMask.getX - mask.getWidth - 0 + dd.getX)
         this.right = obj
         if (this.velocity.getX > 0)
           this.velocity.setX(0)

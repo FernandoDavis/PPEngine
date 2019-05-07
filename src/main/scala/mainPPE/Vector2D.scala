@@ -133,6 +133,9 @@ class Vector2D {
   def distance(v: Vector2D): Double = {
     return math.sqrt(math.pow(x - v.getX, 2) + math.pow(y - v.getY, 2))
   }
+  def distance(x: Double, y: Double): Double = {
+    return math.sqrt(math.pow(this.x - x, 2) + math.pow(this.y - y, 2))
+  }
 
   def translate(x: Double, y: Double): Unit = {
     this.setY(this.getY + y)

@@ -23,6 +23,7 @@ class Level1 extends Level {
     val wall4: Box = new Box(1000 - 100, 300 - 500 - 50, 50, 500)
     val wall5: Box = new Box(1050 , -300, 50, 500)
     val insect: Pichon = new Pichon(300,0)
+    this.background=Main.loadImage("IMAGES/bkg1.png")
 //    val crab: Crab1 = new Crab1(300,100)
 //    val crab2: Crab1 = new Crab1(500,100)
     box3.setAnchored(false)
@@ -31,9 +32,9 @@ class Level1 extends Level {
     box5.setMaskColor(Color.RED)
     this.addObject(floor, box3, box4, wall1, wall2, wall3, wall4, box5,wall5,box6,insect)
 
-//    for(i <- 0 until 10){
-//      this.addObject(new Crab1(300+i*60,100))
-//    }
+    for(i <- 0 until 5){
+      this.addObject(new Crab1(300+i*60,100))
+    }
 
     for(obj <- this.getObjects){
       if(obj.isInstanceOf[Box]&&obj.getPersonality.size==0){
@@ -49,6 +50,7 @@ class Level1 extends Level {
 
   override def tick() {
     super.tick()
+    this.backgroundOffset.setX(200*math.sin(math.toRadians(this.getTime*0.1)))
   }
 
 }
