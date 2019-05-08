@@ -7,10 +7,10 @@ class Vector2D {
   var x: Double = 0
   var y: Double = 0
 
-  def this(x: Double, y: Double){
+  def this(x: Double, y: Double) {
     this()
-    this.x=x
-    this.y=y
+    this.x = x
+    this.y = y
   }
 
   def this(X: Int, Y: Int) = this(X.toDouble, Y.toDouble)
@@ -120,6 +120,16 @@ class Vector2D {
 
   def getY: Double = y
 
+  def set(x: Double, y: Double) {
+    this.x = x
+    this.y = y
+  }
+
+  def set(vector: Vector2D) {
+    this.x = vector.x
+    this.y = vector.y
+  }
+
   def setX(x: Double) {
     this.x = x
   }
@@ -133,6 +143,7 @@ class Vector2D {
   def distance(v: Vector2D): Double = {
     return math.sqrt(math.pow(x - v.getX, 2) + math.pow(y - v.getY, 2))
   }
+
   def distance(x: Double, y: Double): Double = {
     return math.sqrt(math.pow(this.x - x, 2) + math.pow(this.y - y, 2))
   }
@@ -156,7 +167,7 @@ class Vector2D {
   }
 
   def toDimension(): Dimension = {
-    new Dimension(this.getX.toInt,this.getY.toInt)
+    new Dimension(this.getX.toInt, this.getY.toInt)
   }
 
   def roundToNDigits(n: Int): Vector2D = {

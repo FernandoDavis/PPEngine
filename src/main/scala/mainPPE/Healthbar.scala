@@ -107,7 +107,7 @@ class Healthbar extends UIBox {
     }
     if (obj != null) {
       if (anchoredToObject) {
-        this.setPosition((obj.getCenter - (0, obj.height / 2 + 5) - this.w / 2) + Main.getGame.getScreenShift)
+        this.setPosition((obj.getCenter - (0, obj.getHeight / 2 + 5) - this.w / 2) + Main.getGame.getScreenShift)
       }
       if (obj.isInstanceOf[Entity]) {
         val entity: Entity = obj.asInstanceOf[Entity]

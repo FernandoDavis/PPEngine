@@ -16,12 +16,8 @@ class Animation {
   }
 
   protected var frameSpeed: Double = 1
-  protected var Standing: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
-  protected var sIndex: Double = 0
-  protected var Moving: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
-  protected var mIndex: Double = 0
-  protected var Jumping: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
-  protected var jIndex: Double = 0
+  protected var frames: ArrayList[BufferedImage] = new ArrayList[BufferedImage]()
+  protected var index: Double = 0
 
 
   private def next(n: Double, arrayList: ArrayList[BufferedImage]): Double = {
@@ -32,78 +28,38 @@ class Animation {
     spriteSheet.getArrayListOfImages
   }
 
-  def resetIndexes(): Unit = {
-    mIndex = 0
-    sIndex = 0
-    jIndex = 0
+  def reset(): Unit = {
+    index = 0
   }
 
-  def resetMoving(): Unit = {
-    mIndex = 0
-  }
-
-  def resetJumping(): Unit = {
-    jIndex = 0
-  }
-
-  def resetStanding(): Unit = {
-    sIndex = 0
-  }
+  def getIndex: Int = index.toInt
 
   def setFrameSpeed(frameSpeed: Double): Unit ={
     this.frameSpeed=frameSpeed
   }
 
-  def setMovingAnimation(list: BufferedImage*): Unit = {
-    Moving.clear()
-    Moving.addSeq(list)
-  }
-  def setJumpingAnimation(list: BufferedImage*): Unit = {
-    Jumping.clear()
-    Jumping.addSeq(list)
-  }
-  def setStandingAnimation(list: BufferedImage*): Unit = {
-    Standing.clear()
-    Standing.addSeq(list)
+  def setAnimationSeq(list: Seq[BufferedImage]): Unit = {
+    frames.clear()
+    frames.addSeq(list)
   }
 
-  def setMovingAnimation(list: ArrayList[BufferedImage]): Unit = {
-    this.Moving = list
+  def setAnimation(list: ArrayList[BufferedImage]): Unit = {
+    this.frames = list
   }
 
-  def setJumpingAnimation(list: ArrayList[BufferedImage]): Unit = {
-    this.Jumping = list
+  def setAnimation(list: BufferedImage*): Unit = {
+    frames.clear()
+    frames.addSeq(list)
   }
 
-  def setStandingAnimation(list: ArrayList[BufferedImage]): Unit = {
-    this.Standing = list
-  }
 
-  def getJumpingImg: BufferedImage = {
-    resetStanding()
-    resetMoving()
-    val img = Jumping.get(jIndex.toInt)
-    jIndex = next(jIndex, Jumping)
-    img
-  }
 
-  def getStandingImg: BufferedImage = {
-    resetJumping()
-    resetMoving()
-    val img = Standing.get(sIndex.toInt)
-    sIndex = next(sIndex, Standing)
-    img
-  }
-
-  def getMovingImg: BufferedImage = {
-    resetJumping()
-    resetStanding()
-    val img = Moving.get(mIndex.toInt)
-    mIndex = next(mIndex, Moving)
+  def getImg: BufferedImage = {
+    val img = frames.get(index.toInt)
+    index = next(index, frames)
     img
   }
 
   def getFrameSpeed: Double = frameSpeed
-
 
 }

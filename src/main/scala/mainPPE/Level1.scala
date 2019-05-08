@@ -30,11 +30,11 @@ class Level1 extends Level {
     box3.setSpeed(3)
     box3.setPersonality(Behaviour.jump+Behaviour.moveBackAndForthH(400)+Behaviour.attackPlayer(20))
     box5.setMaskColor(Color.RED)
-    this.addObject(floor, box3, box4, wall1, wall2, wall3, wall4, box5,wall5,box6,insect)
+    this.addObject(floor, box4, wall1, wall2, wall3, wall4, box5,wall5,box6,insect)
 
-    for(i <- 0 until 5){
-      this.addObject(new Crab1(300+i*60,100))
-    }
+//    for(i <- 0 until 5){
+//      this.addObject(new Crab1(300+i*60,100))
+//    }
 
     for(obj <- this.getObjects){
       if(obj.isInstanceOf[Box]&&obj.getPersonality.size==0){

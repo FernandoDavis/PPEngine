@@ -11,10 +11,11 @@ import javax.swing._
 
 class Component extends JComponent {
 
+  System.setProperty("sun.java2d.opengl", "True")
   private var levelList = new ArrayList[Level]()
   private var level: Level = null
   var speed: Integer = 10
-  val DebugMode: Boolean = false
+  val DebugMode: Boolean = true
   var objInfo: Obj = null
   var player: Obj = null
   private var shift: Vector2D = new Vector2D(0, 0)
@@ -30,6 +31,7 @@ class Component extends JComponent {
     val pos = obj.getPosition + shift
     pos.getX + w >= 0 && pos.getX <= this.getWidth && pos.getY + h >= 0 && pos.getY <= this.getHeight
   }
+
 
   def getScreenShift: Vector2D = {
     if (player != null)
@@ -62,8 +64,10 @@ class Component extends JComponent {
       if (this.player != null) {
         shift = this.player.getCenter * (-1) + (this.getWidth / 2, this.getHeight / 2)
       }
-      else
+      else {
         shift = new Vector2D(0, 0)
+        println(" W A T")
+      }
       for (i <- this.level.getObjects.indices) {
         val obj1: Obj = this.level.getObject(i)
         if (obj1 != null) {
@@ -147,23 +151,24 @@ class Component extends JComponent {
   }
 
   override def paintComponent(g: Graphics) {
-    super.paintComponent(g)
+    //super.paintComponent(g)
     val g2: Graphics2D = g.asInstanceOf[Graphics2D]
-    g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+    //g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+    //g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_OFF)
     this.tick()
     val mouse = mousePosition //Incase it changes while the code below loads
     if (this.level != null) {
-            val deathY = level.getDeathY + shift.getY.toInt
-            val grad = new GradientPaint(0, 0, new Color(51,90,34), 0,this.getHeight, new Color(0,30,0))
-//            if (deathY < this.getHeight)
-              g2.setPaint(grad)
-//            else
-//              g2.setPaint(new Color(51,90,34))
-            g2.fillRect(0, 0, this.getWidth, this.getHeight)
+      //val deathY = level.getDeathY + shift.getY.toInt
+      val grad = new GradientPaint(0, 0, new Color(51, 90, 34), 0, this.getHeight, new Color(0, 30, 0))
+      //            if (deathY < this.getHeight)
+      g2.setPaint(grad)
+      //            else
+      //              g2.setPaint(new Color(51,90,34))
+      g2.fillRect(0, 0, this.getWidth, this.getHeight)
       if (level.getBackground != null) {
-//        val boffset = level.getBackgroundOffset
-//        val img = ImageFunctions.tileBySize(level.getBackground, this.getWidth, this.getHeight, (boffset.getX - shift.getX).toInt, (boffset.getY - shift.getY).toInt)
-//        g.drawImage(img, 0, 0, null)
+        //        val boffset = level.getBackgroundOffset
+        //        val img = ImageFunctions.tileBySizeLOW(level.getBackground, this.getWidth, this.getHeight, (boffset.getX - shift.getX).toInt, (boffset.getY - shift.getY).toInt)
+        //        g2.drawImage(img, 0, 0, null)
       }
       this.level.tick()
       for (i <- this.level.getObjects.indices) {
@@ -200,12 +205,24 @@ class Component extends JComponent {
             g.setColor(Color.BLACK)
             g2.drawString("Target Position", (target.getX + shift.getX).toInt, (target.getY + shift.getY).toInt)
           }
+          g.setColor(Color.BLUE)
+          if (objInfo.getPoints != null)
+            for (p <- objInfo.getPoints.par) {
+              g2.draw(new Line(objInfo.getCenter + shift, p + shift))
+              g.drawOval((p.getX + shift.getX).toInt - 5, (p.getY + shift.getY).toInt - 5, 10, 10)
+            }
         }
         // g.setColor(Color.red)
         // g.drawLine(0, (currentLevel.getDeathY + shift.getY).toInt, this.getWidth, (currentLevel.getDeathY + shift.getY).toInt)
+        var string: String = "Number of Objects: " + level.getObjects.size
+        g.drawString(string, this.getWidth - g.getFontMetrics.stringWidth(string) - 10, this.getHeight - 50)
+        string = "Level object list capacity: " + level.getObjects.capacity
+        g.drawString(string, this.getWidth - g.getFontMetrics.stringWidth(string) - 10, this.getHeight - 20)
       }
 
-    }
+
+    } else
+      println("WTF")
 
   }
 }
@@ -220,6 +237,13 @@ object Main {
     null
   }
 
+  def imgConversion(img: BufferedImage): BufferedImage = {
+    val ge = GraphicsEnvironment.getLocalGraphicsEnvironment
+    val gd = ge.getDefaultScreenDevice
+    val gc = gd.getDefaultConfiguration
+    gc.createCompatibleImage(img.getWidth, img.getHeight, img.getTransparency)
+  }
+
   private val game: Component = new Component()
 
   def currentTime: Long = System.currentTimeMillis()
@@ -231,6 +255,7 @@ object Main {
   var currentLevelIndex: Int = 0
 
   def run() {
+    System.setProperty("sun.java2d.opengl", "True")
     val frame: JFrame = new JFrame()
     //var input: Input = new Input()
     //    game = new Component()
@@ -243,7 +268,7 @@ object Main {
     frame.setVisible(true)
     frame.addKeyListener(Input)
     frame.addMouseListener(MouseClicks)
-    frame.setResizable(false)
+    // frame.setResizable(false)
     //    var box: Box = new Box(200, 100, 50, 50) //This is for testing purposes
     //    var box2: Box = new Box(0, 300, 1000, 20)//This is for testing purposes
     //    var box3: Box = new Box(300, 50, 50, 50)//This is for testing purposes

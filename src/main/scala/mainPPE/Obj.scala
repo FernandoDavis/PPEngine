@@ -5,10 +5,12 @@ import java.awt.image.BufferedImage
 import java.awt._
 import java.io.File
 
+import Objects.Projectile
 import javax.imageio.ImageIO
 import javax.swing._
+
 /**
-  * author: Gabriel Soto Ramos
+  * @author: Gabriel Soto Ramos
   */
 abstract class Obj() {
 
@@ -82,6 +84,8 @@ abstract class Obj() {
   protected var dir = 1
   protected var vdir = 1
   protected var hitBoxOffset: Vector2D = new Vector2D(0, 0)
+  protected var originalPoints: ArrayList[Vector2D] = new ArrayList[Vector2D]()
+  protected var points: ArrayList[Vector2D] = new ArrayList[Vector2D]()
 
   def setCanBeTouchedByOthers(boolean: Boolean): Unit = {
     this.canBeTouched = boolean
@@ -150,6 +154,8 @@ abstract class Obj() {
   def getArea: Double = this.width * this.height
 
   def getImage: BufferedImage = {
+    if(this.animated&&this.animation!=null)
+      return this.animation.getImg
     img
   }
 
@@ -169,10 +175,10 @@ abstract class Obj() {
   }
 
   def setImg(path: String) {
-    val file: File = new File("src\\" + path)
-    if (file.exists()) {
-      this.img = ImageIO.read(file)
-    }
+        val file: File = new File("src\\" + path)
+        if (file.exists()) {
+          this.img = ImageIO.read(file)
+        }
   }
 
 
@@ -238,6 +244,25 @@ abstract class Obj() {
     this.hitBoxOffset = new Vector2D(x, y)
   }
 
+  def clearPoints(): Unit ={
+    this.points.clear()
+    this.originalPoints.clear()
+  }
+
+  def addPoint(x: Double, y: Double): Unit ={
+    this.addPoint(new Vector2D(x,y))
+  }
+
+  def addPoint(point: Vector2D): Unit ={
+    this.originalPoints.add(point)
+    this.points.add(point.clone())
+  }
+
+  def getPoint(index: Int): Vector2D ={
+    points.get(index)
+  }
+  def getPoints: ArrayList[Vector2D] = points
+
   def getHitBoxDimensions: Vector2D = new Vector2D(hitBox.getWidth, hitBox.getHeight)
 
   protected def refreshMask() {
@@ -257,7 +282,15 @@ abstract class Obj() {
     val ymr: Double = sin * mL * vdir
     mask.setLocation((this.Position + new Vector2D(xmr, ymr) + this.maskOffset * (dir, vdir) + this.getDimensions / 2 - this.getMaskDimensions / 2).toPoint())
     hitBox.setLocation((this.Position + new Vector2D(xhr, yhr) + this.hitBoxOffset * (dir, vdir) + this.getDimensions / 2 - this.getHitBoxDimensions / 2).toPoint())
-
+    if(originalPoints!=null)
+      if(originalPoints.size>0)
+        for(i <- originalPoints.indices.par){
+          val op = originalPoints.get(i)*(dir,vdir)
+          val p = points.get(i)
+          val x = op.getX*cos-op.getY*sin
+          val y = op.getY*cos+op.getX*sin
+          p.set(this.Position+this.getDimensions/2+(x,y)+imageOffset)
+        }
   }
 
   def setDimensions(width: Int, height: Int) {
@@ -459,10 +492,16 @@ abstract class Obj() {
     }
   }
 
+  def projectileCollision(projectile: Projectile): Unit ={
+
+  }
+
   def collision(obj: Obj) {
     if (!this.anchored && obj.canBeTouched && this.canTouch) {
-      //personality.runCollisionBehaviours(obj)
-      //obj.getPersonality.runCollisionBehaviours(this)
+      if(obj.isInstanceOf[Projectile]){
+        projectileCollision(obj.asInstanceOf[Projectile])
+        return
+      }
       if (this.getPosition.getY + this.getMask.getHeight * 3 / 4 - (this.velocity.getY * 2) < obj.getY) {
         if (this.velocity.getY > 0) { // && obj.yThru <= 0) {
           this.airTime = 0 //DO NOT REMOVE
@@ -874,5 +913,9 @@ abstract class Obj() {
   }
 
   def getDimensions: Vector2D = new Vector2D(width, height)
+
+  def destroy(): Unit ={
+    Main.getGame.currentLevel.removeObject(this)
+  }
 
 }

@@ -94,7 +94,7 @@ class Sound {
   }
 
   def play(): Unit = {
-    if (audioFile == null || volume < 1)
+    if (audioFile == null || volume < 1 || volumeSuppress>=1)
       return
     else if (loops < 0)
       stop()
@@ -110,7 +110,7 @@ class Sound {
         val pan: FloatControl = audioClip.getControl(FloatControl.Type.PAN).asInstanceOf[FloatControl]
         pan.setValue(panning)
       }
-      gain.setValue(getGain(volume))
+      gain.setValue(getGain(volume*(1-volumeSuppress)))
       audioClip.setFramePosition(0)
       audioClip.addLineListener(listener)
       audioClip.start()

@@ -3,8 +3,8 @@ package mainPPE
 import scala.reflect.ClassTag
 
 class ArrayList[E >: Null: ClassTag] extends Iterable[E] {
-  private val minCap: Int = 10
-  private var len: Int = 10
+  private val minCap: Int = 100
+  private var len: Int = 100
 
   def this(int: Int) {
     this()
@@ -159,7 +159,7 @@ class ArrayList[E >: Null: ClassTag] extends Iterable[E] {
   override def iterator: Iterator[E] = new iter
 
   private def shiftLeft(index: Int): Unit = {
-    for (i: Int <- index until Size) {
+    for (i: Int <- index until Size-1) {
       this.elements(i) = this.elements(i + 1)
     }
   }
@@ -172,10 +172,10 @@ class ArrayList[E >: Null: ClassTag] extends Iterable[E] {
 
   private def changeCapacity(newCapacity: Int): Unit = {
     if(newCapacity<=0)
-      {
-        this.clear()
-        return
-      }
+    {
+      this.clear()
+      return
+    }
     var newElements: Array[E] = new Array[E](newCapacity)
     for (i <- 0 until Size) {
       newElements(i) = elements(i)

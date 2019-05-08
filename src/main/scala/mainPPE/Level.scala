@@ -18,6 +18,7 @@ abstract class Level {
   protected var player: Player = null
   protected var deathY: Int = 500
   protected var music: Sound = new Sound("Sounds/overworld3.wav")
+  music.setVolumeSuppression(0.5f)
   protected var background: BufferedImage = null
   protected var backgroundOffset: Vector2D = new Vector2D(0,0)
   music.setLoop(-1)
@@ -29,6 +30,7 @@ abstract class Level {
   def getMusic: Sound = music
 
   def clearObjects(): Unit ={
+    println("Cleared all objects")
     Objects.clear()
   }
 
@@ -58,6 +60,9 @@ abstract class Level {
 
   def addObject(obj: Obj) {
     this.Objects.add(obj)
+  }
+  def removeObject(obj: Obj) {
+    this.Objects.remove(obj)
   }
 
   def addObject(objs: Obj*) {

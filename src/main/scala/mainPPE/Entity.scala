@@ -3,8 +3,10 @@ package mainPPE
 import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
 import java.awt.{Graphics, Graphics2D}
+import java.io.File
 
 import Entities.Player
+import javax.imageio.ImageIO
 import javax.swing.JComponent
 
 import scala.util.Random
@@ -18,6 +20,7 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
   this.canBeTouched = false
   protected var healthbar: Healthbar = new Healthbar(this)
   protected var random: Random = new Random()
+  protected var entityAnimation: EntityAnimation = null
   healthbar.setConstant(false)
   healthbar.setAlpha(0)
   random.setSeed(this.getHealth.toLong + System.currentTimeMillis() + System.nanoTime() + this.MaxHealth.toLong)
@@ -78,18 +81,18 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
   }
 
   override def getImage: BufferedImage = {
-    if (this.animated && animation != null) {
+    if (this.animated && entityAnimation != null) {
       if (ground == null && gravity != 0) {
         if (dir >= 0)
-          return animation.getJumpingImg
+          return entityAnimation.getJumpingImg
         else
-          return ImageFunctions.flipX(animation.getJumpingImg)
+          return ImageFunctions.flipX(entityAnimation.getJumpingImg)
       }
       var img: BufferedImage = null
       if (moving)
-        img = animation.getMovingImg
+        img = entityAnimation.getMovingImg
       else
-        img = animation.getStandingImg
+        img = entityAnimation.getStandingImg
       if (dir >= 0)
         return ImageFunctions.rotateRadians(img, this.imageRotation + rotationOffset)
       else
@@ -97,6 +100,27 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
     }
     super.getImage
   }
+
+//  override def getImage: BufferedImage = {
+//    if (this.animated && animation != null) {
+//      if (ground == null && gravity != 0) {
+//        if (dir >= 0)
+//          return animation.getJumpingImg
+//        else
+//          return ImageFunctions.flipX(animation.getJumpingImg)
+//      }
+//      var img: BufferedImage = null
+//      if (moving)
+//        img = animation.getMovingImg
+//      else
+//        img = animation.getStandingImg
+//      if (dir >= 0)
+//        return ImageFunctions.rotateRadians(img, this.imageRotation + rotationOffset)
+//      else
+//        return ImageFunctions.rotateRadians(ImageFunctions.flipX(img), this.imageRotation + rotationOffset)
+//    }
+//    super.getImage
+//  }
 
   //  override def drawObj(g: Graphics, comp: JComponent): Unit = {
   //    super.drawObj(g, comp)
@@ -107,4 +131,68 @@ abstract class Entity(x: Int, y: Int, w: Int, h: Int) extends Obj(x: Int, y: Int
     super.drawObj(g, comp, offset)
     healthbar.draw(g)
   }
+
+  protected class EntityAnimation {
+
+    protected var Standing: Animation = new Animation
+    protected var Moving: Animation = new Animation
+    protected var Jumping: Animation = new Animation
+
+    def setFrameSpeed(frameSpeed: Double): Unit ={
+      Standing.setFrameSpeed(frameSpeed)
+      Jumping.setFrameSpeed(frameSpeed)
+      Moving.setFrameSpeed(frameSpeed)
+    }
+
+    def setMovingAnimation(list: BufferedImage*): Unit = {
+      Moving.setAnimationSeq(list)
+    }
+    def setJumpingAnimation(list: BufferedImage*): Unit = {
+      Jumping.setAnimationSeq(list)
+    }
+    def setStandingAnimation(list: BufferedImage*): Unit = {
+      Standing.setAnimationSeq(list)
+    }
+
+    def setMovingAnimation(list: ArrayList[BufferedImage]): Unit = {
+      this.Moving.setAnimation(list)
+    }
+
+    def setJumpingAnimation(list: ArrayList[BufferedImage]): Unit = {
+      this.Jumping.setAnimation(list)
+    }
+
+    def setStandingAnimation(list: ArrayList[BufferedImage]): Unit = {
+      this.Standing.setAnimation(list)
+    }
+    def setMovingAnimation(anim: Animation): Unit = {
+      this.Moving=anim
+    }
+
+    def setJumpingAnimation(anim: Animation): Unit = {
+      this.Jumping=anim
+    }
+
+    def setStandingAnimation(anim: Animation): Unit = {
+      this.Standing=anim
+    }
+
+    def getStandingImg: BufferedImage = {
+      Moving.reset()
+      Jumping.reset()
+      this.Standing.getImg
+    }
+    def getJumpingImg: BufferedImage = {
+      Moving.reset()
+      Standing.reset()
+      this.Jumping.getImg
+    }
+    def getMovingImg: BufferedImage = {
+      Jumping.reset()
+      Standing.reset()
+      this.Moving.getImg
+    }
+
+  }
+
 }

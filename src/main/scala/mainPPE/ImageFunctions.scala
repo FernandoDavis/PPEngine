@@ -85,4 +85,20 @@ object ImageFunctions {
     newImg
   }
 
+  def tileBySizeLOW(image: BufferedImage, width: Int, height: Int, xOffset: Int, yOffset: Int): BufferedImage = {
+
+    val newImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+    val iw = image.getWidth
+    val ih = image.getHeight
+
+    val g = newImg.getGraphics
+    for (x <- (-iw until width+iw by iw).par) {
+      for (y <- (-ih until height+ih by ih).par) {
+        g.drawImage(image, x - xOffset % image.getWidth, y - yOffset % image.getHeight, null)
+      }
+    }
+    g.dispose()
+    newImg
+  }
+
 }
