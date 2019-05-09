@@ -96,9 +96,12 @@ class Vector2D {
     math.atan2(v.getY, v.getX) - math.atan2(this.y, this.x)
   }
 
-  def UnitVector(v: Vector2D): Vector2D = {
+  def unitVector(v: Vector2D): Vector2D = {
     val a: Double = this.getDifferenceAngle(v)
     new Vector2D(math.cos(a), math.sin(a))
+  }
+  def unitVectorAngle: Double = {
+    math.atan2(y, x)
   }
 
   def getMagnitude: Double = {

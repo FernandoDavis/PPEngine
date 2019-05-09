@@ -32,9 +32,9 @@ class Level1 extends Level {
     box5.setMaskColor(Color.RED)
     this.addObject(floor, box4, wall1, wall2, wall3, wall4, box5,wall5,box6,insect)
 
-//    for(i <- 0 until 5){
-//      this.addObject(new Crab1(300+i*60,100))
-//    }
+    for(i <- 0 until 5){
+      this.addObject(new Crab1(300+i*60,100))
+    }
 
     for(obj <- this.getObjects){
       if(obj.isInstanceOf[Box]&&obj.getPersonality.size==0){

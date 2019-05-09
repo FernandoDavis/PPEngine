@@ -155,7 +155,7 @@ class Sound {
       val distance: Double = player.getPosition.distance(x, y)
       if (distance < soundRadius) {
         this.setVolume(((soundRadius - distance)/soundRadius).toFloat*120.0f*(1-volumeSuppress))
-        this.setPanning(((player.getX - x) / soundRadius).toFloat)
+        this.setPanning(((x-player.getX ) / soundRadius).toFloat)
         this.play()
       }
     }

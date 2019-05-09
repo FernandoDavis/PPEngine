@@ -7,7 +7,8 @@ import Entities.Player
 abstract class Level {
   //var input = Input
   //protected var Objects: Array[Obj] = new Array[Obj](255)
-  protected var Objects: ArrayList[Obj] = new ArrayList[Obj](255)
+//  protected var Objects: ArrayList[Obj] = new ArrayList[Obj](255)
+  protected var Objects: LinkedList[Obj] = new LinkedList[Obj]
   protected var StartPosition: Vector2D = new Vector2D(300, 300)
   protected var LevelSpeed: Integer = 10
   protected var nextLvl: Level = null
@@ -69,7 +70,7 @@ abstract class Level {
     objs.foreach(this.Objects.add(_)) //Hmm it didnt let me use this.Objects.add(objs) even tho the function for it is defined
   }
 
-  def getObjects: ArrayList[Obj] = {
+  def getObjects: LinkedList[Obj] = {
     this.Objects
   }
 

@@ -86,6 +86,7 @@ abstract class Obj() {
   protected var hitBoxOffset: Vector2D = new Vector2D(0, 0)
   protected var originalPoints: ArrayList[Vector2D] = new ArrayList[Vector2D]()
   protected var points: ArrayList[Vector2D] = new ArrayList[Vector2D]()
+  protected var targetOffset: Vector2D = new Vector2D(0,0)
 
   def setCanBeTouchedByOthers(boolean: Boolean): Unit = {
     this.canBeTouched = boolean
@@ -154,9 +155,14 @@ abstract class Obj() {
   def getArea: Double = this.width * this.height
 
   def getImage: BufferedImage = {
-    if(this.animated&&this.animation!=null)
-      return this.animation.getImg
-    img
+    var image: BufferedImage = img
+    if (this.animated && this.animation != null)
+      image = this.animation.getImg
+    if (dir < 0)
+      image = ImageFunctions.flipX(image)
+    if (this.imageRotation + this.rotationOffset != 0)
+      image = ImageFunctions.rotateRadians(image, this.imageRotation + rotationOffset)
+    image
   }
 
   def setMask(mask: Rectangle) {
@@ -175,10 +181,10 @@ abstract class Obj() {
   }
 
   def setImg(path: String) {
-        val file: File = new File("src\\" + path)
-        if (file.exists()) {
-          this.img = ImageIO.read(file)
-        }
+    val file: File = new File("src\\" + path)
+    if (file.exists()) {
+      this.img = ImageIO.read(file)
+    }
   }
 
 
@@ -244,23 +250,24 @@ abstract class Obj() {
     this.hitBoxOffset = new Vector2D(x, y)
   }
 
-  def clearPoints(): Unit ={
+  def clearPoints(): Unit = {
     this.points.clear()
     this.originalPoints.clear()
   }
 
-  def addPoint(x: Double, y: Double): Unit ={
-    this.addPoint(new Vector2D(x,y))
+  def addPoint(x: Double, y: Double): Unit = {
+    this.addPoint(new Vector2D(x, y))
   }
 
-  def addPoint(point: Vector2D): Unit ={
+  def addPoint(point: Vector2D): Unit = {
     this.originalPoints.add(point)
     this.points.add(point.clone())
   }
 
-  def getPoint(index: Int): Vector2D ={
+  def getPoint(index: Int): Vector2D = {
     points.get(index)
   }
+
   def getPoints: ArrayList[Vector2D] = points
 
   def getHitBoxDimensions: Vector2D = new Vector2D(hitBox.getWidth, hitBox.getHeight)
@@ -282,14 +289,14 @@ abstract class Obj() {
     val ymr: Double = sin * mL * vdir
     mask.setLocation((this.Position + new Vector2D(xmr, ymr) + this.maskOffset * (dir, vdir) + this.getDimensions / 2 - this.getMaskDimensions / 2).toPoint())
     hitBox.setLocation((this.Position + new Vector2D(xhr, yhr) + this.hitBoxOffset * (dir, vdir) + this.getDimensions / 2 - this.getHitBoxDimensions / 2).toPoint())
-    if(originalPoints!=null)
-      if(originalPoints.size>0)
-        for(i <- originalPoints.indices.par){
-          val op = originalPoints.get(i)*(dir,vdir)
+    if (originalPoints != null)
+      if (originalPoints.size > 0)
+        for (i <- originalPoints.indices.par) {
+          val op = originalPoints.get(i) * (dir, vdir)
           val p = points.get(i)
-          val x = op.getX*cos-op.getY*sin
-          val y = op.getY*cos+op.getX*sin
-          p.set(this.Position+this.getDimensions/2+(x,y)+imageOffset)
+          val x = op.getX * cos - op.getY * sin
+          val y = op.getY * cos + op.getX * sin
+          p.set(this.Position + this.getDimensions / 2 + (x, y) + imageOffset*(dir,vdir))
         }
   }
 
@@ -351,6 +358,10 @@ abstract class Obj() {
 
   def setPosition(p: Vector2D) {
     this.Position = p
+  }
+
+  def setCenter(p: Vector2D): Unit ={
+    this.Position = p - this.getDimensions/2
   }
 
   def getPosition: Vector2D = {
@@ -492,13 +503,13 @@ abstract class Obj() {
     }
   }
 
-  def projectileCollision(projectile: Projectile): Unit ={
+  def projectileCollision(projectile: Projectile): Unit = {
 
   }
 
   def collision(obj: Obj) {
     if (!this.anchored && obj.canBeTouched && this.canTouch) {
-      if(obj.isInstanceOf[Projectile]){
+      if (obj.isInstanceOf[Projectile]) {
         projectileCollision(obj.asInstanceOf[Projectile])
         return
       }
@@ -534,7 +545,7 @@ abstract class Obj() {
       return
     val r: Rectangle = this.mask.intersection(obj.getMask)
     val intersection: Vector2D = new Vector2D(r.getCenterX, r.getCenterY)
-    this.velocity = this.velocity - this.getCenter.UnitVector(intersection) //* math.sqrt(r.getHeight*r.getHeight+r.getWidth*r.getWidth))
+    this.velocity = this.velocity - this.getCenter.unitVector(intersection) //* math.sqrt(r.getHeight*r.getHeight+r.getWidth*r.getWidth))
   }
 
   //  def overlap_OLD(obj: Obj) {
@@ -674,6 +685,14 @@ abstract class Obj() {
     math.sqrt(x * x + y * y)
   }
 
+  def setTargetOffset(x: Double, y: Double): Unit ={
+    this.targetOffset=new Vector2D(x,y)
+  }
+
+  def setTargetOffset(v: Vector2D): Unit ={
+    this.targetOffset=v
+  }
+
   def tick() {
     this.refreshMask()
     if (left != null) {
@@ -703,9 +722,9 @@ abstract class Obj() {
       if (targetPos != null || targetObj != null) {
         var target: Vector2D = targetPos
         if (targetObj != null)
-          target = targetObj.getCenter
+          target = targetObj.getCenter+targetOffset
         if (target.distance(this.getCenter) >= targetDistance) {
-          val direction: Vector2D = this.getCenter.UnitVector(target) * speed
+          val direction: Vector2D = this.getCenter.unitVector(target) * speed
           if (this.gravity != 0)
             this.velocity.setX(direction.getX)
           else
@@ -914,7 +933,7 @@ abstract class Obj() {
 
   def getDimensions: Vector2D = new Vector2D(width, height)
 
-  def destroy(): Unit ={
+  def destroy(): Unit = {
     Main.getGame.currentLevel.removeObject(this)
   }
 

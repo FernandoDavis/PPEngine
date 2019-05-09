@@ -206,6 +206,58 @@ object Behaviour {
     }
   }
 
+
+  def flyAroundPlayer: Behaviour = {
+    new Behaviour() {
+      delay = 500
+      val index = 7
+      var lostIt: Boolean = true
+
+      override def run(): Unit = {
+        super.run()
+        if (owner.getGravity != 0) {
+          owner.setGravity(0)
+        }
+        if (System.currentTimeMillis() - timer > delay) {
+          timer = System.currentTimeMillis()
+          val rand: Random = new Random()
+          rand.setSeed(System.nanoTime() + System.currentTimeMillis())
+          val player: Obj = Main.getGame.getPlayer
+          if (owner != null)
+            if (player != null) {
+//              var minAngle = 0
+//              var maxAngle = 360
+//              if (player.getGround != null) {
+                val maxAngle = 315
+                val minAngle = 225
+              //}
+              val angle = math.toRadians(rand.nextInt(maxAngle-minAngle)+minAngle)
+              rand.setSeed(System.nanoTime() + System.currentTimeMillis() + (angle * 20).toLong)
+              val closeness = rand.nextInt(300) + 100
+              if (player.getPosition.distance(owner.getPosition) <= 500) {
+                lostIt = false
+                this.owner.setTargetOffset(math.cos(angle) * closeness, math.sin(angle) * closeness)
+                this.owner.setTargetObj(player)
+              }
+              else if (this.owner.getTargetObj == player) {
+                this.owner.setTargetObj(null)
+                this.owner.setTargetPosition(null)
+              } else {
+                if (secondary != null) {
+                  if (!lostIt) {
+                    lostIt = true
+                    secondary.doubleParam2 = owner.getCenterX
+                    secondary.doubleParam3 = owner.getCenterY
+                  }
+                  runSecondary()
+                }
+              }
+            }
+        }
+      }
+    }
+  }
+
   object activationType extends Enumeration {
     type activationType = Value
     val collision, default, takeDamage = Value
@@ -255,7 +307,7 @@ abstract class Behaviour() {
   }
 
   def ~(behaviour: Behaviour): Behaviour = {
-    if(behaviour==null)
+    if (behaviour == null)
       return this
     if (behaviour.owner == null)
       behaviour.setOwner(owner)
@@ -283,7 +335,7 @@ abstract class Behaviour() {
   }
 
   def cloneSecondary: Behaviour = {
-    if(secondary!=null)
+    if (secondary != null)
       return secondary.clone()
     null
   }
@@ -299,13 +351,14 @@ abstract class Behaviour() {
 
   override def clone(): Behaviour = {
     index match {
-      case 0 => return Behaviour.randomFly~cloneSecondary
-      case 1 => return Behaviour.followPlayer~cloneSecondary
-      case 2 => return Behaviour.constantVelocity(dp1, dp2)~cloneSecondary
-      case 3 => return Behaviour.jump~cloneSecondary
-      case 4 => return Behaviour.attackPlayer(dp1.toInt)~cloneSecondary
-      case 5 => return Behaviour.moveBackAndForthH(dp1)~cloneSecondary
-      case 6 => return Behaviour.moveBackAndForthH(dp1, dp2, dp3)~cloneSecondary
+      case 0 => return Behaviour.randomFly ~ cloneSecondary
+      case 1 => return Behaviour.followPlayer ~ cloneSecondary
+      case 2 => return Behaviour.constantVelocity(dp1, dp2) ~ cloneSecondary
+      case 3 => return Behaviour.jump ~ cloneSecondary
+      case 4 => return Behaviour.attackPlayer(dp1.toInt) ~ cloneSecondary
+      case 5 => return Behaviour.moveBackAndForthH(dp1) ~ cloneSecondary
+      case 6 => return Behaviour.moveBackAndForthH(dp1, dp2, dp3) ~ cloneSecondary
+      case 7 => return Behaviour.flyAroundPlayer ~ cloneSecondary
       case _ => throw new NullPointerException("The behaviour with index " + index + " has not been added to the clone list")
     }
     null

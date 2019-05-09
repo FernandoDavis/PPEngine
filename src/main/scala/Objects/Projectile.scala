@@ -28,17 +28,17 @@ abstract class Projectile extends Obj {
   }
 
   def setDirection(from: Vector2D, to: Vector2D): Unit = {
-    this.direction = from.UnitVector(to)
+    this.direction = from.unitVector(to)
   }
 
   override def tick(): Unit = {
     super.tick()
     this.velocity = direction * speed
+    this.imageRotation=direction.unitVectorAngle
     if (lifeTime > 0) {
-      lifeTime -= 1
+      lifeTime -= 0.5
     }
     else {
-      println("S A S")
       destroy()
     }
   }

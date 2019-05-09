@@ -7,6 +7,7 @@ import mainPPE.Input.{isClicking, mouseClick, mousePosition, updateMouse}
 object Input extends KeyListener {
 
   var keys: Array[Boolean] = new Array[Boolean](255)
+  private var keyTime: Array[Long] = new Array[Long](255)
   var mousePosition: Vector2D = new Vector2D(0,0)
   var mouseScreenPosition: Vector2D = new Vector2D(0,0)
   var isClicking: Boolean = false
@@ -17,6 +18,7 @@ object Input extends KeyListener {
   }
 
   def isPressing(key: Int): Boolean = this.keys(key)
+  def getTime(key: Int): Long = this.keyTime(key)
 
   def updateMouse(e: MouseEvent): Unit={
     mousePosition.getDataFrom(e.getPoint)
@@ -30,6 +32,7 @@ object Input extends KeyListener {
   override def keyPressed(k: KeyEvent) {
     //super.keyPressed(k)
     keys(k.getKeyCode) = true
+    keyTime(k.getKeyCode) +=1
     //println(k.getKeyChar)
   }
 
@@ -40,6 +43,7 @@ object Input extends KeyListener {
   override def keyReleased(k: KeyEvent) {
     // super.keyReleased(k)
     keys(k.getKeyCode) = false
+    keyTime(k.getKeyCode) = 0
   }
 
 }

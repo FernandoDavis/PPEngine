@@ -24,9 +24,10 @@ class Pichon(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
 
   this.canTouch = true
   this.canBeTouched = false
-  this.setSpeed(2 + random.nextInt(2))
+  this.setSpeed(5 + random.nextInt(2))
   this.imageOffset = new Vector2D(-8, -16)
   //this.setPersonality(Behaviour.attackPlayer(20) + Behaviour.randomFly)
+  this.setPersonality(Behaviour.flyAroundPlayer)
   this.anchored = false
   this.gravity = 0
   this.hitBoxOffset = new Vector2D(-8, 5)
@@ -34,10 +35,16 @@ class Pichon(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
   this.setImageDimensions(141, 141)
 //  animation.setFrameSpeed(0.2 * this.speed)
   entityAnimation.setFrameSpeed(0.2 * this.speed)
-  val sound: Sound = new Sound("Sounds/pichon.wav")
+  val sound: Sound = new Sound("Sounds/big_insect.wav")
+  val sound2: Sound = new Sound("Sounds/pichon/growl.wav")
   sound.setSoundRadius(1000)
-  sound.setVolumeSuppression(0.7f)
-  val delay: Int = 100
+  sound.setVolumeSuppression(0.5f)
+  sound2.setSoundRadius(1000)
+  this.entitySounds.movingSounds.add(sound)
+  this.entitySounds.standingSounds.add(sound)
+  this.entitySounds.jumpingSounds.add(sound)
+  this.entitySounds.setSoundDelays(1500)
+  var delay: Int = 1500
   var time: Long = 0
   val delay2: Int = 100
   var time2: Long = 0
@@ -49,12 +56,16 @@ class Pichon(x: Int, y: Int, w: Int, h: Int) extends Entity(x: Int, y: Int, w: I
     val player = Main.getGame.getPlayer
     this.imageRotation = math.sin(System.currentTimeMillis() / 400.0) * math.toRadians(20)
     if (System.currentTimeMillis() - time >= delay) {
-      time = System.currentTimeMillis()
-      sound.play(this.getPosition)
+      time=System.currentTimeMillis()
+      this.random.setSeed(System.currentTimeMillis()+System.nanoTime())
+      sound2.setVolumeSuppression((random.nextInt(5)+5)/10.0f)
+      this.random.setSeed(System.currentTimeMillis()+System.nanoTime()+30)
+      delay=random.nextInt(2500)+1500
+      sound2.play(this.getPosition)
     }
     if (System.currentTimeMillis() - time2 >= delay2 && player!=null) {
       time2 = System.currentTimeMillis()
-      Main.getGame.currentLevel.addObject(new Pichon_Laser(this.getPoint(0),this.getPoint(0),player.getPosition).setOwner(this))
+      Main.getGame.currentLevel.addObject(new Pichon_Laser(this.getPoint(0),this.getPoint(0),player.getCenter).setOwner(this))
     }
 
   }

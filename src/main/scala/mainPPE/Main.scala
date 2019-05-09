@@ -20,6 +20,7 @@ class Component extends JComponent {
   var player: Obj = null
   private var shift: Vector2D = new Vector2D(0, 0)
   private var previousLevel: Int = 0
+  var downShift: Int = 0
 
   def isInScreen(obj: Obj): Boolean = {
     var w: Double = obj.getWidth
@@ -62,14 +63,15 @@ class Component extends JComponent {
   def tick() {
     if (this.level != null) {
       if (this.player != null) {
-        shift = this.player.getCenter * (-1) + (this.getWidth / 2, this.getHeight / 2)
+        shift = this.player.getCenter * (-1) + (this.getWidth / 2, this.getHeight-player.getHeight/2-100-downShift)
       }
       else {
         shift = new Vector2D(0, 0)
-        println(" W A T")
+        println("The Player is currently null...")
       }
-      for (i <- this.level.getObjects.indices) {
-        val obj1: Obj = this.level.getObject(i)
+      //for (i <- this.level.getObjects.indices) {
+        for (obj1 <- this.level.getObjects) {
+        //val obj1: Obj = this.level.getObject(i)
         if (obj1 != null) {
           val mousepos: Point = (mousePosition - shift).toPoint()
           if (mousepos != null) {
@@ -81,8 +83,9 @@ class Component extends JComponent {
             this.player = obj1
           obj1.tick()
           if (obj1.isSolid)
-            for (j <- (i until this.level.getObjects.length).par) { //parallelized
-              val obj2: Obj = this.level.getObject(j)
+            //for (j <- (i until this.level.getObjects.length).par) { //parallelized
+              for (obj2 <- this.level.getObjects) { //parallelized
+              //val obj2: Obj = this.level.getObject(j)
               if (obj2 != null)
                 if (obj1 != obj2)
                   if (obj1.intersects(obj2) || obj2.intersects(obj1)) {
@@ -216,13 +219,13 @@ class Component extends JComponent {
         // g.drawLine(0, (currentLevel.getDeathY + shift.getY).toInt, this.getWidth, (currentLevel.getDeathY + shift.getY).toInt)
         var string: String = "Number of Objects: " + level.getObjects.size
         g.drawString(string, this.getWidth - g.getFontMetrics.stringWidth(string) - 10, this.getHeight - 50)
-        string = "Level object list capacity: " + level.getObjects.capacity
-        g.drawString(string, this.getWidth - g.getFontMetrics.stringWidth(string) - 10, this.getHeight - 20)
+        //string = "Level object list capacity: " + level.getObjects.capacity
+        //g.drawString(string, this.getWidth - g.getFontMetrics.stringWidth(string) - 10, this.getHeight - 20)
       }
 
 
     } else
-      println("WTF")
+      println("Loading Level...")
 
   }
 }
