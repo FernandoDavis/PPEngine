@@ -106,6 +106,9 @@ class Component extends JComponent {
     if (Input.keys(KeyEvent.VK_N)) {
       this.level.goToNextLevel()
     }
+    if (Input.keys(KeyEvent.VK_M)) {
+      this.reloadLevel()
+    }
   }
 
 

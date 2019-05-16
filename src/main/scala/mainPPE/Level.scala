@@ -17,9 +17,9 @@ abstract class Level {
   private var Timers: Array[Int] = new Array[Int](20)
   private var LevelNumber: Int = 0
   protected var player: Player = null
-  protected var deathY: Int = 500
+  protected var deathY: Int = 1000
   protected var music: Sound = new Sound("Sounds/overworld3.wav")
-  music.setVolumeSuppression(0.5f)
+  music.setVolumeSuppression(0.9f)
   protected var background: BufferedImage = null
   protected var backgroundOffset: Vector2D = new Vector2D(0,0)
   music.setLoop(-1)

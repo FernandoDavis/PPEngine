@@ -3,14 +3,14 @@ package parser
 import java.awt.image.BufferedImage
 import java.util
 
-import Entities.Player
+import Entities.{Crab1, Pichon, Player}
 import Objects.Box
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import java.io.File
 
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
-import mainPPE.{ArrayList, Behaviour, Component, GenericLevel, Level, Level1, Level2, Main, Obj, SpriteSheet}
+import mainPPE._
 
 class TestLexer extends StandardTokenParsers {
 
@@ -22,9 +22,9 @@ class TestLexer extends StandardTokenParsers {
 
   def level: Parser[Level] = "Level" ~ "(" ~ listAttr ~ ")" ~ ":" ~ typeList ~ end ^^ {
     case _ =>
-      var l : GenericLevel = new GenericLevel
-      Main.objArray.get(Main.objArray.size-1).foreach(l.addObject)
-      Main.currentLevelIndex+=1
+      var l: GenericLevel = new GenericLevel
+      Main.objArray.get(Main.objArray.size - 1).foreach(l.addObject)
+      Main.currentLevelIndex += 1
       Main.objArray.add(new ArrayList[Obj](255))
       l
   }
@@ -56,12 +56,12 @@ class TestLexer extends StandardTokenParsers {
         var arr: Array[Int] = subIndex(str, 0)
 
         x = str.substring(arr(0), arr(1)).toInt
-        arr = subIndex(str, arr(1) +1)
+        arr = subIndex(str, arr(1) + 1)
         y = str.substring(arr(0), arr(1)).toInt
-        arr = subIndex(str, arr(1) +1)
+        arr = subIndex(str, arr(1) + 1)
         z = str.substring(arr(0), arr(1)).toInt
-        println(x + " " + y + " " + str.substring(arr(0)-3, arr(0))+z)
-        val findImg = str.substring(arr(0)-3, arr(0)+ z)
+        println(x + " " + y + " " + str.substring(arr(0) - 3, arr(0)) + z)
+        val findImg = str.substring(arr(0) - 3, arr(0) + z)
 
         //var x : Int = list.get(0).asInstanceOf[Int]
         // var y : Int = list.get(1).asInstanceOf[Int]
@@ -71,43 +71,43 @@ class TestLexer extends StandardTokenParsers {
         //
         //        Main.objArray.get(Main.currentLevelIndex).add(p)
 
-        var p: Player = new Player(x,y)
+        var p: Player = new Player(x, y)
 
-       // var skins = new SpriteSheet(ImageIO.read(new File("src\\BRICK50X50.jpg")), 1,1,50,50,1) //SprSheet, crop all textures to player/object dimensions? Unsure what the crop function is.
-       var skin: BufferedImage = null
+        // var skins = new SpriteSheet(ImageIO.read(new File("src\\BRICK50X50.jpg")), 1,1,50,50,1) //SprSheet, crop all textures to player/object dimensions? Unsure what the crop function is.
+        var skin: BufferedImage = null
 
         //SWITCH STATEMENT VERSION doesnt work, im doing it wrong
-   /*     findImg match{
-          case "img1" =>  skin = ImageIO.read(new File("src/IMAGES/BRICK50X50.jpg"))
-            p.setImg(skin)
-            println("Skin 1 Applied to Player")
-          case "img2" =>  skin = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
-            p.setImg(skin)
-            println("Skin 2 Applied to Player")
+        /*     findImg match{
+               case "img1" =>  skin = ImageIO.read(new File("src/IMAGES/BRICK50X50.jpg"))
+                 p.setImg(skin)
+                 println("Skin 1 Applied to Player")
+               case "img2" =>  skin = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
+                 p.setImg(skin)
+                 println("Skin 2 Applied to Player")
 
-          case "img3" =>  skin = ImageIO.read(new File("src/IMAGES/water.jpg"))
-            p.setImg(skin)
-            println("Skin 3 Applied to Player")
-        }
-        */
+               case "img3" =>  skin = ImageIO.read(new File("src/IMAGES/water.jpg"))
+                 p.setImg(skin)
+                 println("Skin 3 Applied to Player")
+             }
+             */
 
-        if(findImg == "img1"){
+        if (findImg == "img1") {
           //var texture = skinss.getFrame(1)
           var texture: BufferedImage = ImageIO.read(new File("src/IMAGES/BRICK50X50.jpg"))
           p.setImg(texture)
           println("Skin 1 Applied to Player")
         }
-
-        if(findImg == "img2"){
+        else if
+        (findImg == "img2~" || findImg == "img2") {
           //var texture = skins.getFrame(2) //SprSheet
-          var face: BufferedImage = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
+          var face: BufferedImage = ImageIO.read(new File("src/IMAGES/dead_inside.jpg"))
           p.setImg(face)
           println("Skin 2 Applied to Player")
-                }
-
-        if(findImg == "img3"){
+        }
+        else if
+        (findImg == "img3~") {
           //var texture = skins.getFrame(2) //SprSheet
-          var water: BufferedImage = ImageIO.read(new File("src/IMAGES/water.jpg"))
+          var water: BufferedImage = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
           p.setImg(water)
           println("Skin 3 Applied to Player")
         }
@@ -123,33 +123,39 @@ class TestLexer extends StandardTokenParsers {
         println(str)
         var x: Int = 0
         var y: Int = 0
+        var w: Int = 100
+        var h: Int = 100
         var z: Int = 0
         var arr: Array[Int] = subIndex(str, 0)
 
         x = str.substring(arr(0), arr(1)).toInt
-        arr = subIndex(str, arr(1) +1)
+        arr = subIndex(str, arr(1) + 1)
         y = str.substring(arr(0), arr(1)).toInt
-        arr = subIndex(str, arr(1) +1)
+        arr = subIndex(str, arr(1) + 1)
+        w = str.substring(arr(0), arr(1)).toInt
+        arr = subIndex(str, arr(1) + 1)
+        h = str.substring(arr(0), arr(1)).toInt
+        arr = subIndex(str, arr(1) + 1)
         z = str.substring(arr(0), arr(1)).toInt
 
-        println(x + " " + y + " " + str.substring(arr(0)-3, arr(0))+ " " +z)
-        val findImg = str.substring(arr(0)-3, arr(0)+ z)
+        println(x + " " + y + " " + str.substring(arr(0) - 3, arr(0)) + " " + z)
+        val findImg = str.substring(arr(0) - 3, arr(0) + z)
         //var x : Int = list.get(0).asInstanceOf[Int]
         // var y : Int = list.get(1).asInstanceOf[Int]
         //          var i : String = list.get(2).asInstanceOf[String]
         //          var Bh : Behaviour = list.get(3).asInstanceOf[Behaviour]
 
-        val box: Box = new Box(x, y, 100, 100)
+        val box: Box = new Box(x, y, w, h)
         box.setAnchored(true)
 
-        if(findImg == "img1"){
+        if (findImg == "img1") {
           val texture: BufferedImage = ImageIO.read(new File("src\\IMAGES\\BRICK50X50.jpg"))
           box.setImg(texture)
           println("Texture 1 Applied to Object")
         }
-
-        if(findImg == "img2"){
-          val texture: BufferedImage = ImageIO.read(new File("src\\IMAGES\\happyface.jpg"))
+        else if
+        (findImg == "img2~" || findImg == "img2") {
+          val texture: BufferedImage = ImageIO.read(new File("src\\IMAGES\\zigzagbrick.jpg"))
           box.setImg(texture)
           println("Texture 2 Applied to Object")
         }
@@ -157,6 +163,33 @@ class TestLexer extends StandardTokenParsers {
         Main.objArray.get(Main.currentLevelIndex).add(box)
       }
 
+      else if (tN.toString().equals("Enemy")) {
+        println("birb")
+        val str: String = listAttr.toString
+        println(str)
+        var x: Int = 0
+        var y: Int = 0
+        var z: Int = 0
+        var arr: Array[Int] = subIndex(str, 0)
+
+        x = str.substring(arr(0), arr(1)).toInt
+        arr = subIndex(str, arr(1) + 1)
+        y = str.substring(arr(0), arr(1)).toInt
+        arr = subIndex(str, arr(1) + 1)
+        z = str.substring(arr(0), arr(1)).toInt
+
+        println(x + " " + y + " " + str.substring(arr(0) - 5, arr(0)) + " " + z)
+        val enemyType = str.substring(arr(0) - 5, arr(0) + z)
+
+        var enemy: Entity = null
+
+        enemyType match {
+          case "enemy1" => enemy = new Crab1(x, y)
+          case "enemy2~" => enemy = new Pichon(x, y)
+        }
+
+        Main.objArray.get(Main.currentLevelIndex).add(enemy)
+      }
 
     case _ => {
       println("nohayna")

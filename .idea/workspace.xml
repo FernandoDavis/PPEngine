@@ -1,40 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="564c17ab-5d76-43ab-b94c-11e8c543b492" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/IMAGES/projectiles/pichon1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Sounds/big_insect.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Sounds/pichon/growl.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Sounds/shoot2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/LinkedList.scala" afterDir="false" />
+    <list default="true" id="564c17ab-5d76-43ab-b94c-11e8c543b492" name="Default Changelist" comment="Replaced the ArrayList in Level Objects with a LinkedList as the later wont have updating issues when multiple nodes are removed at the same time. Also created a new behaviour which avoids the player while walking around, and created a EntitySound class for each entity which makes it easier to create sounds according to the entity's animation.">
+      <change afterPath="$PROJECT_DIR$/src/IMAGES/dead_inside.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Entities/Pichon.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Entities/Pichon.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Entities/Player.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Entities/Player.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Objects/Pichon_Laser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Objects/Pichon_Laser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Objects/Projectile.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Objects/Projectile.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Entity.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Entity.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Input.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Input.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PPEngineCode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/PPEngineCode.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Sound.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Sound.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Vector2D.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Vector2D.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/Entities/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/Entities/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Component.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Component.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Entity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Input$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Input$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Input.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Input.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Level.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Level1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Level1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Main$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Main$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/MouseClicks$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/MouseClicks$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Obj.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Obj.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Vector2D.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Vector2D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/TestLexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/parser/TestLexer.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -57,48 +34,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/Objects/Pichon_Laser.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Player.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+            <state relative-caret-position="306">
+              <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
               <folding>
-                <element signature="e#17#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Pichon.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="60" column="54" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
-              <folding>
-                <element signature="e#18#45#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Entity.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1366">
-              <caret line="215" column="40" lean-forward="true" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
-              <folding>
-                <element signature="e#17#47#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-              <folding>
-                <element signature="e#17#38#0" expanded="true" />
+                <element signature="e#18#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -107,19 +48,91 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="42" selection-start-line="42" selection-start-column="2" selection-end-line="45" selection-end-column="7" />
+            <state relative-caret-position="604">
+              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1252">
+              <caret line="22" column="48" lean-forward="true" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
+              <folding>
+                <element signature="e#17#52#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="411">
+              <caret line="357" column="34" selection-start-line="357" selection-start-column="34" selection-end-line="357" selection-end-column="34" />
+              <folding>
+                <element signature="e#17#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="21" column="46" lean-forward="true" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
+              <folding>
+                <element signature="e#17#38#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level2.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="23" column="49" lean-forward="true" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/parser/Main1.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret line="274" column="16" selection-start-line="274" selection-start-column="16" selection-end-line="274" selection-end-column="16" />
+              <caret column="12" selection-start-column="12" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1003">
+              <caret line="105" column="9" lean-forward="true" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
               <folding>
-                <element signature="e#48#83#0" expanded="true" />
+                <element signature="e#16#51#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,14 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setTo</find>
-      <find>drawo</find>
-      <find>colli</find>
-      <find>refreshmas</find>
-      <find>drawObj</find>
-      <find>drawob</find>
-      <find>overlap2</find>
-      <find>process</find>
       <find>draw</find>
       <find>isin</find>
       <find>load</find>
@@ -152,13 +157,21 @@
       <find>rese</find>
       <find>clear</find>
       <find>shiftLef</find>
-      <find>player</find>
       <find>indices</find>
       <find>arra</find>
       <find>getim</find>
       <find>targetpo</find>
       <find>refre</find>
       <find>refresh</find>
+      <find>behavio</find>
+      <find>behav</find>
+      <find>substring</find>
+      <find>subindex</find>
+      <find>next</find>
+      <find>new box</find>
+      <find>level</find>
+      <find>levellist</find>
+      <find>player</find>
     </findStrings>
     <replaceStrings>
       <replace>Token</replace>
@@ -191,8 +204,6 @@
         <option value="$PROJECT_DIR$/src/main/scala/parser/Interpreter.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/parser/PlainClasses/Program.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/parser/Main1.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" />
-        <option value="$PROJECT_DIR$/src/PPEngineCode.txt" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/ImageTransformer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Action.scala" />
@@ -210,12 +221,10 @@
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Animation.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/ArrayList.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/LinkedList.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Sound.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Vector2D.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Objects/Projectile.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Input.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Entities/Player.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala" />
@@ -224,12 +233,16 @@
         <option value="$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Entities/Pichon.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" />
+        <option value="$PROJECT_DIR$/src/PPEngineCode.txt" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-165" />
-    <option name="y" value="13" />
+    <option name="x" value="-26" />
+    <option name="y" value="6" />
     <option name="width" value="1378" />
     <option name="height" value="733" />
   </component>
@@ -239,8 +252,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -257,6 +268,12 @@
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
               <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="IMAGES" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -265,6 +282,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="Entities" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
@@ -286,6 +311,14 @@
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
               <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="parser" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Sounds" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -299,12 +332,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557370890854" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558045417193" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/scala" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
@@ -313,12 +348,8 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.build.tools" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds\pichon" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\projectiles" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\pichon" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Fernan\IdeaProjects\PPEngineParser\src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="mainPPE" />
@@ -326,8 +357,12 @@
       <recent name="Objects" />
       <recent name="parser" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Fernan\IdeaProjects\PPEngineParser\src" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds\pichon" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\projectiles" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\pichon" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -342,7 +377,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Tester">
+  <component name="RunManager" selected="Application.Main1">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="mainPPE.Main" />
       <module name="PPEngineParser" />
@@ -397,8 +432,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Tester" />
         <item itemvalue="Application.Main1" />
+        <item itemvalue="Application.Tester" />
         <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
       </list>
@@ -504,7 +539,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557283804114</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Replaced the ArrayList in Level Objects with a LinkedList as the later wont have updating issues when multiple nodes are removed at the same time. Also created a new behaviour which avoids the player while walking around, and created a EntitySound class for each entity which makes it easier to create sounds according to the entity's animation.">
+      <created>1557378589521</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1557378589537</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -512,7 +554,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Learn" order="0" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.3375695" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.26846704" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -521,7 +563,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49920508" weight="0.3280255" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.46942016" visible="true" weight="0.06210191" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4686259" visible="true" weight="0.0477707" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -529,7 +571,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.5329627" weight="0.32961783" />
       <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" weight="0.3289689" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="10" sideWeight="0.5305798" side_tool="true" visible="true" weight="0.06210191" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5313741" side_tool="true" visible="true" weight="0.0477707" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.299509" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.4813344" weight="0.24363057" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -553,7 +595,8 @@
     <MESSAGE value="Added hitboxes, a clone method for personalities, a new enemy, and fixed alot of issues in the obj physics&#10;&#10;New issues:&#10;Objects with custom Mask dimensions will go thru other objects if they collide with them, but not of the collision was from the left nor up" />
     <MESSAGE value="SOUNDS!&#10;Created a sound system from scratch. Now sounds can be played by creating a new instance of Sound() choosing the file path of the sound and writing sound.play(). Sounds also have panning and volume features, I also created a method where the sounds come out from different speakers depending on the play location (NOTE: This only works on some systems like Windows, if the system is not supported, it will simply try a different approaching by controlling the volume). I also fixed some collision issues and added a new method for custom image sizes and level backgrounds (setting the level background seems to lag so the method responsible for it, is commented and disabled)." />
     <MESSAGE value="SOUNDS!&#10;Created a sound system from scratch. Now sounds can be played by creating a new instance of Sound() choosing the file path of the sound and writing sound.play(). Sounds also have panning and volume features, I also created a method where the sounds come out from different speakers depending on the play location (NOTE: This only works on some systems like Windows, if the system is not supported, it will simply try a different approaching by controlling the volume). I also fixed some collision issues and added a new method for custom image sizes and level backgrounds (setting the level background seems to lag so the method responsible for it, is commented and disabled).&#10;&#10;EDIT: Added projectiles and remade the animation class. The old animation class is now named Animation_DELETE_PENDING, the class was not deleted in case there are any references to it in the project. As soon as the references are removed and the animations migrate to the new class, it'll be deleted, for now, it stays as a deprecated class.&#10;&#10;Current Issues:&#10;Since the object updates run in parallel, the arrayList tends to crash due to performing various operations at the same time &lt;&lt;NEEDS FIXING ASAP" />
-    <option name="LAST_COMMIT_MESSAGE" value="SOUNDS!&#10;Created a sound system from scratch. Now sounds can be played by creating a new instance of Sound() choosing the file path of the sound and writing sound.play(). Sounds also have panning and volume features, I also created a method where the sounds come out from different speakers depending on the play location (NOTE: This only works on some systems like Windows, if the system is not supported, it will simply try a different approaching by controlling the volume). I also fixed some collision issues and added a new method for custom image sizes and level backgrounds (setting the level background seems to lag so the method responsible for it, is commented and disabled).&#10;&#10;EDIT: Added projectiles and remade the animation class. The old animation class is now named Animation_DELETE_PENDING, the class was not deleted in case there are any references to it in the project. As soon as the references are removed and the animations migrate to the new class, it'll be deleted, for now, it stays as a deprecated class.&#10;&#10;Current Issues:&#10;Since the object updates run in parallel, the arrayList tends to crash due to performing various operations at the same time &lt;&lt;NEEDS FIXING ASAP" />
+    <MESSAGE value="Replaced the ArrayList in Level Objects with a LinkedList as the later wont have updating issues when multiple nodes are removed at the same time. Also created a new behaviour which avoids the player while walking around, and created a EntitySound class for each entity which makes it easier to create sounds according to the entity's animation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Replaced the ArrayList in Level Objects with a LinkedList as the later wont have updating issues when multiple nodes are removed at the same time. Also created a new behaviour which avoids the player while walking around, and created a EntitySound class for each entity which makes it easier to create sounds according to the entity's animation." />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.8-sources.jar!/scala/Int.scala">
@@ -599,9 +642,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/IMAGES/happyface.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/LineSplitter.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-82">
@@ -609,22 +649,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/Main1.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/IMAGES/BRICK50X50.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Objects/Box.scala">
       <provider selected="true" editor-type-id="text-editor">
@@ -718,13 +744,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/SpeedMask.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -736,23 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level2.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1321">
-          <caret line="84" column="6" selection-start-line="84" selection-start-column="6" selection-end-line="84" selection-end-column="6" />
-          <folding>
-            <element signature="e#17#52#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -787,26 +789,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="235" column="44" selection-start-line="235" selection-start-column="44" selection-end-line="235" selection-end-column="44" />
-          <folding>
-            <element signature="e#17#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="65" column="105" selection-start-line="65" selection-start-column="105" selection-end-line="65" selection-end-column="105" />
-          <folding>
-            <element signature="e#17#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Input.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-170">
@@ -814,61 +796,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Player.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+        <state relative-caret-position="4261">
+          <caret line="287" column="36" selection-start-line="287" selection-start-column="36" selection-end-line="287" selection-end-column="36" />
           <folding>
-            <element signature="e#18#39#0" expanded="true" />
+            <element signature="e#48#83#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2074">
-          <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Objects/Pichon_Laser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        <state relative-caret-position="204">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
           <folding>
             <element signature="e#17#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="42" selection-start-line="42" selection-start-column="2" selection-end-line="45" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-          <folding>
-            <element signature="e#17#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Entity.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1366">
-          <caret line="215" column="40" lean-forward="true" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
+        <state relative-caret-position="3655">
+          <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
           <folding>
             <element signature="e#17#47#0" expanded="true" />
           </folding>
@@ -877,21 +828,116 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Pichon.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="60" column="54" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
+        <state relative-caret-position="255">
+          <caret line="29" column="29" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="29" />
           <folding>
             <element signature="e#18#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala">
+    <entry file="file://$PROJECT_DIR$/src/IMAGES/happyface.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2121">
+          <caret line="133" column="41" selection-start-line="133" selection-start-column="32" selection-end-line="133" selection-end-column="41" />
+          <folding>
+            <element signature="e#17#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Player.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+          <folding>
+            <element signature="e#18#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/Main1.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1003">
+          <caret line="105" column="9" lean-forward="true" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
+          <folding>
+            <element signature="e#16#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1252">
+          <caret line="22" column="48" lean-forward="true" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
+          <folding>
+            <element signature="e#17#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="357" column="34" selection-start-line="357" selection-start-column="34" selection-end-line="357" selection-end-column="34" />
+          <folding>
+            <element signature="e#17#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level1.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="21" column="46" lean-forward="true" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
+          <folding>
+            <element signature="e#17#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret line="274" column="16" selection-start-line="274" selection-start-column="16" selection-end-line="274" selection-end-column="16" />
-          <folding>
-            <element signature="e#48#83#0" expanded="true" />
-          </folding>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Level2.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="49" lean-forward="true" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
         </state>
       </provider>
     </entry>
