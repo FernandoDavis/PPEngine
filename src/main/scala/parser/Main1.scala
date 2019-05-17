@@ -8,7 +8,7 @@ object Main1 {
     val PPEngineCode = scala.io.Source.fromFile("src\\PPEngineCode.txt").mkString
 
     //Create the parser
-    val parser = new TestLexer
+    val parser = new PPLexer
 
     //Print out the result of the parser!
     println(parser.eval(PPEngineCode))

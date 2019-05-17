@@ -1,1 +1,8 @@
-Level(Hello)
+Level(Hello):
+Object(100, 200, 500, 200, img1, Behaviour(none))
+Object(95, 10, 50, 300, img1, Behaviour(none))
+Object(605, 10, 50, 300, img1, Behaviour(none))
+
+Object(200, 50, 50, 50, img1, Behaviour(jump+moveBackAndForth+followPlayer))
+Player(400, 100, 40, 40, img1, Behaviour(none))
+end
