@@ -105,7 +105,7 @@ class TestLexer extends StandardTokenParsers {
           println("Skin 2 Applied to Player")
         }
         else if
-        (findImg == "img3~") {
+        (findImg == "img3~" || findImg == "img3" || findImg == "img3~~") {
           //var texture = skins.getFrame(2) //SprSheet
           var water: BufferedImage = ImageIO.read(new File("src/IMAGES/happyface.jpg"))
           p.setImg(water)
@@ -118,7 +118,6 @@ class TestLexer extends StandardTokenParsers {
 
 
       else if (tN.toString().equals("Object")) {
-        println("yeetObject")
         var str: String = listAttr.toString
         println(str)
         var x: Int = 0
@@ -164,7 +163,6 @@ class TestLexer extends StandardTokenParsers {
       }
 
       else if (tN.toString().equals("Enemy")) {
-        println("birb")
         val str: String = listAttr.toString
         println(str)
         var x: Int = 0

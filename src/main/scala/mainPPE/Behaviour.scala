@@ -44,7 +44,11 @@ object Behaviour {
         if (System.currentTimeMillis() - timer > delay) {
           timer = System.currentTimeMillis()
           val player: Obj = Main.getGame.getPlayer
-          if (owner != null)
+          if (owner != null) {
+            if(owner.isAnchored)
+              owner.setAnchored(false)
+            if(owner.getSpeed<=0)
+              owner.setSpeed(4)
             if (player != null) {
               if (player.getPosition.distance(owner.getPosition) <= 200) {
                 lostIt = false
@@ -64,6 +68,7 @@ object Behaviour {
                 }
               }
             }
+          }
         }
       }
     }
@@ -179,6 +184,8 @@ object Behaviour {
           super.setOwner(owner)
           next = new Vector2D(dp2, owner.getCenterY) + (this.dp1 / 2, 0)
           owner.setTargetDistance(5)
+          if (owner.isAnchored)
+            owner.setAnchored(false)
         }
       }
 
@@ -225,13 +232,13 @@ object Behaviour {
           val player: Obj = Main.getGame.getPlayer
           if (owner != null)
             if (player != null) {
-//              var minAngle = 0
-//              var maxAngle = 360
-//              if (player.getGround != null) {
-                val maxAngle = 315
-                val minAngle = 225
+              //              var minAngle = 0
+              //              var maxAngle = 360
+              //              if (player.getGround != null) {
+              val maxAngle = 315
+              val minAngle = 225
               //}
-              val angle = math.toRadians(rand.nextInt(maxAngle-minAngle)+minAngle)
+              val angle = math.toRadians(rand.nextInt(maxAngle - minAngle) + minAngle)
               rand.setSeed(System.nanoTime() + System.currentTimeMillis() + (angle * 20).toLong)
               val closeness = rand.nextInt(300) + 100
               if (player.getPosition.distance(owner.getPosition) <= 500) {

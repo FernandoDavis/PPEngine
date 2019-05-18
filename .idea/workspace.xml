@@ -2,95 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="564c17ab-5d76-43ab-b94c-11e8c543b492" name="Default Changelist" comment="Replaced the ArrayList in Level Objects with a LinkedList as the later wont have updating issues when multiple nodes are removed at the same time. Also created a new behaviour which avoids the player while walking around, and created a EntitySound class for each entity which makes it easier to create sounds according to the entity's animation.">
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$102b42bc86dfaba99ffd$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$102b42bc86dfaba99ffd.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$102b42bc86dfaba99ffd.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$2c2e83faf651f85b4843$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$2c2e83faf651f85b4843.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$2c2e83faf651f85b4843.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$92aec054602b0174246b$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$92aec054602b0174246b.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$92aec054602b0174246b.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$d6c4e27c753057ea0bd0$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$d6c4e27c753057ea0bd0.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$d6c4e27c753057ea0bd0.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$e3177b968043466b865f$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$e3177b968043466b865f.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/config-classes/$e3177b968043466b865f.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/Entities/Crab1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/Entities/Enemy.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/Entities/Pichon.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/Objects/Pichon_Laser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/Objects/Projectile.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Animation.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Animation_DELETE_PENDING.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$$anon$4.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$$anon$5.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$$anon$6.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$$anon$7.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$$anon$8.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Behaviour$activationType$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Entity$EntityAnimation.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Entity$EntitySounds.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Healthbar.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/ImageFunctions$.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/ImageFunctions.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/LinkedList$Node.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/LinkedList$iter.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/LinkedList.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Personality.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Sound$$anon$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/Sound.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/SpriteSheet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/TransformableImage.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/classes/mainPPE/UIBox.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/PPEngineParser-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/PPEngineParser-build.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/PPEngineParser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/PPEngineParser.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/default/ppengine-build/scala_2.12/sbt_1.0/0.1.0-SNAPSHOT/resolved.xml.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/default/ppengine-build/scala_2.12/sbt_1.0/0.1.0-SNAPSHOT/resolved.xml.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/default/ppengine-build/scala_2.12/sbt_1.0/0.1.0-SNAPSHOT/resolved.xml.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/default/ppengine-build/scala_2.12/sbt_1.0/0.1.0-SNAPSHOT/resolved.xml.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-compile-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-compile-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-compile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-compile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-optional.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-optional.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-provided.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-provided.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-runtime-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-runtime-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-runtime.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-runtime.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-scala-tool.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-scala-tool.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-test-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-test-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/scala-2.12/sbt-1.0/resolution-cache/reports/default-ppengine-build-test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$102b42bc86dfaba99ffd$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$102b42bc86dfaba99ffd.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$102b42bc86dfaba99ffd.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$2c2e83faf651f85b4843$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$2c2e83faf651f85b4843.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$2c2e83faf651f85b4843.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$92aec054602b0174246b$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$92aec054602b0174246b.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$92aec054602b0174246b.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$d6c4e27c753057ea0bd0$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$d6c4e27c753057ea0bd0.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$d6c4e27c753057ea0bd0.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$e3177b968043466b865f$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$e3177b968043466b865f.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$e3177b968043466b865f.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/$global/ivyConfiguration/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/$global/ivyConfiguration/$global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/$global/update/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/$global/update/$global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/$global/update/$global/streams/update_cache_2.12/inputs" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/$global/update/$global/streams/update_cache_2.12/inputs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/$global/update/$global/streams/update_cache_2.12/output" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/$global/update/$global/streams/update_cache_2.12/output" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/compile/compileIncremental/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/compileIncremental/$global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/compile/copyResources/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/copyResources/$global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/compile/dependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/dependencyClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/compile/exportedProducts/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/exportedProducts/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/compile/externalDependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/externalDependencyClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/compile/managedClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/managedClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/runtime/dependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/runtime/dependencyClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/runtime/exportedProducts/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/runtime/exportedProducts/$global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/runtime/externalDependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/runtime/externalDependencyClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/runtime/fullClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/runtime/fullClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/runtime/internalDependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/runtime/internalDependencyClasspath/$global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/runtime/managedClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/runtime/managedClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PPEngineCode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/PPEngineCode.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/parser/Main1.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/parser/Main1.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/.history" beforeDir="false" afterPath="$PROJECT_DIR$/target/.history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/Main1$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/parser/Main1$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$BOOL$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$COLON$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$COMMA$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$DELIMETER$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$FLOAT$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$FLOAT.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$ID$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$ID.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$INT$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$INT.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$LEVEL$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$LPAREN$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$RPAREN$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$TYPENAME$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer$WorkflowToken.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/parser/PPLexer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/ppengineparser/ppengineparser$sources/0.1/resolved.xml.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/ppengineparser/ppengineparser$sources/0.1/resolved.xml.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/ppengineparser/ppengineparser$sources/0.1/resolved.xml.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/ppengineparser/ppengineparser$sources/0.1/resolved.xml.xml" afterDir="false" />
@@ -154,8 +104,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+            <state relative-caret-position="227">
+              <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
               <folding>
                 <element signature="e#17#39#0" expanded="true" />
               </folding>
@@ -164,21 +114,30 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="26" column="140" selection-start-line="26" selection-start-column="140" selection-end-line="26" selection-end-column="140" />
+            <state relative-caret-position="136">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala">
+        <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="61" column="50" lean-forward="true" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="50" />
+            <state relative-caret-position="119">
+              <caret line="7" column="71" selection-start-line="7" selection-start-column="71" selection-end-line="7" selection-end-column="71" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2747">
+              <caret line="165" selection-start-line="165" selection-end-line="165" />
               <folding>
-                <element signature="e#48#83#0" expanded="true" />
+                <element signature="e#16#51#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -187,20 +146,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="213" column="31" lean-forward="true" selection-start-line="213" selection-start-column="31" selection-end-line="213" selection-end-column="31" />
+            <state relative-caret-position="597">
+              <caret line="140" column="57" selection-start-line="140" selection-start-column="57" selection-end-line="140" selection-end-column="57" />
               <folding>
                 <element signature="e#16#51#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="61" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -209,8 +159,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isin</find>
-      <find>load</find>
       <find>setim</find>
       <find>tick</find>
       <find>animation</find>
@@ -239,6 +187,8 @@
       <find>levellist</find>
       <find>player</find>
       <find>simpleTypeDeclar</find>
+      <find>behaviour</find>
+      <find>follo</find>
     </findStrings>
     <replaceStrings>
       <replace>Token</replace>
@@ -271,7 +221,6 @@
         <option value="$PROJECT_DIR$/src/main/scala/parser/Interpreter.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/parser/PlainClasses/Program.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/ImageTransformer.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Action.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/UIBox.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Objects/Box.scala" />
@@ -290,7 +239,6 @@
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Sound.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Vector2D.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Objects/Projectile.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Input.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Entities/Player.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala" />
@@ -301,16 +249,18 @@
         <option value="$PROJECT_DIR$/src/main/scala/Entities/Pichon.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Main.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Level.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/parser/Main1.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala" />
         <option value="$PROJECT_DIR$/src/PPEngineCode.txt" />
         <option value="$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-26" />
-    <option name="y" value="6" />
+    <option name="x" value="390" />
+    <option name="y" value="61" />
     <option name="width" value="1378" />
     <option name="height" value="733" />
   </component>
@@ -320,62 +270,35 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="IMAGES" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="IMAGES" type="462c0819:PsiDirectoryNode" />
-              <item name="crab1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="IMAGES" type="462c0819:PsiDirectoryNode" />
-              <item name="pichon" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="Entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
@@ -383,7 +306,7 @@
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
@@ -391,7 +314,7 @@
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
@@ -399,29 +322,21 @@
             </path>
             <path>
               <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="PPEngineFinalVersion" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Sounds" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PPEngineParser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PPEngine" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Sounds" type="462c0819:PsiDirectoryNode" />
-              <item name="pichon" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558045417193" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558190542234" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/scala" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
@@ -430,8 +345,12 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.build.tools" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Fernan\IdeaProjects\PPEngineParser\src" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds\pichon" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\projectiles" />
+      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\pichon" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="mainPPE" />
@@ -439,12 +358,8 @@
       <recent name="Objects" />
       <recent name="parser" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds\pichon" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\Sounds" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\projectiles" />
-      <recent name="C:\Users\PC\IdeaProjects\PPEngine\src\IMAGES\pichon" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Fernan\IdeaProjects\PPEngineParser\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -534,7 +449,7 @@
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value="ppengine [file:/C:/Users/Fernan/IdeaProjects/PPEngine/]" />
+                <option name="name" value="ppenginefinalversion [file:/C:/Users/PC/IdeaProjects/PPEngineFinalVersion/]" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
@@ -548,8 +463,8 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$/build.sbt" value="1097556850" />
-        <entry key="$PROJECT_DIR$/project/build.properties" value="1396028727" />
+        <entry key="$PROJECT_DIR$/build.sbt" value="999246304" />
+        <entry key="$PROJECT_DIR$/project/build.properties" value="2567920773" />
       </map>
     </option>
   </component>
@@ -631,10 +546,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1319" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Learn" order="0" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.17776097" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.18030183" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -643,15 +559,15 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49920508" weight="0.3280255" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.46520424" visible="true" weight="0.43862522" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.46465448" visible="true" weight="0.4378981" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.5329627" weight="0.32961783" />
-      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.53479576" side_tool="true" visible="true" weight="0.43862522" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.5321684" weight="0.32961783" />
+      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" sideWeight="0.4980143" weight="0.21815287" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4988086" weight="0.32961783" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5353455" side_tool="true" visible="true" weight="0.4378981" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.299509" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.4773071" weight="0.24222586" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -862,7 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala" />
     <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Player.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -887,16 +802,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-399">
           <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-          <folding>
-            <element signature="e#16#51#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -961,23 +866,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
-          <folding>
-            <element signature="e#17#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1930" column="18" selection-start-line="1930" selection-start-column="18" selection-end-line="1930" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/String.java" />
     <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/ArrayList.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
@@ -985,34 +874,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="61" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Entities/Crab1.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="442">
           <caret line="26" column="140" selection-start-line="26" selection-start-column="140" selection-end-line="26" selection-end-column="140" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Obj.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="61" column="50" lean-forward="true" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="50" />
+        <state relative-caret-position="935">
+          <caret line="61" column="50" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="50" />
           <folding>
             <element signature="e#48#83#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Tester.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/mainPPE/Behaviour.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
+          <folding>
+            <element signature="e#17#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/parser/TestLexer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2747">
+          <caret line="165" selection-start-line="165" selection-end-line="165" />
+          <folding>
+            <element signature="e#16#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PPEngineCode.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="71" selection-start-line="7" selection-start-column="71" selection-end-line="7" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/parser/PPLexer.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="213" column="31" lean-forward="true" selection-start-line="213" selection-start-column="31" selection-end-line="213" selection-end-column="31" />
+        <state relative-caret-position="597">
+          <caret line="140" column="57" selection-start-line="140" selection-start-column="57" selection-end-line="140" selection-end-column="57" />
           <folding>
             <element signature="e#16#51#0" expanded="true" />
           </folding>

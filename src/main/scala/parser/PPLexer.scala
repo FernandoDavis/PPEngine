@@ -136,9 +136,9 @@ class PPLexer extends StandardTokenParsers {
               case "randomFly" => personality += Behaviour.randomFly
               case "flyAroundPlayer" => personality += Behaviour.flyAroundPlayer
               case "jump" => personality += Behaviour.jump
-              case "attackPlayer" => personality += Behaviour.attackPlayer(new Random().nextInt(100))
+              case "attackPlayer" => personality += Behaviour.attackPlayer(new Random().nextInt(20))
               case "followPlayer" => personality += Behaviour.followPlayer
-              case "constantVelocity" => personality += Behaviour.constantVelocity(new Random().nextInt(100), new Random().nextInt(100))
+              case "constantVelocity" => personality += Behaviour.constantVelocity(new Random().nextInt(10), new Random().nextInt(10))
               case "moveBackAndForth" => personality += Behaviour.moveBackAndForthH(new Random().nextInt(200), new Vector2D(x, y))
               case "none" =>  {box.setAnchored(true)}
               case _ => println("do nothing")
