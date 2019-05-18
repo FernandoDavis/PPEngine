@@ -186,6 +186,8 @@ object Behaviour {
           owner.setTargetDistance(5)
           if (owner.isAnchored)
             owner.setAnchored(false)
+          if (owner.getSpeed<=0)
+            owner.setSpeed(4)
         }
       }
 
